@@ -3,7 +3,13 @@ var ySize=10;
 var cells='';
 
 function toggleLoginModal(){
-  document.getElementById("loginModal").setAttribute("class", "modal fade");
+	
+//If the user authenticates
+  //document.getElementById("loginModal").setAttribute("class", "modal fade");
+  
+//If the user fails to authenticate
+  document.getElementById("errorMessage").innerHTML = 'Authentication Failed';
+  $("#errorMessage").delay(5000).fadeOut();
 };
 
 function generatePlayerBoard(){
