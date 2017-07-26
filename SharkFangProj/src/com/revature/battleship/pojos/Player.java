@@ -1,32 +1,16 @@
 package com.revature.battleship.pojos;
 
-import javax.persistence.*;
 import java.util.*;
 
-@Entity(name="Player")
 public class Player 
 {
-	@Id
-	@GeneratedValue 
 	private Long uid;
-	@Column(name="username", nullable=false)
 	private String uname;
-	@Column(name="password", nullable=false)
 	private String pword;
-	@Column(nullable=false)
 	private String email;
-	@Column(name="first_name")
 	private String fname;
-	@Column(name="last_name")
 	private String lname;
-	@Column(name="profile_picture")
 	private String profPic;
-	@ElementCollection
-	@CollectionTable(
-			name="scores",
-			joinColumns=@JoinColumn(name="uid")
-			)
-	@OrderColumn(name="scores")
 	private ArrayList<Integer> highScores = new ArrayList<Integer>();
 
 

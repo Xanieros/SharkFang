@@ -49,10 +49,10 @@ public class LoginServlet extends HttpServlet {
 		Service service = new ServiceImpl();
 		boolean authenticated = service.login(usernameEntered, passwordEntered);
 		
-		PrintWriter out = response.getWriter();
+		/*PrintWriter out = response.getWriter();
 		if (true)
 		{
-			out.print("<h1> Success </h1>");
+			out.println("<h1> Success </h1>");
 		}*/
 		/*else
 		{
