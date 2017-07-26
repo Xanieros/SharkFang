@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Got here");
-		HttpSession session = request.getSession();
+		/*HttpSession session = request.getSession();
 
 		String usernameEntered = request.getParameter("username");
 		String passwordEntered = request.getParameter("password");
@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 		if (true)
 		{
 			out.print("<h1> Success </h1>");
-		}
+		}*/
 		/*else
 		{
 			out.print("<h1> Success </h1>");
