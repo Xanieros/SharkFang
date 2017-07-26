@@ -9,7 +9,7 @@ function toggleLoginModal(){
   
 //If the user fails to authenticate
   document.getElementById("errorMessage").innerHTML = 'Authentication Failed';
-  $("#errorMessage").delay(5000).fadeOut();
+  //$("#errorMessage").delay(5000).fadeOut();
 };
 
 function generatePlayerBoard(){
