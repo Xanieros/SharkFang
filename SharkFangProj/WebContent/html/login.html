@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Reimbursements</title>
+<!--<link  rel="stylesheet" href="../css/style.css">-->
+  
+<!-- Bootstrap, jQuery, JS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../js/script.js"></script>
+</head>
+<body onload="generatePlayerBoard();">
+  
+<!-- Login Modal -->
+<div id="loginModal" class="modal show" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Log in</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <form id="loginForm" action="" method="POST">
+            <label>Username</label><input class="form-control" type=text name="username"><!-- TODO names-->
+            <label>Password</label><input class="form-control" type=password name="password">
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" form="loginForm" onclick="generatePlayerBoard(); ">Login</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  
+<!--Player Board-->
+<div>
+  <table border="1" id="playerBoard">
+    <th></th>
+    
+
+  </table>
+</div>
+  
+<!--  <video playsinline autoplay muted loop poster="../image/sea-water-hd-1.jpg" id="bgvid">
+    <source src="../resources/video/Running_Stream_Of_Water.webm" type="video/webm">
+</video>-->
+</body>
+</html>

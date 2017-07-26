@@ -2,6 +2,10 @@ var xSize=10;
 var ySize=10;
 var cells='';
 
+function toggleLoginModal(){
+  document.getElementById("loginModal").setAttribute("class", "modal fade");
+};
+
 function generatePlayerBoard(){
   
   //Table Headers
@@ -12,7 +16,7 @@ function generatePlayerBoard(){
   
   //Unique Cells
   for(i=0; i<xSize; i++){
-    cells+='<td><label>'++'</label></td>'
+    cells+='<td><label>'+i+'</label></td>'
     cells+='<td class="hit"><input type="radio" name="cell" value="'+i+'" disabled></td>';
     console.log(cells);
   }
