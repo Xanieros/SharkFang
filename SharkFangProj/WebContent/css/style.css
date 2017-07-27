@@ -1,8 +1,29 @@
-  .hit{
-    background-color : red;
+.modal-backdrop {
+   background-color: rgba(0,0,0,.5);
+}
+
+  .unplayed{
+    background-color : blue;
+    /* bg-info */
   }
   
-  video#bgvid { 
+  .hit{
+    background-color : red;
+    /* bg-danger */
+  }
+  
+    .miss{
+    background-color : orange;
+    /* bg-warning */
+    
+  }
+  
+    .ship{
+    background-color : black;
+    /* bg-inverse */
+  }
+  
+/*   video#bgvid { 
     position: fixed;
     top: 50%;
     left: 50%;
@@ -17,4 +38,4 @@
     transform: translateX(-50%) translateY(-50%);
     background: url(polina.jpg) no-repeat;
     background-size: cover; 
-}
+} */

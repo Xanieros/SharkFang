@@ -3,7 +3,6 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Reimbursements</title>
-<link  rel="stylesheet" href="../css/style.css">
   
 <!-- Bootstrap, jQuery, JS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,6 +11,7 @@
   
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../js/script.js"></script>
+<link  rel="stylesheet" href="../css/style.css">
 </head>
 <body onload="generatePlayerBoard();">
 
@@ -19,25 +19,21 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-    </ul>
+      <a class="navbar-brand" href="#">SF Battleship</a>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> High Scores</a></li> <!-- Call Hi-score Modal -->   
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li> <!-- Call Profile Modal -->
+    <!-- href calls servlet, onclick calls js -->
+      <li><a onclick="" href="#"><span class="glyphicon glyphicon-king"></span> Scores</a></li>   
+      <li><a onclick="" href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+      <li><a onclick="" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>   
     </ul>
   </div>
 </nav>
   
 <!-- Login Modal -->
-<div id="loginModal" class="modal show" role="dialog">
+<div id="loginModal" class="modal show modal-backdrop" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
+    <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Log in</h4>
@@ -52,7 +48,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" form="loginForm" value="Login" />
+        <!-- <input type="submit" class="btn btn-primary" form="loginForm" value="Login" /> -->
+        <button onclick="toggleLoginModal();" class="btn btn-primary">&alpha; Dismiss Modal</button>
       </div>
     </div>
 
@@ -62,22 +59,26 @@
 <!--Form to start game-->
 <div>
 	<form id="loadOrNew" action="#" method="POST">
-		<label>Load</label></label><input type="radio" name="" value="" checked/>
-		<label>New</label></label><input type="radio" name="" value="" />
+
+		<label>Load</label><input type="radio" name="choice" value="0" checked/> <!-- Call to load game -->
+		<label>New</label><input type="radio" name="choice" value="1" /> <!-- Call to make game -->
 		<input type="submit" value="Start!">
 	</form>
 </div>
 
 <!-- Player Board -->
-  <table border="1" id="playerBoard">
-    <th></th>
-    
-
+<div>
+	<form>
+	  <fieldset disabled>
+ 	  <table border="1" class="table table-bordered" id="playerBoard">
+      <tr id="header"><th></th></tr>
   </table>
+ </fieldset>
+</form>
 </div>
   
-<video playsinline autoplay muted loop poster="../image/sea-water-hd-1.jpg" id="bgvid">
+<!-- <video playsinline autoplay muted loop poster="../image/sea-water-hd-1.jpg" id="bgvid">
     <source src="../resources/video/Running_Stream_Of_Water.webm" type="video/webm">
-</video>
+</video> -->
 </body>
 </html>

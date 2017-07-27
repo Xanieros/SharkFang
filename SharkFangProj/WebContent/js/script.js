@@ -1,39 +1,43 @@
 var xSize=10;
 var ySize=10;
-var cells='';
+var rows='';
+
+function testFunction(){
+	window.alert("test called");
+}
 
 function toggleLoginModal(){
 	
 //If the user authenticates
-  //document.getElementById("loginModal").setAttribute("class", "modal fade");
+  document.getElementById("loginModal").setAttribute("class", "modal fade");
   
 //If the user fails to authenticate
-  document.getElementById("errorMessage").innerHTML = 'Authentication Failed';
+  //document.getElementById("errorMessage").innerHTML = 'Authentication Failed';
   //$("#errorMessage").delay(5000).fadeOut();
 };
 
 function generatePlayerBoard(){
   
   //Table Headers
-  for(i=0; i<xSize; i++){
-      document.getElementById("playerBoard").innerHTML += '<th>'+i+'</th>';
+  for(i=1; i<xSize+1; i++){
+      document.getElementById("header").innerHTML += '<th>'+i+'</th>';
 
   }
   
-  //Unique Cells
-  for(i=0; i<xSize; i++){
-    cells+='<td><label>'+i+'</label></td>'
-    cells+='<td class="hit"><input type="radio" name="cell" value="'+i+'" disabled></td>';
-    console.log(cells);
-  }
-  
-  //Table Rows
+  //Make Rows
+  //Start with label
+  var counter=0;
   for(i=0; i<ySize; i++){
-      document.getElementById("playerBoard").innerHTML += 
-        +'<tr>'+cells
-        //+'<td><label>'+i+'</label></td>'+cells
-        //+'<td class="hit"><input type="radio" name="cell" value="A1" disabled></td>'
-        +'</tr>';
-
+    rows+='<tr><td><label>'+(i+1)+'</label></td>';
+    	//Append buttons
+        for(j=0; j<xSize; j++){
+        	rows+='<td class="bg-info"><input type="radio" name="cell" value="'+counter+'"></td>';
+        	counter++;
+        }
+    //Close row tag once row made
+    rows+='</tr>';
   }
+  
+  document.getElementById("playerBoard").innerHTML += rows;
+  
 };
