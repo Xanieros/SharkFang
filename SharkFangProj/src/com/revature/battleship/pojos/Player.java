@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Player 
 {
-	private Long uid;
+	private int uid;
 	private String uname;
 	private String pword;
 	private String email;
@@ -19,7 +19,7 @@ public class Player
 		
 	}
 	
-	public Player(Long uid, String uname, String pword, String email, String fname, String lname, String profPic) {
+	public Player(int uid, String uname, String pword, String email, String fname, String lname, String profPic) {
 		super();
 		this.uid = uid;
 		this.uname = uname;
@@ -29,10 +29,10 @@ public class Player
 		this.lname = lname;
 		this.profPic = profPic;
 	}
-	public Long getUid() {
+	public int getUid() {
 		return uid;
 	}
-	public void setUid(Long uid) {
+	public void setUid(int uid) {
 		this.uid = uid;
 	}
 	public String getUname() {
