@@ -41,3 +41,8 @@ function generatePlayerBoard(){
   document.getElementById("playerBoard").innerHTML += rows;
   
 };
+
+function populateMyProfileModal(){
+	  document.getElementById("myProfileTable").innerHTML += "Lorem ipsum dolor sit amet";
+
+}
