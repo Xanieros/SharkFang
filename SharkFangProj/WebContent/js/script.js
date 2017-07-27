@@ -26,11 +26,13 @@ function generatePlayerBoard(){
   
   //Make Rows
   //Start with label
-  for(i=1; i<ySize+1; i++){
-    rows+='<tr><td><label>'+i+'</label></td>';
+  var counter=0;
+  for(i=0; i<ySize; i++){
+    rows+='<tr><td><label>'+(i+1)+'</label></td>';
     	//Append buttons
         for(j=0; j<xSize; j++){
-        	rows+='<td class="bg-info"><input type="radio" name="cell" value="'+i+'"></td>';
+        	rows+='<td class="bg-info"><input type="radio" name="cell" value="'+counter+'"></td>';
+        	counter++;
         }
     //Close row tag once row made
     rows+='</tr>';
