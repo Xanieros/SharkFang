@@ -14,12 +14,30 @@
 <script src="../js/script.js"></script>
 </head>
 <body onload="generatePlayerBoard();">
+
+<!-- Nav Navbar Nav bar Navarino -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a onclick="" href="#"><span class="glyphicon glyphicon-king"></span> High Scores</a></li> <!-- Call Hi-score Modal -->   
+      <li><a onclick="testFunction()" href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li> <!-- Call Profile Modal -->
+    </ul>
+  </div>
+</nav>
   
 <!-- Login Modal -->
-<div id="loginModal" class="modal show" role="dialog">
+<!-- <div id="loginModal" class="modal show" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
+    Modal content
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Log in</h4>
@@ -39,10 +57,18 @@
     </div>
 
   </div>
-</div>
+</div> -->
   
-<!--Player Board-->
+<!--Form to start game-->
 <div>
+	<form id="loadOrNew" action="#" method="POST">
+		<label>Load</label></label><input type="radio" name="" value="" checked/>
+		<label>New</label></label><input type="radio" name="" value="" />
+		<input type="submit" value="Start!">
+	</form>
+</div>
+
+<!-- Player Board -->
   <table border="1" id="playerBoard">
     <th></th>
     

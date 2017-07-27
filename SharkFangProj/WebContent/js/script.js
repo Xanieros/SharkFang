@@ -2,6 +2,10 @@ var xSize=10;
 var ySize=10;
 var cells='';
 
+function testFunction(){
+	window.alert("test called");
+}
+
 function toggleLoginModal(){
 	
 //If the user authenticates
