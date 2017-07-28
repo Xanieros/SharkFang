@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>LoginPage</title>
+<title>Reimbursements</title>
   
 <!-- Bootstrap, jQuery, JS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -23,40 +23,15 @@
     <ul class="nav navbar-nav navbar-right">
     <!-- href calls servlet, onclick calls js -->
       <li><a onclick="" href="#"><span class="glyphicon glyphicon-king"></span> Scores</a></li>   
-      <li><a onclick="populateMyProfileModal()" href="#" data-toggle="modal" data-target="#myProfileModal"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-      <li><a onclick="" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>   
+      <li><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+      <li><a onclick="" href="logoutUser"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>   
       <!-- Trigger the modal with a button -->
 <!-- <button type="button" class="btn btn-info btn-lg" >Open Modal</button> -->
     </ul>
   </div>
 </nav>
   
-<!-- Login Modal -->
-<div id="loginModal" class="modal show modal-backdrop" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Log in</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <form id="loginForm" action="loginUser" method="POST">
-            <label>Username</label><input class="form-control" type=text name="username">
-            <label>Password</label><input class="form-control" type=password name="password">
-          </form>
-          <p id="errorMessage"></p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" form="loginForm" value="Login" />
-      </div>
-    </div>
-
-  </div>
-</div>
-  
+<p id="test">test</p>
 <!--Form to start game-->
 <div>
 	<form id="loadOrNew" action="#" method="POST">
@@ -86,10 +61,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">User</h4>
+        <h4 class="modal-title" id="myProfileModalTitle">User</h4>
       </div>
       <div class="modal-body">
-        <table id="myProfileTable"></table>
+        <table class="table table-bordered" id="myProfileTable"></table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
