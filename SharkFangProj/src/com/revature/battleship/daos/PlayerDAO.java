@@ -33,7 +33,7 @@ public class PlayerDAO implements PlayerInterface{
 				String email = rs.getString("EMAIL");
 				String profPic = rs.getString("PROFILE_PICTURE");
 				
-				player = new Player(uid, username, password, fname, lname, email, profPic);
+				player = new Player(uid, username, password,  email, fname, lname, profPic);
 			}
 			else
 				throw new Exception("Player not found");
