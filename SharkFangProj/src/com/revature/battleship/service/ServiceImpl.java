@@ -4,16 +4,13 @@
 
 package com.revature.battleship.service;
 
-import com.revature.battleship.daos.PlayerDAO;
-import com.revature.battleship.pojos.Player;
-
 public class ServiceImpl implements Service {
 
-	PlayerDAO playerDatabase = new PlayerDAO();
+	// make Database object
 	
 	@Override
-	public Player login(String usernameEntered, String passwordEntered) {
-		return playerDatabase.login(usernameEntered, passwordEntered);
+	public boolean login(String usernameEntered, String passwordEntered) {
+		return false; // return Database method that accesses the database
 	}
 
 }
