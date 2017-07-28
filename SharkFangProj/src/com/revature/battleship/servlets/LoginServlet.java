@@ -1,15 +1,14 @@
 package com.revature.battleship.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.revature.battleship.pojos.Player;
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
 
@@ -38,8 +37,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Got here");
-		/*HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 
 		String usernameEntered = request.getParameter("username");
 		String passwordEntered = request.getParameter("password");
@@ -47,17 +45,22 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("username", usernameEntered);
 		
 		Service service = new ServiceImpl();
-		boolean authenticated = service.login(usernameEntered, passwordEntered);
+		Player currentPlayer = service.login(usernameEntered, passwordEntered);
 		
-		/*PrintWriter out = response.getWriter();
-		if (true)
+		String nextPage = "/html/login.html";
+		if (currentPlayer.getUid() != 1)
 		{
-			out.println("<h1> Success </h1>");
-		}*/
-		/*else
-		{
-			out.print("<h1> Success </h1>");
-		}*/
+			session.setAttribute("uid", currentPlayer.getUid());
+			session.setAttribute("username", currentPlayer.getUname());
+			session.setAttribute("email", currentPlayer.getEmail());
+			session.setAttribute("fname", currentPlayer.getFname());
+			session.setAttribute("lname", currentPlayer.getLname());
+			session.setAttribute("profPic", currentPlayer.getProfPic());
+			 
+			 nextPage = "/html/game.html";
+		}
+		
+		request.getRequestDispatcher(nextPage).forward(request, response);
 	}
 
 }
