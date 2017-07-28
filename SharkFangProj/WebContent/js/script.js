@@ -13,8 +13,9 @@ function toggleLoginModal(){
 };
 
 function generatePlayerBoard(){
-	var xSize = document.size.xSize.value;
-	var ySize = document.size.ySize.value;
+	var xSize = document.sizeForm.xSize.value;
+	var ySize = document.sizeForm.ySize.value;
+	var enemyID = document.sizeForm.enemyID.value;
 	var headers = '<tr><th></th>'; //Initialize with empty corner
 	var rows='';
 	
@@ -46,6 +47,25 @@ function generatePlayerBoard(){
   
   //OverWrite Completed Table
   document.getElementById("playerBoard").innerHTML = headers+rows;
+  
+  //Send data to servlet
+  var xhttp = new XMLHttpRequest();
+  var url=	'initialize?xSize='+xSize+'&'
+  			+'ySize='+ySize+'&'
+  			+'enemyID='+enemyID;
+  
+	  xhttp.onreadystatechange = function()
+		{
+			if(xhttp.readyState == 4 && xhttp.status == 200)
+				{
+					console.log(xhttp.readyState+"/"+xhttp.status);
+				}
+			
+		};
+		
+		//make call to server asynchronously
+		xhttp.open('GET', url ,true);
+		xhttp.send();
   
 };
 
