@@ -28,4 +28,12 @@
     <servlet-name>viewInfo</servlet-name>
     <url-pattern>/html/viewInformation</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>initializeBoard</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.InitializeGame</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>initializeBoard</servlet-name>
+    <url-pattern>/html/initialize</url-pattern>
+  </servlet-mapping>
 </web-app>

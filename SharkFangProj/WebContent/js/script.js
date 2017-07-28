@@ -1,7 +1,3 @@
-var xSize=10;
-var ySize=10;
-var rows='';
-
 function testFunction(){
 	window.alert("test called");
 };
@@ -17,12 +13,23 @@ function toggleLoginModal(){
 };
 
 function generatePlayerBoard(){
-  
-  //Table Headers
-  for(i=1; i<xSize+1; i++){
-      document.getElementById("header").innerHTML += '<th>'+i+'</th>';
+	var xSize = document.sizeForm.xSize.value;
+	var ySize = document.sizeForm.ySize.value;
+	var enemyID = document.sizeForm.enemyID.value;
+	var headers = '<tr><th></th>'; //Initialize with empty corner
+	var rows='';
+	
+	console.log("Board size: "+xSize+" by "+ySize)
+	document.getElementById("test").innerHTML = "Board size: "+xSize+" by "+ySize;
 
+  //Table Headers
+  for(i=1; i<=xSize; i++){
+      headers += '<th>'+i+'</th>';
+      
   }
+  
+  //Close row tag
+  headers += '</tr>';
   
   //Make Rows
   //Start with label
@@ -38,7 +45,27 @@ function generatePlayerBoard(){
     rows+='</tr>';
   }
   
-  document.getElementById("playerBoard").innerHTML += rows;
+  //OverWrite Completed Table
+  document.getElementById("playerBoard").innerHTML = headers+rows;
+  
+  //Send data to servlet
+  var xhttp = new XMLHttpRequest();
+  var url=	'initialize?xSize='+xSize+'&'
+  			+'ySize='+ySize+'&'
+  			+'enemyID='+enemyID;
+  
+	  xhttp.onreadystatechange = function()
+		{
+			if(xhttp.readyState == 4 && xhttp.status == 200)
+				{
+					console.log(xhttp.readyState+"/"+xhttp.status);
+				}
+			
+		};
+		
+		//make call to server asynchronously
+		xhttp.open('GET', url ,true);
+		xhttp.send();
   
 };
 
@@ -78,3 +105,28 @@ function populateMyProfileModal(){
 
 
 };
+
+function loadNewGame(){
+	var xhttp = new XMLHttpRequest();
+	var txt='';
+	console.log("loadNewGame() Called");
+	  
+	  xhttp.onreadystatechange = function()
+		{
+		  //document.getElementById("test").innerHTML = xhttp.readyState+" "+xhttp.status;
+		  console.log(xhttp.readyState+" "+xhttp.status);
+			//check to see if readystate == 4 and status = 200
+			if(xhttp.readyState == 4 && xhttp.status == 200)
+				{
+				console.log("Sent Load Request");
+				//var data = xhttp.responseText;
+				//console.log(data);
+	            //var userData = JSON.parse(data);
+				
+				}
+			
+		};
+		//make call to server asynchronously
+		xhttp.open('POST','initialize',true);
+		xhttp.send();
+}
