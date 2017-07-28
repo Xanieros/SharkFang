@@ -1,7 +1,7 @@
 package com.revature.battleship.pojos;
 
 public class Record {
-	private int sid;
+	private int rid;
 	private int wins;
 	private int losses;
 	private int uid;
@@ -11,18 +11,18 @@ public class Record {
 		
 	}
 	
-	public Record(int sid, int wins, int losses, int uid) {
+	public Record(int rid, int wins, int losses, int uid) {
 		super();
-		this.sid = sid;
+		this.rid = rid;
 		this.wins = wins;
 		this.losses = losses;
 		this.uid = uid;
 	}
-	public int getSid() {
-		return sid;
+	public int getRid() {
+		return rid;
 	}
-	public void setSid(int sid) {
-		this.sid = sid;
+	public void setRid(int rid) {
+		this.rid = rid;
 	}
 	public int getWins() {
 		return wins;
