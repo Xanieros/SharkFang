@@ -34,13 +34,9 @@ public class GameStateDAO implements GameStateInterface{
 			cs.setInt(5, rowLength);
 			cs.registerOutParameter(6, OracleTypes.NUMBER);
 			
-			ResultSet rs = cs.executeQuery();
-			
-			if(rs.next())
-			{
-				LOGGER.info("getting gameState ID");
-				output = cs.getInt("GS_ID");
-			}
+			cs.executeQuery();
+			LOGGER.info("getting gameState ID");
+			output = cs.getInt("GS_ID");
 		}
 		catch(Exception e)
 		{
@@ -52,8 +48,37 @@ public class GameStateDAO implements GameStateInterface{
 
 	@Override
 	public GameState loadGame(int gid) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("in loadGame");
+		GameState gameState = new GameState();
+		
+		try
+		{
+			CallableStatement cs = conn.prepareCall("call LOAD_GAME(?,?)");
+			cs.setInt(1, gid);
+			cs.registerOutParameter(2, OracleTypes.CURSOR);
+			
+			ResultSet rs = (ResultSet)cs.executeQuery();
+			if(rs.next())
+			{
+				gameState.setBoardLength(rs.getInt("BOARD_LENGTH"));
+				gameState.setGameStateId(gid);
+				gameState.setPlayerOneBoard(rs.getString("P1_BOARD"));
+				gameState.setPlayerOneId(rs.getInt("P1_ID"));
+				gameState.setPlayerTwoBoard(rs.getString("P2_BOARD"));
+				gameState.setPlayerTwoId(rs.getInt("P2_ID"));
+			}
+			else
+			{
+				gameState = null;
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			gameState = null;
+		}
+		
+		return gameState;
 	}
 
 	//WHEN MULTIPLAYER IS IMPLEMENTED CHECK RECORD FOR ACCURACY, MAKE SURE THEY ARE NOT BEING UPDATED TWICE
