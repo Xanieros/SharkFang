@@ -26,17 +26,14 @@ public class GameStateDAO implements GameStateInterface{
 			cs.setString(4, p2Board);
 			cs.setInt(5, rowLength);
 			cs.registerOutParameter(6, OracleTypes.NUMBER);
-			
-			ResultSet rs = cs.executeQuery();
-			
-			if(rs.next())
-				output = cs.getInt("GS_ID");
+			cs.executeQuery();
+			output = cs.getInt(6);			
 		}
 		catch(Exception e)
 		{
 			
 		}
-		
+		System.out.println("Game ID " + output);
 		return output;
 	}
 
