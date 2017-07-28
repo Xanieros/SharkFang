@@ -48,7 +48,8 @@ public class LoginServlet extends HttpServlet {
 		Player currentPlayer = service.login(usernameEntered, passwordEntered);
 		
 		String nextPage = "/html/login.html";
-		if (currentPlayer.getUid() != 1)
+		int currID = currentPlayer.getUid();
+		if (currID > 0)
 		{
 			session.setAttribute("uid", currentPlayer.getUid());
 			session.setAttribute("username", currentPlayer.getUname());
@@ -57,9 +58,8 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("lname", currentPlayer.getLname());
 			session.setAttribute("profPic", currentPlayer.getProfPic());
 			 
-			 nextPage = "/html/game.html";
+			nextPage = "/html/game.html";
 		}
-		
 		request.getRequestDispatcher(nextPage).forward(request, response);
 	}
 
