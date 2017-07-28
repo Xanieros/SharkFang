@@ -27,8 +27,9 @@ public class PlayerDAO implements PlayerInterface{
 			cs.setString(1, username);
 			cs.setString(2, password);
 			cs.registerOutParameter(3, OracleTypes.CURSOR);
-			
-			ResultSet rs = (ResultSet)cs.executeQuery();
+			cs.executeQuery();
+      
+			ResultSet rs = (ResultSet) cs.getObject(3);
 			
 			if(rs.next())
 			{

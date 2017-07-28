@@ -1,26 +1,23 @@
 package com.revature.battleship.servlets;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.revature.battleship.service.Service;
-import com.revature.battleship.service.ServiceImpl;
 
 /**
- * Servlet implementation class InitializeGame
+ * Servlet implementation class PlaceShipsOntoPlayerBoardServlet
  */
-public class InitializeGame extends HttpServlet {
+@WebServlet("/PlaceShipsOntoPlayerBoardServlet")
+public class PlaceShipsOntoPlayerBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InitializeGame() {
+    public PlaceShipsOntoPlayerBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,24 +26,16 @@ public class InitializeGame extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Service service = new ServiceImpl();
-		
-		int xSize = Integer.parseInt(request.getParameter("xSize"));
-		int ySize = Integer.parseInt(request.getParameter("ySize"));
-		int userPlayerID = (Integer) session.getAttribute("uid");
-		int enemyPlayerID = Integer.parseInt(request.getParameter("enemyID"));
-		
-		int gameID = service.initializeGame(xSize, ySize, userPlayerID, enemyPlayerID);
-		
-		session.setAttribute("currGameIDInPlay", gameID);
-		System.out.println("Got here: "  + gameID);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request,response);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
+
 }

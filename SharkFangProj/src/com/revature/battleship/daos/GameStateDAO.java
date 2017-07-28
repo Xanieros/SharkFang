@@ -34,13 +34,10 @@ public class GameStateDAO implements GameStateInterface{
 			cs.setInt(5, rowLength);
 			cs.registerOutParameter(6, OracleTypes.NUMBER);
 			
-			ResultSet rs = cs.executeQuery();
+			cs.executeQuery();
 			
-			if(rs.next())
-			{
-				LOGGER.info("getting gameState ID");
-				output = cs.getInt("GS_ID");
-			}
+			LOGGER.info("getting gameState ID");
+			output = cs.getInt("GS_ID");
 		}
 		catch(Exception e)
 		{
