@@ -4,18 +4,25 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.revature.battleship.pojos.OracleConnection;
 import com.revature.battleship.pojos.Player;
 
 import oracle.jdbc.OracleTypes;
 
 public class PlayerDAO implements PlayerInterface{
+	private static final Logger LOGGER = LogManager.getLogger(PlayerDAO.class);
 	private Connection conn = OracleConnection.getOracleConnection();
+	
 	@Override
 	public Player login(String username, String password) {
+		LOGGER.info("in login");
 		Player player = new Player();
 		
 		try{
+			LOGGER.info("calling AUTH(?,?,?)");
 			CallableStatement cs = conn.prepareCall("call AUTH(?,?,?)");
 			cs.setString(1, username);
 			cs.setString(2, password);
@@ -25,6 +32,7 @@ public class PlayerDAO implements PlayerInterface{
 			
 			if(rs.next())
 			{
+				LOGGER.info("creating a new player from database");
 				int uid = rs.getInt("U_ID");
 				String fname = rs.getString("FIRST_NAME");
 				String lname = rs.getString("LAST_NAME");
@@ -33,21 +41,26 @@ public class PlayerDAO implements PlayerInterface{
 				
 				player = new Player(uid, username, password, fname, lname, email, profPic);
 			}
-			else
+			else{
+				LOGGER.info("login failed");
 				player = null;
+			}
+				
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		
+		LOGGER.debug("userID of player: " + player.getUid());
 		return player;
 	}
 	@Override
 	public Player updateInfo(int pid, String pword, String fname, String lname, String profPic) {
+		LOGGER.info("in updateInfo");
 		Player player = new Player();
 		try
 		{
+			LOGGER.info("calling UPDATE_PLAYER(?,?,?,?,?,?)");
 			CallableStatement cs = conn.prepareCall("call UPDATE_PLAYER(?,?,?,?,?,?)");
 			cs.setInt(1, pid);
 			cs.setString(2, pword);
@@ -59,16 +72,21 @@ public class PlayerDAO implements PlayerInterface{
 			ResultSet rs = (ResultSet)cs.executeQuery();
 			if(rs.next())
 			{
+				LOGGER.info("creating new player from database");
 				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_FICTURE"));
 			}
-			else
+			else{
+				LOGGER.info("player not found");
 				player = null;
+			}
+				
 			
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+		LOGGER.debug("userID of player: " + player.getUid());
 		return player;
 	}
 	
