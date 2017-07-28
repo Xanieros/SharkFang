@@ -31,33 +31,6 @@
   </div>
 </nav>
   
-<!-- Login Modal -->
-<div id="loginModal" class="modal show modal-backdrop" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Log in</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <form id="loginForm" action="loginUser" method="POST">
-            <label>Username</label><input class="form-control" type=text name="username">
-            <label>Password</label><input class="form-control" type=password name="password">
-          </form>
-          <p id="errorMessage"></p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <!-- <input type="submit" class="btn btn-primary" form="loginForm" value="Login" /> -->
-        <button onclick="toggleLoginModal();" class="btn btn-primary">&alpha; Dismiss Modal</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-  
 <!--Form to start game-->
 <div>
 	<form id="loadOrNew" action="#" method="POST">
