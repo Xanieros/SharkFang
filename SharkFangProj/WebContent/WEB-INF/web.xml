@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  id="WebApp_ID" version="3.1">
+
+  <!-- Niceties -->
+
   <display-name>SharkFangProj</display-name>
   <welcome-file-list>
     <welcome-file>html/login.html</welcome-file>
   </welcome-file-list>
+
+  <!-- Servlet Definitions -->
+
   <servlet>
     <servlet-name>login</servlet-name>
     <servlet-class>com.revature.battleship.servlets.LoginServlet</servlet-class>
   </servlet>
-  <servlet-mapping>
-    <servlet-name>login</servlet-name>
-    <url-pattern>/html/loginUser</url-pattern>
-  </servlet-mapping>
   <servlet>
     <servlet-name>logout</servlet-name>
     <servlet-class>com.revature.battleship.servlets.LogoutServlet</servlet-class>
   </servlet>
-  <servlet-mapping>
-    <servlet-name>logout</servlet-name>
-    <url-pattern>/html/logoutUser</url-pattern>
-  </servlet-mapping>
   <servlet>
     <servlet-name>viewInfo</servlet-name>
     <servlet-class>com.revature.battleship.servlets.ViewPlayerInformationServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>initializeBoard</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.InitializeGame</servlet-class>
+  </servlet>
+
+  <!-- Servlet Mappings -->
+
+  <servlet-mapping>
+    <servlet-name>login</servlet-name>
+    <url-pattern>/html/loginUser</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/html/logoutUser</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>viewInfo</servlet-name>
     <url-pattern>/html/viewInformation</url-pattern>
   </servlet-mapping>
-   <servlet>
-    <servlet-name>initializeBoard</servlet-name>
-    <servlet-class>com.revature.battleship.servlets.InitializeGame</servlet-class>
-  </servlet>
+
   <servlet-mapping>
     <servlet-name>initializeBoard</servlet-name>
     <url-pattern>/html/initialize</url-pattern>
   </servlet-mapping>
+
 </web-app>
