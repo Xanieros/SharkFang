@@ -8,4 +8,5 @@ import com.revature.battleship.pojos.Player;
 
 public interface Service {
 	Player login(String usernameEntered, String passwordEntered);
+	int initializeGame(int xSize, int ySize, int userPlayerID, int enemyPlayerID);
 }
