@@ -1,45 +1,45 @@
 package com.revature.battleship.pojos;
 
 public class Record {
-	private Long sid;
-	private Long wins;
-	private Long losses;
-	private Long uid;
+	private int sid;
+	private int wins;
+	private int losses;
+	private int uid;
 	
 	public Record()
 	{
 		
 	}
 	
-	public Record(Long sid, Long wins, Long losses, Long uid) {
+	public Record(int sid, int wins, int losses, int uid) {
 		super();
 		this.sid = sid;
 		this.wins = wins;
 		this.losses = losses;
 		this.uid = uid;
 	}
-	public Long getSid() {
+	public int getSid() {
 		return sid;
 	}
-	public void setSid(Long sid) {
+	public void setSid(int sid) {
 		this.sid = sid;
 	}
-	public Long getWins() {
+	public int getWins() {
 		return wins;
 	}
-	public void setWins(Long wins) {
+	public void setWins(int wins) {
 		this.wins = wins;
 	}
-	public Long getLosses() {
+	public int getLosses() {
 		return losses;
 	}
-	public void setLosses(Long losses) {
+	public void setLosses(int losses) {
 		this.losses = losses;
 	}
-	public Long getUid() {
+	public int getUid() {
 		return uid;
 	}
-	public void setUid(Long uid) {
+	public void setUid(int uid) {
 		this.uid = uid;
 	}
 }

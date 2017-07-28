@@ -46,20 +46,70 @@ public class GameStateDAO implements GameStateInterface{
 		return null;
 	}
 
+	//WHEN MULTIPLAYER IS IMPLEMENTED CHECK RECORD FOR ACCURACY, MAKE SURE THEY ARE NOT BEING UPDATED TWICE
 	@Override
 	public Record endGame(int gid, int winner) {
 		Record record = new Record();
 		
 		try
 		{
-			CallableStatement cs = conn.prepareCall("call GET_PID_FROM_GS(?,?)");
+			CallableStatement cs = conn.prepareCall("call END_GAME(?,?,?)");
+			cs.setInt(1, gid);
+			cs.setInt(2, winner);
+			cs.registerOutParameter(3, OracleTypes.CURSOR);
 			
+			ResultSet rs = (ResultSet)cs.executeQuery();
+			if(rs.next())
+			{
+				if(winner == 1)
+				{
+					cs = conn.prepareCall("call ADD_WIN(?)");
+					cs.setInt(1,rs.getInt("P1_ID"));
+					
+					cs.executeQuery();
+					
+					cs = conn.prepareCall("call ADD_LOSS(?)");
+					cs.setInt(1,rs.getInt("P2_ID"));
+					
+					cs.executeQuery();
+				}
+				else if(winner == 2)
+				{
+					cs = conn.prepareCall("call ADD_WIN(?)");
+					cs.setInt(1,rs.getInt("P2_ID"));
+					
+					cs.executeQuery();
+					
+					cs = conn.prepareCall("call ADD_LOSS(?)");
+					cs.setInt(1,rs.getInt("P1_ID"));
+					
+					cs.executeQuery();
+				}
+
+				cs = conn.prepareCall("call GET_RECORD(?,?)");
+				cs.setInt(1, rs.getInt("P1_ID"));
+				cs.registerOutParameter(2, OracleTypes.CURSOR);
+				
+				ResultSet rs2 = (ResultSet)cs.executeQuery();
+				if(rs2.next())
+				{
+					record.setLosses(rs2.getInt("LOSSES"));
+					record.setSid(rs2.getInt("R_ID"));
+					record.setUid(rs2.getInt("U_ID"));
+					record.setWins(rs2.getInt("WINS"));
+				}
+			}
+			else
+			{
+				record = null;
+			}
+			cs.close();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return record;
 	}
 
 	@Override
