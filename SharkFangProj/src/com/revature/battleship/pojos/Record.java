@@ -5,6 +5,12 @@ public class Record {
 	private Long wins;
 	private Long losses;
 	private Long uid;
+	
+	public Record()
+	{
+		
+	}
+	
 	public Record(Long sid, Long wins, Long losses, Long uid) {
 		super();
 		this.sid = sid;
