@@ -42,21 +42,32 @@
 		<label>X-Size</label><input id="xSize" type="number" value="10" min="10" max="25" name="xSize" step="1" required/>
 		<label>Y-Size</label><input id="ySize" type="number" value="10" min="10" max="25" name="ySize" step="1" required/>
 		<label>Enemy ID</label><input type="number" value="0" name="enemyID" disabled/>
-		<input type="submit" value="Start!">
 	</form>
-	<button onclick="generatePlayerBoard();" >New Game</button>
+	<button onclick="generatePlayerBoards();" >New Game</button>
 </div>
 
-<!-- Player Board -->
+<!-- Attack Board -->
 <div>
 	<form>
 	  <fieldset disabled>
- 	  <table border="1" class="table table-bordered" id="playerBoard">
+ 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="attackBoard">
       
   </table>
  </fieldset>
 </form>
 </div>
+
+<!-- Ship Board -->
+<div>
+	<form id="shipBoardForm">
+	  <fieldset>
+ 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="shipBoard">
+      
+  </table>
+ </fieldset>
+</form>
+</div>
+<div text-align="center" id="placeShips" onclick="placeShips(); " style="text-align:center; display:none"><button>Place ships</button></div>
 
 <!-- Profile Modal for signed-in user -->
 <div id="myProfileModal" class="modal fade" role="dialog">
@@ -69,7 +80,7 @@
         <h4 class="modal-title" id="myProfileModalTitle">User</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-bordered" id="myProfileTable"></table>
+        <table class="table table-bordered table-responsive" id="myProfileTable"></table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
