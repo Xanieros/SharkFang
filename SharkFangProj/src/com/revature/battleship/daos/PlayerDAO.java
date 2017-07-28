@@ -21,9 +21,7 @@ public class PlayerDAO implements PlayerInterface{
 			cs.setString(2, password);
 			cs.registerOutParameter(3, OracleTypes.CURSOR);
 			
-			cs.executeQuery();
-			
-			ResultSet rs = (ResultSet) cs.getObject(3);
+			ResultSet rs = (ResultSet)cs.executeQuery();
 			
 			if(rs.next())
 			{
@@ -33,17 +31,44 @@ public class PlayerDAO implements PlayerInterface{
 				String email = rs.getString("EMAIL");
 				String profPic = rs.getString("PROFILE_PICTURE");
 				
-				player = new Player(uid, username, password,  email, fname, lname, profPic);
+				player = new Player(uid, username, password, fname, lname, email, profPic);
 			}
 			else
-				throw new Exception("Player not found");
+				player = null;
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			player = new Player(-1, "default", "default", "default", "default", "default", "default");
 		}
 		
+		return player;
+	}
+	@Override
+	public Player updateInfo(int pid, String pword, String fname, String lname, String profPic) {
+		Player player = new Player();
+		try
+		{
+			CallableStatement cs = conn.prepareCall("call UPDATE_PLAYER(?,?,?,?,?,?)");
+			cs.setInt(1, pid);
+			cs.setString(2, pword);
+			cs.setString(3, fname);
+			cs.setString(4, lname);
+			cs.setString(5, profPic);
+			cs.registerOutParameter(6, OracleTypes.CURSOR);
+			
+			ResultSet rs = (ResultSet)cs.executeQuery();
+			if(rs.next())
+			{
+				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_FICTURE"));
+			}
+			else
+				player = null;
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		return player;
 	}
 	
