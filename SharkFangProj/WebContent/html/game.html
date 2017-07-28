@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Reimbursements</title>
+<title>Play Game</title>
   
 <!-- Bootstrap, jQuery, JS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,7 +13,7 @@
 <script src="../js/script.js"></script>
 <link  rel="stylesheet" href="../css/style.css">
 </head>
-<body onload="generatePlayerBoard();">
+<body>
 
 <!-- Nav Navbar Nav bar Navarino -->
 <nav class="navbar navbar-inverse">
@@ -33,13 +33,18 @@
   
 <p id="test">test</p>
 <!--Form to start game-->
-<div>
-	<form id="loadOrNew" action="#" method="POST">
 
-		<label>Load</label><input type="radio" name="choice" value="0" checked/> <!-- Call to load game -->
-		<label>New</label><input type="radio" name="choice" value="1" /> <!-- Call to make game -->
+<div>
+	<form name="size" action="#" method="POST">
+
+		<!-- <label>Load</label><input type="radio" name="choice" value="0"/>
+		<label>New</label><input type="radio" name="choice" value="1" checked/> -->
+		<label>X-Size</label><input id="xSize" type="number" value="10" min="10" max="25" name="xSize" step="1" required/>
+		<label>Y-Size</label><input id="ySize" type="number" value="10" min="10" max="25" name="ySize" step="1" required/>
+		<label>Enemy ID</label><input type="number" value="0" name="enemyID" disabled/>
 		<input type="submit" value="Start!">
 	</form>
+	<button onclick="generatePlayerBoard();" >New Game</button>
 </div>
 
 <!-- Player Board -->
@@ -47,7 +52,7 @@
 	<form>
 	  <fieldset disabled>
  	  <table border="1" class="table table-bordered" id="playerBoard">
-      <tr id="header"><th></th></tr>
+      
   </table>
  </fieldset>
 </form>
