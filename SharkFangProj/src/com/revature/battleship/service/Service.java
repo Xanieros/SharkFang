@@ -4,8 +4,6 @@
 
 package com.revature.battleship.service;
 
-import com.revature.battleship.pojos.Player;
-
 public interface Service {
-	Player login(String usernameEntered, String passwordEntered);
+	boolean login(String usernameEntered, String passwordEntered);
 }
