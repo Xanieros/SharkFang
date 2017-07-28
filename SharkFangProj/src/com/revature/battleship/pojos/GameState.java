@@ -17,6 +17,8 @@ public class GameState {
 		this.playerTwoBoard = playerTwoBoard;
 		this.boardLength = boardLength;
 	}
+	public GameState() {
+	}
 	public int getGameStateId() {
 		return gameStateId;
 	}
