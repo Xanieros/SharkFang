@@ -1,6 +1,5 @@
 package com.revature.battleship.pojos;
 
-import java.util.*;
 
 public class Player 
 {
@@ -11,7 +10,6 @@ public class Player
 	private String fname;
 	private String lname;
 	private String profPic;
-	private ArrayList<Integer> highScores = new ArrayList<Integer>();
 
 
 	public Player()
@@ -71,13 +69,4 @@ public class Player
 	public void setProfPic(String profPic) {
 		this.profPic = profPic;
 	}
-	
-	public ArrayList<Integer> getHighScores() {
-		return highScores;
-	}
-
-	public void setHighScores(ArrayList<Integer> highScores) {
-		this.highScores = highScores;
-	}
-	
 }
