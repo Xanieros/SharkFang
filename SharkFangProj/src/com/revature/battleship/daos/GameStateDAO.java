@@ -53,11 +53,12 @@ public class GameStateDAO implements GameStateInterface{
 		
 		try
 		{
-			CallableStatement cs = conn.prepareCall("call LOAD_GAME(?,?)");
+			CallableStatement cs = conn.prepareCall("call GET_GAME_STATE(?,?)");
 			cs.setInt(1, gid);
 			cs.registerOutParameter(2, OracleTypes.CURSOR);
 			
-			ResultSet rs = (ResultSet)cs.executeQuery();
+			cs.executeQuery();
+			ResultSet rs = (ResultSet) cs.getObject(2);
 			if(rs.next())
 			{
 				gameState.setBoardLength(rs.getInt("BOARD_LENGTH"));
