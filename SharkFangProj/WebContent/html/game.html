@@ -18,17 +18,26 @@
 <!-- Nav Navbar Nav bar Navarino -->
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a class="navbar-brand" href="#">SF Battleship</a>
-    <ul class="nav navbar-nav navbar-right">
-    <!-- href calls servlet, onclick calls js -->
-      <li><a onclick="" href="#"><span class="glyphicon glyphicon-king"></span> Scores</a></li>   
-      <li><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-      <li><a onclick="" href="logoutUser"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>   
-      <!-- Trigger the modal with a button -->
-<!-- <button type="button" class="btn btn-info btn-lg" >Open Modal</button> -->
-    </ul>
-  </div>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a onclick="" href="#"><span class="glyphicon glyphicon-king"></span> Scores</a></li>
+        <li><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+      	<li><a onclick="" href="logoutUser"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
   
 <p id="test">test</p>
@@ -41,35 +50,39 @@
 		<label>New</label><input type="radio" name="choice" value="1" checked/> -->
 		<label>X-Size</label><input id="xSize" type="number" value="10" min="10" max="25" name="xSize" step="1" required/>
 		<label>Y-Size</label><input id="ySize" type="number" value="10" min="10" max="25" name="ySize" step="1" required/>
-		<label>Enemy ID</label><input type="number" value="0" name="enemyID" disabled/>
+		<label>Opponent</label><input type="number" value="0" name="enemyID" disabled/>
 	</form>
 	<button onclick="generatePlayerBoards();" >New Game</button>
 </div>
 
 <!-- Attack Board -->
-<div id="mainContent" class="text-center">
-<div>
-	<form>
-	  <fieldset disabled>
- 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="attackBoard">
-      
-  </table>
- </fieldset>
-</form>
-</div>
+<div id="mainContent" class="container text-center">
+	<div>
+		<form>
+		  <fieldset disabled>
+	 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="attackBoard">
+	      
+	  </table>
+	 </fieldset>
+	</form>
+	</div>
 
-<!-- Ship Board -->
-<div>
-	<form id="shipBoardForm">
-	  <fieldset>
- 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="shipBoard">
-      
-  </table>
- </fieldset>
-</form>
-</div>
-<div id="placeShips" onclick="placeShips(); " style="display:none"><button>Place ships</button></div>
-</div>
+	<!-- Ship Board -->
+	<div>
+		<form id="shipBoardForm">
+		  <fieldset>
+	 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="shipBoard">
+	      
+	  </table>
+	 </fieldset>
+	</form>
+	</div>
+	<div id="buttonArea" style="display:none"><button onclick="placeShips(); ">Place ships</button>
+	<button onclick="saveAndQuit(); ">DUMMY SaveQuit</button>
+	<button onclick="removeBoxes(); ">DUMMY removeBoxes</button>
+	<button onclick=" ">DUMMY SaveQuit</button>
+	</div>
+	</div>
 
 <!-- Profile Modal for signed-in user -->
 <div id="myProfileModal" class="modal fade" role="dialog">
