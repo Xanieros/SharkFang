@@ -13,8 +13,8 @@
   }
   
     .miss{
-    background-color : orange;
-    /* bg-warning */
+    background-color : gray;
+    /* bg-faded */
     
   }
   
@@ -22,6 +22,12 @@
     background-color : black;
     /* bg-inverse */
   }
+  
+  .table {
+        max-width: none;
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
   
 /*   video#bgvid { 
     position: fixed;
