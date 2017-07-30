@@ -1,13 +1,13 @@
 package com.revature.battleship.pojos;
 
 public class GameState {
-	private Long gameStateId;
-	private Long playerOneId;
-	private Long playerTwoId;
+	private int gameStateId;
+	private int playerOneId;
+	private int playerTwoId;
 	private String playerOneBoard;
 	private String playerTwoBoard;
 	private int boardLength;
-	public GameState(Long gameStateId, Long playerOneId, Long playerTwoId, String playerOneBoard, String playerTwoBoard,
+	public GameState(int gameStateId, int playerOneId, int playerTwoId, String playerOneBoard, String playerTwoBoard,
 			int boardLength) {
 		super();
 		this.gameStateId = gameStateId;
@@ -17,22 +17,24 @@ public class GameState {
 		this.playerTwoBoard = playerTwoBoard;
 		this.boardLength = boardLength;
 	}
-	public Long getGameStateId() {
+	public GameState() {
+	}
+	public int getGameStateId() {
 		return gameStateId;
 	}
-	public void setGameStateId(Long gameStateId) {
+	public void setGameStateId(int gameStateId) {
 		this.gameStateId = gameStateId;
 	}
-	public Long getPlayerOneId() {
+	public int getPlayerOneId() {
 		return playerOneId;
 	}
-	public void setPlayerOneId(Long playerOneId) {
+	public void setPlayerOneId(int playerOneId) {
 		this.playerOneId = playerOneId;
 	}
-	public Long getPlayerTwoId() {
+	public int getPlayerTwoId() {
 		return playerTwoId;
 	}
-	public void setPlayerTwoId(Long playerTwoId) {
+	public void setPlayerTwoId(int playerTwoId) {
 		this.playerTwoId = playerTwoId;
 	}
 	public String getPlayerOneBoard() {
