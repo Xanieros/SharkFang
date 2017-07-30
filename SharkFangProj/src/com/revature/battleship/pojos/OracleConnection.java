@@ -43,14 +43,14 @@ public class OracleConnection {
 			Properties prop = new Properties();
 			
 			//load the prop instance with the file
-			prop.load(new FileReader(new File("connection.properties")));
+			/*prop.load(new FileReader(new File("connection.properties")));
 			
 			url = prop.getProperty("Url");
 			username = prop.getProperty("Username");
 			password = prop.getProperty("Password");
-			oracleClass = prop.getProperty("OracleClass");
+			oracleClass = prop.getProperty("OracleClass");*/
 			//2 - Load Driver
-			Class.forName(oracleClass);
+			/*Class.forName(oracleClass);*/
 			
 			//3 - Get connection object;
 			conn = DriverManager.getConnection(url, username, password);
