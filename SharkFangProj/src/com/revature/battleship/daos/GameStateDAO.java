@@ -1,15 +1,11 @@
 package com.revature.battleship.daos;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.*;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.revature.battleship.pojos.GameState;
-import com.revature.battleship.pojos.OracleConnection;
-import com.revature.battleship.pojos.Record;
+import com.revature.battleship.pojos.*;
 
 import oracle.jdbc.internal.OracleTypes;
 
@@ -53,6 +49,7 @@ public class GameStateDAO implements GameStateInterface{
 		
 		try
 		{
+			LOGGER.info("calling GET_GAME_STATE(?,?)");
 			CallableStatement cs = conn.prepareCall("call GET_GAME_STATE(?,?)");
 			cs.setInt(1, gid);
 			cs.registerOutParameter(2, OracleTypes.CURSOR);
@@ -176,6 +173,7 @@ public class GameStateDAO implements GameStateInterface{
 					record.setUid(rs2.getInt("U_ID"));
 					record.setWins(rs2.getInt("WINS"));
 				}
+				LOGGER.debug("record id: " + record.getRid());
 			}
 			else
 			{
@@ -186,7 +184,6 @@ public class GameStateDAO implements GameStateInterface{
 		{
 			e.printStackTrace();
 		}
-		LOGGER.debug("record id: " + record.getRid());
 		return record;
 	}
 

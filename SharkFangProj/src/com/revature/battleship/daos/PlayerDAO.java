@@ -1,8 +1,6 @@
 package com.revature.battleship.daos;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.*;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -41,6 +39,7 @@ public class PlayerDAO implements PlayerInterface{
 				String profPic = rs.getString("PROFILE_PICTURE");
 				
 				player = new Player(uid, username, password, fname, lname, email, profPic);
+				LOGGER.debug("userID of player: " + player.getUid());
 			}
 			else{
 				LOGGER.info("login failed");
@@ -51,8 +50,8 @@ public class PlayerDAO implements PlayerInterface{
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			player = null;
 		}
-		LOGGER.debug("userID of player: " + player.getUid());
 		return player;
 	}
 	@Override
@@ -75,6 +74,7 @@ public class PlayerDAO implements PlayerInterface{
 			{
 				LOGGER.info("creating new player from database");
 				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_FICTURE"));
+				LOGGER.debug("userID of player: " + player.getUid());
 			}
 			else{
 				LOGGER.info("player not found");
@@ -86,8 +86,8 @@ public class PlayerDAO implements PlayerInterface{
 		catch (Exception e)
 		{
 			e.printStackTrace();
+			player = null;
 		}
-		LOGGER.debug("userID of player: " + player.getUid());
 		return player;
 	}
 	
