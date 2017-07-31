@@ -12,7 +12,7 @@ import oracle.jdbc.OracleTypes;
 
 public class PlayerDAO implements PlayerInterface{
 	private static final Logger LOGGER = LogManager.getLogger(PlayerDAO.class);
-	private Connection conn = OracleConnection.getOracleConnection();
+	private static Connection conn = OracleConnection.getOracleConnection();
 	
 	@Override
 	public Player login(String username, String password) {
@@ -89,6 +89,29 @@ public class PlayerDAO implements PlayerInterface{
 			player = null;
 		}
 		return player;
+	}
+	
+	public static String getUsername(int uid)
+	{
+		LOGGER.info("in getUsername");
+		String output = "";
+		
+		try{
+			LOGGER.info("calling GET_USERNAME(?,?)");
+			CallableStatement cs = conn.prepareCall("call GET_USERNAME(?,?)");
+			cs.setInt(1, uid);
+			cs.registerOutParameter(2, OracleTypes.VARCHAR);
+			
+			cs.executeQuery();
+			
+			output = cs.getString("USERNAME");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return output;
 	}
 	
 }

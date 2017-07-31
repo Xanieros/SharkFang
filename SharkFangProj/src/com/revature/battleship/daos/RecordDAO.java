@@ -13,35 +13,24 @@ import com.revature.battleship.pojos.Record;
 
 import oracle.jdbc.internal.OracleTypes;
 
-public class RecordDAO implements RecordInterface{
+public class RecordDAO implements RecordInterface {
 	private static final Logger LOGGER = LogManager.getLogger(GameStateDAO.class);
 	private Connection conn = OracleConnection.getOracleConnection();
+
 	@Override
 	public Record addWin(int pid) {
 		LOGGER.info("in addWin");
 		Record rec = new Record();
-		try{
-		LOGGER.info("calling GET_RECORD(?) for " + pid);
-		CallableStatement cs = conn.prepareCall("call GET_RECORD(?)");
-		cs.setInt(1, pid);
-		
-		ResultSet rs = (ResultSet)cs.executeQuery();
-		
-		if(rs.next())
-		{
-			rec.setLosses(rs.getInt("LOSSES"));
-			rec.setRid(rs.getInt("R_ID"));
-			rec.setUid(rs.getInt("U_ID"));
-			rec.setWins(rs.getInt("WINS"));
-		}
-		LOGGER.info("calling ADD_WIN(?) for " + pid);
-		cs = conn.prepareCall("call ADD_WIN(?,?)");
-		cs.setInt(2,rec.getWins()+1);
-		cs.setInt(1, rec.getUid());
-		cs.executeQuery();
-		}
-		catch(Exception e)
-		{
+		try {
+			LOGGER.info("calling ADD_WIN(?) for " + pid);
+			CallableStatement cs = conn.prepareCall("call ADD_WIN(?)");
+			cs.setInt(1, rec.getUid());
+			cs.executeQuery();
+			
+			rec = getPlayerRecord(pid);
+			
+			LOGGER.debug(pid + "'s wins: " + rec.getWins());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rec;
@@ -51,28 +40,15 @@ public class RecordDAO implements RecordInterface{
 	public Record addLoss(int pid) {
 		LOGGER.info("in addLoss");
 		Record rec = new Record();
-		try{
-		LOGGER.info("calling GET_RECORD(?) for " + pid);
-		CallableStatement cs = conn.prepareCall("call GET_RECORD(?)");
-		cs.setInt(1, pid);
-		
-		ResultSet rs = (ResultSet)cs.executeQuery();
-		
-		if(rs.next())
-		{
-			rec.setLosses(rs.getInt("LOSSES"));
-			rec.setRid(rs.getInt("R_ID"));
-			rec.setUid(rs.getInt("U_ID"));
-			rec.setWins(rs.getInt("WINS"));
-		}
-		LOGGER.info("calling ADD_LOSS(?) for " + pid);
-		cs = conn.prepareCall("call ADD_LOSS(?,?)");
-		cs.setInt(2,rec.getLosses()+1);
-		cs.setInt(1, rec.getUid());
-		cs.executeQuery();
-		}
-		catch(Exception e)
-		{
+		try {
+			LOGGER.info("calling ADD_LOSS(?) for " + pid);
+			CallableStatement cs = conn.prepareCall("call ADD_LOSS(?)");
+			cs.setInt(1, rec.getUid());
+			cs.executeQuery();
+
+			rec = getPlayerRecord(pid);
+			LOGGER.debug(pid + "'s wins: " + rec.getLosses());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rec;
@@ -82,28 +58,24 @@ public class RecordDAO implements RecordInterface{
 	public Record getPlayerRecord(int uid) {
 		LOGGER.info("in getPlayerRecord");
 		Record record = new Record();
-		
-		try{
+
+		try {
 			LOGGER.info("calling GET_RECORDS(?,?)");
 			CallableStatement cs = conn.prepareCall("call GET_RECORDS(?,?)");
 			cs.setInt(1, uid);
 			cs.registerOutParameter(2, OracleTypes.CURSOR);
 			ResultSet rs = (ResultSet) cs.executeQuery();
-			if(rs.next())
-			{
+			if (rs.next()) {
 				record.setLosses(rs.getInt("LOSSES"));
 				record.setRid(rs.getInt("R_ID"));
 				record.setUid(uid);
 				record.setWins(rs.getInt("WINS"));
-				
+
 				LOGGER.debug("record ID: " + record.getRid());
-				
-			}
-			else
+
+			} else
 				record = null;
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			record = null;
 		}
@@ -114,28 +86,26 @@ public class RecordDAO implements RecordInterface{
 	public ArrayList<Record> getTopRank(int limit) {
 		LOGGER.info("in getTopRank");
 		ArrayList<Record> recordsAL = new ArrayList<Record>();
-		
-		try{
+
+		try {
 			LOGGER.info("calling GET_TOP_RECORDS");
 			CallableStatement cs = conn.prepareCall("call GET_TOP_RECORDS(?,?)");
 			cs.setInt(1, limit);
 			cs.registerOutParameter(2, OracleTypes.CURSOR);
-			
-			ResultSet rs = (ResultSet)cs.executeQuery();
-			
-			while(rs.next())
-			{
-				Record curRec = new Record(rs.getInt("R_ID"), rs.getInt("WINS"), rs.getInt("LOSSES"), rs.getInt("U_ID"));
+
+			ResultSet rs = (ResultSet) cs.executeQuery();
+
+			while (rs.next()) {
+				Record curRec = new Record(rs.getInt("R_ID"), rs.getInt("WINS"), rs.getInt("LOSSES"),
+						rs.getInt("U_ID"));
 				recordsAL.add(curRec);
 			}
 			LOGGER.debug("top records: " + recordsAL.toString());
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			recordsAL = null;
 		}
-		
+
 		return recordsAL;
 	}
 
