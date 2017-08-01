@@ -40,7 +40,7 @@ public class OracleConnection {
             String password = "P4SSW0RD";
             conn = DriverManager.getConnection(url, username, password);
 			//create an instance of java.util.Properties class
-			Properties prop = new Properties();
+			//Properties prop = new Properties();
 			
 			//load the prop instance with the file
 			/*prop.load(new FileReader(new File("connection.properties")));
@@ -53,7 +53,7 @@ public class OracleConnection {
 			/*Class.forName(oracleClass);*/
 			
 			//3 - Get connection object;
-			conn = DriverManager.getConnection(url, username, password);
+			//conn = DriverManager.getConnection(url, username, password);
 			
 		}
 		catch(Exception e)

@@ -31,7 +31,7 @@ public class GameStateDAO implements GameStateInterface {
 
 			cs.executeQuery();
 			LOGGER.info("getting gameState ID");
-			output = cs.getInt("GS_ID");
+			output = cs.getInt(6);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,8 +87,8 @@ public class GameStateDAO implements GameStateInterface {
 			cs.setInt(1, gid);
 			cs.setInt(2, winner);
 			cs.registerOutParameter(3, OracleTypes.CURSOR);
-
-			ResultSet rs = (ResultSet) cs.executeQuery();
+			cs.executeQuery();
+			ResultSet rs = (ResultSet) cs.getObject(3);
 			if (rs.next()) {
 				if(winner == 1)
 				{

@@ -68,12 +68,12 @@ public class PlayerDAO implements PlayerInterface{
 			cs.setString(4, lname);
 			cs.setString(5, profPic);
 			cs.registerOutParameter(6, OracleTypes.CURSOR);
-			
-			ResultSet rs = (ResultSet)cs.executeQuery();
+			cs.executeQuery();
+			ResultSet rs = (ResultSet)cs.getObject(6);
 			if(rs.next())
 			{
 				LOGGER.info("creating new player from database");
-				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_FICTURE"));
+				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_PICTURE"));
 				LOGGER.debug("userID of player: " + player.getUid());
 			}
 			else{
@@ -104,7 +104,7 @@ public class PlayerDAO implements PlayerInterface{
 			
 			cs.executeQuery();
 			
-			output = cs.getString("USERNAME");
+			output = cs.getString(2);
 		}
 		catch(Exception e)
 		{

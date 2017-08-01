@@ -24,8 +24,8 @@ public class RecordDAO implements RecordInterface {
 		try {
 			LOGGER.info("calling ADD_WIN(?) for " + pid);
 			CallableStatement cs = conn.prepareCall("call ADD_WIN(?)");
-			cs.setInt(1, rec.getUid());
-			cs.executeQuery();
+			cs.setInt(1, pid);
+			cs.executeUpdate();
 			
 			rec = getPlayerRecord(pid);
 			
@@ -43,8 +43,8 @@ public class RecordDAO implements RecordInterface {
 		try {
 			LOGGER.info("calling ADD_LOSS(?) for " + pid);
 			CallableStatement cs = conn.prepareCall("call ADD_LOSS(?)");
-			cs.setInt(1, rec.getUid());
-			cs.executeQuery();
+			cs.setInt(1, pid);
+			cs.executeUpdate();
 
 			rec = getPlayerRecord(pid);
 			LOGGER.debug(pid + "'s wins: " + rec.getLosses());
@@ -60,11 +60,12 @@ public class RecordDAO implements RecordInterface {
 		Record record = new Record();
 
 		try {
-			LOGGER.info("calling GET_RECORDS(?,?)");
-			CallableStatement cs = conn.prepareCall("call GET_RECORDS(?,?)");
+			LOGGER.info("calling GET_RECORD(?,?)");
+			CallableStatement cs = conn.prepareCall("call GET_RECORD(?,?)");
 			cs.setInt(1, uid);
 			cs.registerOutParameter(2, OracleTypes.CURSOR);
-			ResultSet rs = (ResultSet) cs.executeQuery();
+			cs.executeQuery();
+			ResultSet rs = (ResultSet) cs.getObject(2);
 			if (rs.next()) {
 				record.setLosses(rs.getInt("LOSSES"));
 				record.setRid(rs.getInt("R_ID"));
@@ -92,8 +93,9 @@ public class RecordDAO implements RecordInterface {
 			CallableStatement cs = conn.prepareCall("call GET_TOP_RECORDS(?,?)");
 			cs.setInt(1, limit);
 			cs.registerOutParameter(2, OracleTypes.CURSOR);
-
-			ResultSet rs = (ResultSet) cs.executeQuery();
+			cs.executeQuery();
+			
+			ResultSet rs = (ResultSet) cs.getObject(2);
 
 			while (rs.next()) {
 				Record curRec = new Record(rs.getInt("R_ID"), rs.getInt("WINS"), rs.getInt("LOSSES"),
