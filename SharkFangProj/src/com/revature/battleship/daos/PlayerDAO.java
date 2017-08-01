@@ -41,6 +41,7 @@ public class PlayerDAO implements PlayerInterface{
 				String profPic = rs.getString("PROFILE_PICTURE");
 				
 				player = new Player(uid, username, password, fname, lname, email, profPic);
+				LOGGER.debug("userID of player: " + player.getUid());
 			}
 			else{
 				LOGGER.info("login failed");
@@ -52,7 +53,6 @@ public class PlayerDAO implements PlayerInterface{
 		{
 			e.printStackTrace();
 		}
-		LOGGER.debug("userID of player: " + player.getUid());
 		return player;
 	}
 	@Override
