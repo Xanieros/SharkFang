@@ -40,11 +40,17 @@
   </div><!-- /.container-fluid -->
 </nav>
   
-<div id="test"><p>Testing area</p>
-	<button onclick="saveAndQuit(); ">SaveQuit</button>
-	<button onclick="removeBoxes(); ">removeBoxes</button>
-	<button onclick="testActivate(); ">Activate Attack Form</button>
-	<p></p>
+<!-- Panel Testing Area -->
+<div class="panel panel-primary">
+<script src="../js/test.js"></script>
+  <div class="panel-heading">TESTING AREA</div>
+  <div id="test" class="panel-body">
+  	<button class="btn" disabled>New Game</button>
+  	<button class="btn" disabled>Place Ships</button>
+  	<button class="btn" onclick="removeBoxes(); ">removeBoxes</button>
+	<button class="btn" onclick="activateTestFunction(); ">Activate Attack Form</button>
+  	<button class="btn" onclick="saveAndQuitTestFunction(); ">SaveQuit</button><br>
+  </div>
 </div>
 
 
