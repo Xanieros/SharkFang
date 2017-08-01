@@ -40,7 +40,21 @@
   </div><!-- /.container-fluid -->
 </nav>
   
-<p id="test">test</p>
+<!-- Panel Testing Area -->
+<div class="panel panel-primary">
+<script src="../js/test.js"></script>
+  <div class="panel-heading">TESTING AREA</div>
+  <div id="test" class="panel-body">
+  	<button class="btn" disabled>New Game</button>
+  	<button class="btn" disabled>Place Ships</button>
+  	<button class="btn" onclick="removeBoxesTestFunction(); ">removeBoxes</button>
+	<button class="btn" onclick="activateTestFunction(); ">Activate Attack Form</button>
+  	<button class="btn" onclick="saveAndQuitTestFunction(); ">SaveQuit</button><br>
+  	<button class="btn" onclick="sendMove(); ">Send Move</button>
+  </div>
+</div>
+
+
 <!--Form to start game-->
 
 <div>
@@ -58,7 +72,7 @@
 <!-- Attack Board -->
 <div id="mainContent" class="container text-center">
 	<div>
-		<form>
+		<form id="attackBoardForm">
 		  <fieldset disabled>
 	 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="attackBoard">
 	      
@@ -78,9 +92,6 @@
 	</form>
 	</div>
 	<div id="buttonArea" style="display:none"><button onclick="placeShips(); ">Place ships</button>
-	<button onclick="saveAndQuit(); ">DUMMY SaveQuit</button>
-	<button onclick="removeBoxes(); ">DUMMY removeBoxes</button>
-	<button onclick=" ">DUMMY SaveQuit</button>
 	</div>
 	</div>
 

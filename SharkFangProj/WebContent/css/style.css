@@ -19,8 +19,8 @@
   }
   
     .ship{
-    background-color : black;
-    /* bg-inverse */
+    background-color : yellow;
+    /* bg-warning */
   }
   
   .table {
