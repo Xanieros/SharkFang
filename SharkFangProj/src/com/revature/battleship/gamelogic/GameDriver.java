@@ -48,7 +48,7 @@ public class GameDriver {
 		
 		myGameStateDatabase.saveGame(gameID, initialBoardAsString, initialBoardAsString);
 		
-		currentGameState = new GameState(gameID, userPlayerID, enemyPlayerID, initialBoardAsString, initialBoardAsString, xSize);
+		currentGameState = new GameState(gameID, userPlayerID, enemyPlayerID, initialBoardAsString, initialBoardAsString, xSize, 0, null);
 		
 		return gameID;
 	}
