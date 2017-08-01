@@ -5,7 +5,8 @@ function testFunction(){
 	window.alert("test called");
 };
 
-function toggleLoginModal(){
+//Unused due to Page Redirect
+/*function toggleLoginModal(){
 	
 //If the user authenticates
   document.getElementById("loginModal").setAttribute("class", "modal fade");
@@ -13,74 +14,70 @@ function toggleLoginModal(){
 //If the user fails to authenticate
   //document.getElementById("errorMessage").innerHTML = 'Authentication Failed';
   //$("#errorMessage").delay(5000).fadeOut();
-};
+};*/
 
 function generatePlayerBoards(){
 	
+	//Get values from form w/o redirect
 	xSize = document.sizeForm.xSize.value;
 	ySize = document.sizeForm.ySize.value;
 	var enemyID = document.sizeForm.enemyID.value;
 	
+	//Validate valid board size, else do nothing
 	if((xSize >=10 && xSize <=25) && (ySize >=10 && ySize <=25)){
-		var headers = '<tr><th></th>'; //Initialize with empty corner
+		console.log("Board size: "+xSize+" by "+ySize);
+		document.getElementById("test").innerHTML += "Board size: "+xSize+" by "+ySize;
 		
-		console.log("Board size: "+xSize+" by "+ySize)
-		document.getElementById("test").innerHTML = "Board size: "+xSize+" by "+ySize;
-
-	  //Generate Headers (Shared by both boards)
-	  for(i=1; i<=xSize; i++){
-	      headers += '<th>'+i+'</th>';
-	      
-	  }
+		////////////////////////////////////////////////
+		//Generate Headers (Shared by both boards)//////
+		////////////////////////////////////////////////
+		var headers = '<tr><th></th>'; //Initialize with empty corner
+		for(i=1; i<=xSize; i++){
+	      headers += '<th>'+i+'</th>';	      
+		}
+		headers += '</tr>';
+		
+		
+		/////////////////////////////
+		//Generate Attack Board//////
+		/////////////////////////////
+		  var rows='';
+		  var counter=0;
+		  for(i=0; i<ySize; i++){
+		    rows+='<tr><td><label>'+(i+1)+'</label></td>';
+			//Append buttons
+			for(j=0; j<xSize; j++){
+				rows+='<td class="bg-info">';
+				rows+='<input type="radio" name="cell" value="'+counter+'"></td>';
+			    	counter++;
+			    }
+			rows+='</tr>';
+			  }
+		  document.getElementById("attackBoard").innerHTML = headers+rows; //Write to page
 	  
-	  //Close row tag
-	  headers += '</tr>';
+		  
+	  	///////////////////////////
+		//Generate Ship Board//////
+		///////////////////////////
+		  var rows='';
+		  var counter=0;
+		  for(i=0; i<ySize; i++){
+		    rows+='<tr><td><label>'+(i+1)+'</label></td>';
+		    	//Append checkboxes
+		        for(j=0; j<xSize; j++){
+		        	rows+='<td class="bg-info" id="'+ counter +'">';
+		        	rows+='<input type="checkbox" name="ship" value="'+counter+'"></td>';
+		        	counter++;
+		        }
+		    rows+='</tr>';
+		  }
+	  document.getElementById("shipBoard").innerHTML = headers+rows; //Write to page
+	  document.getElementById("buttonArea").style.display = "inline"; //Reveal Place Ship button
 	  
-	  /*
-	   * Generate Attack Board
-	   * 
-	   */
-	  var rows='';
-	  var counter=0;
-	  for(i=0; i<ySize; i++){
-	    rows+='<tr><td><label>'+(i+1)+'</label></td>';
-	    	//Append buttons
-	        for(j=0; j<xSize; j++){
-	        	rows+='<td class="bg-info"><input type="radio" name="cell" value="'+counter+'"></td>';
-	        	counter++;
-	        }
-	    //Close row tag once row made
-	    rows+='</tr>';
-	  }
 	  
-	  //Write Completed Table
-	  document.getElementById("attackBoard").innerHTML = headers+rows;
-	  
-	  /*
-	   * Generate Ship Board
-	   * 
-	   */
-	  var rows='';
-	  var counter=0;
-	  for(i=0; i<ySize; i++){
-	    rows+='<tr><td><label>'+(i+1)+'</label></td>';
-	    	//Append checkboxes
-	        for(j=0; j<xSize; j++){
-	        	rows+='<td class="bg-info"><input type="checkbox" name="ship" value="'+counter+'"></td>';
-	        	counter++;
-	        }
-	    //Close row tag once row made
-	    rows+='</tr>';
-	  }
-	  
-	  //Write Completed Table
-	  document.getElementById("shipBoard").innerHTML = headers+rows;
-	  document.getElementById("buttonArea").style.display = "inline";
-	  
-	  /*
-	   * Send data to servlet
-	   * 
-	   */
+	  ////////////////////////////
+	  //Send data to servlet//////
+	  ////////////////////////////
 	  var xhttp = new XMLHttpRequest();
 	  var url=	'initialize?xSize='+xSize+'&'
 	  			+'ySize='+ySize+'&'
@@ -194,11 +191,14 @@ function placeShips(){
 				console.log("Sent Ships");
 				//Rewrite Ship Board
 				removeBoxes(checkedBoxes);
-				colorBoxes();
-				//Activate top radio buttons
 				
+				//Activate top radio buttons			
+				var fieldset = document.getElementById("attackBoardForm").getElementsByTagName("fieldset");
+				fieldset[0].removeAttribute("disabled");
+				
+				//Reveal Save and Quit				
 				document.getElementById("buttonArea").innerHTML = '<button onclick="makeMove(); ">Attack</button>'
-					+'<button onclick="saveAndQuit(); ">Save &amp; Quit</button>';
+					+'<button onclick="SaveGame">Save &amp; Quit</button>';
 			}
 			
 		};
@@ -211,13 +211,32 @@ function placeShips(){
 	
 }
 
-function removeBoxes(){
+function removeBoxes(checkedBoxes){
+	//For Testing
+	//checkedBoxes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "13", "14", "15", "16", "17", "18", "19"]
+	
+	var tabledata = document.getElementById("shipBoardForm").getElementsByTagName("td");
+	console.log(tabledata);
+	//var input = document.getElementById("shipBoardForm").getElementsByTagName("input");
+	
+	for(i=0; i<tabledata.length; i++){
+		
+		console.log(tabledata[i]);
+		var value = tabledata[i].getAttribute("id");
+		console.log(value);
+		if(checkedBoxes.includes(value)){
+			tabledata[i].setAttribute("class", "bg-warning");
+			
+		}
+	}
+	
 	var fieldset = document.getElementById("shipBoardForm").getElementsByTagName("fieldset");
 	fieldset[0].setAttribute("disabled", "");
 	
 }
 
-function saveAndQuit(){
+//Function Delegated to Middle Tier
+/*function saveAndQuit(){
 		
 	//Array representing player board state
 	var playerBoard = []
@@ -247,7 +266,7 @@ function saveAndQuit(){
 }
 console.log(playerBoard);
 }
-
+*/
 function makeMove(){
 	
 	

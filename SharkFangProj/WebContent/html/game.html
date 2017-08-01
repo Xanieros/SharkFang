@@ -40,7 +40,14 @@
   </div><!-- /.container-fluid -->
 </nav>
   
-<p id="test">test</p>
+<div id="test"><p>Testing area</p>
+	<button onclick="saveAndQuit(); ">SaveQuit</button>
+	<button onclick="removeBoxes(); ">removeBoxes</button>
+	<button onclick="testActivate(); ">Activate Attack Form</button>
+	<p></p>
+</div>
+
+
 <!--Form to start game-->
 
 <div>
@@ -58,7 +65,7 @@
 <!-- Attack Board -->
 <div id="mainContent" class="container text-center">
 	<div>
-		<form>
+		<form id="attackBoardForm">
 		  <fieldset disabled>
 	 	  <table border="1" class="table table-bordered table-condensed table-responsive" id="attackBoard">
 	      
@@ -78,9 +85,6 @@
 	</form>
 	</div>
 	<div id="buttonArea" style="display:none"><button onclick="placeShips(); ">Place ships</button>
-	<button onclick="saveAndQuit(); ">DUMMY SaveQuit</button>
-	<button onclick="removeBoxes(); ">DUMMY removeBoxes</button>
-	<button onclick=" ">DUMMY SaveQuit</button>
 	</div>
 	</div>
 
