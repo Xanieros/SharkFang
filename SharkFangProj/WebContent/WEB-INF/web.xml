@@ -33,6 +33,11 @@
   	<servlet-name>placeShips</servlet-name>
   	<servlet-class>com.revature.battleship.servlets.PlaceShipsOntoPlayerBoardServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>saveGame</servlet-name>
+  	<servlet-class>com.revature.battleship.servlets.SaveGame</servlet-class>
+  </servlet>
+
 
   <!-- Servlet Mappings -->
 
@@ -59,6 +64,11 @@
   <servlet-mapping>
   	<servlet-name>placeShips</servlet-name>
   	<url-pattern>/html/InitializeShips</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>saveGame</servlet-name>
+    <url-pattern>/html/SaveGame</url-pattern>
   </servlet-mapping>
 
 </web-app>
