@@ -1,8 +1,6 @@
 package com.revature.battleship.daos;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.*;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -14,7 +12,7 @@ import oracle.jdbc.OracleTypes;
 
 public class PlayerDAO implements PlayerInterface{
 	private static final Logger LOGGER = LogManager.getLogger(PlayerDAO.class);
-	private Connection conn = OracleConnection.getOracleConnection();
+	private static Connection conn = OracleConnection.getOracleConnection();
 	
 	@Override
 	public Player login(String username, String password) {
@@ -41,6 +39,7 @@ public class PlayerDAO implements PlayerInterface{
 				String profPic = rs.getString("PROFILE_PICTURE");
 				
 				player = new Player(uid, username, password, fname, lname, email, profPic);
+				LOGGER.debug("userID of player: " + player.getUid());
 			}
 			else{
 				LOGGER.info("login failed");
@@ -51,8 +50,8 @@ public class PlayerDAO implements PlayerInterface{
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			player = null;
 		}
-		LOGGER.debug("userID of player: " + player.getUid());
 		return player;
 	}
 	@Override
@@ -69,12 +68,13 @@ public class PlayerDAO implements PlayerInterface{
 			cs.setString(4, lname);
 			cs.setString(5, profPic);
 			cs.registerOutParameter(6, OracleTypes.CURSOR);
-			
-			ResultSet rs = (ResultSet)cs.executeQuery();
+			cs.executeQuery();
+			ResultSet rs = (ResultSet)cs.getObject(6);
 			if(rs.next())
 			{
 				LOGGER.info("creating new player from database");
-				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_FICTURE"));
+				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_PICTURE"));
+				LOGGER.debug("userID of player: " + player.getUid());
 			}
 			else{
 				LOGGER.info("player not found");
@@ -86,9 +86,32 @@ public class PlayerDAO implements PlayerInterface{
 		catch (Exception e)
 		{
 			e.printStackTrace();
+			player = null;
 		}
-		LOGGER.debug("userID of player: " + player.getUid());
 		return player;
+	}
+	
+	public static String getUsername(int uid)
+	{
+		LOGGER.info("in getUsername");
+		String output = "";
+		
+		try{
+			LOGGER.info("calling GET_USERNAME(?,?)");
+			CallableStatement cs = conn.prepareCall("call GET_USERNAME(?,?)");
+			cs.setInt(1, uid);
+			cs.registerOutParameter(2, OracleTypes.VARCHAR);
+			
+			cs.executeQuery();
+			
+			output = cs.getString(2);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return output;
 	}
 	
 }
