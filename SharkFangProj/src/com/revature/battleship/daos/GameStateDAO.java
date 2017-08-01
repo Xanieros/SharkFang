@@ -3,6 +3,7 @@ package com.revature.battleship.daos;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -36,7 +37,7 @@ public class GameStateDAO implements GameStateInterface{
 			
 			cs.executeQuery();
 			LOGGER.info("getting gameState ID");
-			output = cs.getInt("GS_ID");
+			output = cs.getInt(6);
 		}
 		catch(Exception e)
 		{
@@ -206,6 +207,23 @@ public class GameStateDAO implements GameStateInterface{
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	// used for Junit testing to reverts changes
+	@Override
+	public void deleteGameState(int gameStateID) {
+		LOGGER.debug("in deleteGameState");
+		try {
+			String sqlCommand = "call DELETE_GAME_STATE(?)";
+			CallableStatement deleteGSCallableStmt = conn.prepareCall(sqlCommand);
+			deleteGSCallableStmt.setInt(1, gameStateID);
+			
+			deleteGSCallableStmt.executeUpdate();
+			
+		} catch (SQLException sqlE) {
+			LOGGER.fatal("SQL Exception in DeleteGameState(" + gameStateID + ")");
+			sqlE.printStackTrace();
 		}
 	}
 

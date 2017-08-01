@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		
 		session.setAttribute("username", usernameEntered);
 		
-		Service service = new ServiceImpl();
+		Service service = ServiceImpl.getService();
 		Player currentPlayer = service.login(usernameEntered, passwordEntered);
 		
 		String nextPage = "/html/login.html";
