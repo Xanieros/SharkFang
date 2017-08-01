@@ -15,8 +15,8 @@ function activateTestFunction(){
 				fieldset[0].removeAttribute("disabled");
 				
 				//Reveal Save and Quit				
-				document.getElementById("buttonArea").innerHTML = '<button onclick="makeMove(); ">Attack</button>'
-					+'<button onclick="SaveGame">Save &amp; Quit</button>';
+				document.getElementById("buttonArea").innerHTML = '<button form="attackBoardForm">Attack w Form</button>'
+					+'<button onclick="sendMove(); ">Attack w JS</button>';
 }
 
 function placeShipsTestFuntion(){
@@ -25,4 +25,28 @@ function placeShipsTestFuntion(){
 
 function saveAndQuitTestFunction(){
 	window.alert("Not implemented");
+}
+
+function removeBoxesTestFunction(){
+
+	checkedBoxes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "13", "14", "15", "16", "17", "18", "19"]
+	
+	var tabledata = document.getElementById("shipBoardForm").getElementsByTagName("td");
+	console.log(tabledata);
+	//var input = document.getElementById("shipBoardForm").getElementsByTagName("input");
+	
+	for(i=0; i<tabledata.length; i++){
+		
+		console.log(tabledata[i]);
+		var value = tabledata[i].getAttribute("id");
+		console.log(value);
+		if(checkedBoxes.includes(value)){
+			tabledata[i].setAttribute("class", "bg-warning");
+			
+		}
+	}
+	
+	var fieldset = document.getElementById("shipBoardForm").getElementsByTagName("fieldset");
+	fieldset[0].setAttribute("disabled", "");
+	
 }

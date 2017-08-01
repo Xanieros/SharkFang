@@ -1,6 +1,21 @@
 xSize = 0;
 ySize = 0;
 
+/*var xhttp = new XMLHttpRequest();
+var url='servletName?ships='+checkedBoxes;		  
+xhttp.onreadystatechange = function()
+{
+  console.log(xhttp.readyState+" "+xhttp.status);
+  if(xhttp.readyState == 4 && xhttp.status == 200)
+	{
+		console.log("Did something");
+	}
+	
+};
+
+xhttp.open('GET', url, true);
+xhttp.send();*/
+
 function testFunction(){
 	window.alert("test called");
 };
@@ -189,7 +204,7 @@ function placeShips(){
 		  if(xhttp.readyState == 4 && xhttp.status == 200)
 			{
 				console.log("Sent Ships");
-				//Rewrite Ship Board
+				//Colorize Ship Board and Disable Checkboxes
 				removeBoxes(checkedBoxes);
 				
 				//Activate top radio buttons			
@@ -197,7 +212,7 @@ function placeShips(){
 				fieldset[0].removeAttribute("disabled");
 				
 				//Reveal Save and Quit				
-				document.getElementById("buttonArea").innerHTML = '<button onclick="makeMove(); ">Attack</button>'
+				document.getElementById("buttonArea").innerHTML = '<button onclick="sendMove(); ">Attack</button>'
 					+'<button onclick="SaveGame">Save &amp; Quit</button>';
 			}
 			
@@ -212,12 +227,9 @@ function placeShips(){
 }
 
 function removeBoxes(checkedBoxes){
-	//For Testing
-	//checkedBoxes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "13", "14", "15", "16", "17", "18", "19"]
 	
 	var tabledata = document.getElementById("shipBoardForm").getElementsByTagName("td");
 	console.log(tabledata);
-	//var input = document.getElementById("shipBoardForm").getElementsByTagName("input");
 	
 	for(i=0; i<tabledata.length; i++){
 		
@@ -267,7 +279,54 @@ function removeBoxes(checkedBoxes){
 console.log(playerBoard);
 }
 */
-function makeMove(){
+function sendMove(){
+
+	var checkedCell = $('input[name=cell]:checked').val();
+
+	if(checkedCell === undefined){
+		window.alert("Please make a move!")
+	}
 	
+	else{
+		
+		console.log(checkedCell);
+		
+		var xhttp = new XMLHttpRequest();
+		var url='servletName?move='+checkedCell;//TODO Change Servlet Name 
+		xhttp.onreadystatechange = function()
+		{
+		  console.log(xhttp.readyState+" "+xhttp.status);
+		  if(xhttp.readyState == 4 && xhttp.status == 200)
+			{
+				console.log("sent Move");				
+			}
+			
+		};
+
+		xhttp.open('GET', url, false);//Don't do a
+		xhttp.send();
+		receiveMove();
+	}
+}
+
+function receiveMove(){
 	
+	var xhttp = new XMLHttpRequest();
+	var url='servletName?ships='+checkedBoxes;		  
+	xhttp.onreadystatechange = function()
+	{
+	  console.log(xhttp.readyState+" "+xhttp.status);
+	  if(xhttp.readyState == 4 && xhttp.status == 200)
+		{
+		  	var data = xhttp.responseText;
+			var opponentMove = JSON.parse(data);
+			console.log("Received move: "+opponentMove);
+			//Update value on shipBoard
+			
+		}
+		
+	};
+
+	xhttp.open('GET', url, true);
+	xhttp.send();
 }
