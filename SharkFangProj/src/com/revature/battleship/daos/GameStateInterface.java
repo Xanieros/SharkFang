@@ -12,4 +12,6 @@ public interface GameStateInterface {
 	public GameState loadGame(int gid);
 	
 	public Record endGame(int gid, int winner);
+	
+	void deleteGameState(int gameStateID);
 }
