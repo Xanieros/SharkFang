@@ -48,8 +48,8 @@ public class LoginServlet extends HttpServlet {
 		Player currentPlayer = service.login(usernameEntered, passwordEntered);
 		
 		String nextPage = "/html/login.html";
-		int currID = currentPlayer.getUid();
-		if (currID > 0)
+		
+		if (currentPlayer != null)
 		{
 			session.setAttribute("uid", currentPlayer.getUid());
 			session.setAttribute("username", currentPlayer.getUname());

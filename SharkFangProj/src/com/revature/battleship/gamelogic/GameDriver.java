@@ -71,8 +71,6 @@ public class GameDriver {
 			int randomDirection = (int) (Math.random() * 4); // Up:0 Right:1 Down:2 Left:3
 			boolean placedOnBoard = false;
 
-			System.out.println("Random Index:" + randomIndex + " randomDirection: " + randomDirection);
-
 			boolean shipFits = shipFitsAtLocation(randomIndex, randomDirection, boardShips.get(i));
 				
 			if (shipFits)
@@ -139,7 +137,6 @@ public class GameDriver {
 		for (int i = 1; i < shipSize; i++)
 		{
 			currentLocation = location + (directionParity * incrementer * (shipSize - i));
-			System.out.println("Checking: " + currentLocation + "with size: " + shipSize);
 			if (computerBoard.charAt(currentLocation) == '3')
 			{
 				return false;
@@ -191,12 +188,10 @@ public class GameDriver {
 		// change this to a string builder 
 		StringBuilder currentBoardSB = new StringBuilder(computerBoard);
 		currentBoardSB.setCharAt(location, GameDriver.SHIP);
-		System.out.println("Placing " + location);
 		for(int i = 1; i < shipSize; i++)
 		{
 			currentLocation = location + (directionParity * incrementer * (shipSize - i));
 			currentBoardSB.setCharAt(currentLocation, GameDriver.SHIP);
-			System.out.println("Placing " + currentLocation);
 		}
 		
 		currentGameState.setPlayerTwoBoard(currentBoardSB.toString());
