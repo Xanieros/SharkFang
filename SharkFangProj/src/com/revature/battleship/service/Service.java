@@ -12,4 +12,5 @@ public interface Service {
 	Player login(String usernameEntered, String passwordEntered);
 	int initializeGame(int xSize, int ySize, int userPlayerID, int enemyPlayerID);
 	void placeShipsOntoBoard(String[] shipLocations);
+	void saveGame();
 }

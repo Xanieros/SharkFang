@@ -61,4 +61,9 @@ public class ServiceImpl implements Service {
 		// saves the current game state
 		myGameDriver.saveGame();
 	}
+
+	@Override
+	public void saveGame() {
+		myGameDriver.saveGame();
+	}
 }
