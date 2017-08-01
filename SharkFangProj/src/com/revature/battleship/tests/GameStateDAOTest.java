@@ -1,6 +1,6 @@
 package com.revature.battleship.tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class GameStateDAOTest {
 		testGameState = null;
 		System.gc();
 	}
-
+	
 	@Test
 	public void testLoadGame() {
 		GameState actualGameState = testGameStateDAO.loadGame(testGameID);
@@ -53,9 +53,11 @@ public class GameStateDAOTest {
 		int actualGameID = actualGameState.getGameStateId();
 		assertEquals(testGameID, actualGameID);
 		
+		int expectedPlayerOneID = 1001;
 		int actualPlayerOneID = actualGameState.getPlayerOneId();
 		assertEquals(expectedp1ID, actualPlayerOneID);
 		
+		int expectedPlayerTwoID = 1002;
 		int actualPlayerTwoID = actualGameState.getPlayerTwoId();
 		assertEquals(expectedp2ID, actualPlayerTwoID);
 		
@@ -68,13 +70,20 @@ public class GameStateDAOTest {
 		int actualBoardLength = actualGameState.getBoardLength();
 		assertEquals(expectedRowLength, actualBoardLength);
 		
-		/*int expectedActive = 0;
-		int actualActive = actualGameState.get*/
+		int expectedActive = 0;
+		int actualActive = actualGameState.getActive();
+		assertEquals(expectedActive, actualActive);
 		
-		// need to test Active and timestamp, add to pojo
+		// need to test timestamp
 	}
 	
 	@Test
+	public void testStartGame()
+	{
+		assertTrue(1<myGameStateDAO.startGame(1002, 1003, "testString", "testString", 10));
+  }
+
+  @Test
 	public void testSaveGame()
 	{
 		String expectedNewP1Board = "1111122222" +
@@ -114,6 +123,6 @@ public class GameStateDAOTest {
 	@Test
 	public void testEndGame()
 	{
-		
+		assertEquals(1001, (myGameStateDAO.endGame(1, 1)).getUid());
 	}
 }

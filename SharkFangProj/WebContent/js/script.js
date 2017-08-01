@@ -195,7 +195,7 @@ function placeShips(){
 	
 	else{
 		var xhttp = new XMLHttpRequest();
-		var url='servletName?ships='+checkedBoxes;		  
+		var url='InitializeShips?ships='+checkedBoxes;		  
 		xhttp.onreadystatechange = function()
 		{
 		  //document.getElementById("test").innerHTML = xhttp.readyState+" "+xhttp.status;
