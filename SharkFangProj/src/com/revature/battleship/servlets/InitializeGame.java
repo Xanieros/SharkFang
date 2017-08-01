@@ -30,7 +30,7 @@ public class InitializeGame extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Service service = new ServiceImpl();
+		Service service = ServiceImpl.getService();
 		
 		int xSize = Integer.parseInt(request.getParameter("xSize"));
 		int ySize = Integer.parseInt(request.getParameter("ySize"));
@@ -40,7 +40,6 @@ public class InitializeGame extends HttpServlet {
 		int gameID = service.initializeGame(xSize, ySize, userPlayerID, enemyPlayerID);
 		
 		session.setAttribute("currGameIDInPlay", gameID);
-		System.out.println("Got here: "  + gameID);
 	}
 
 	/**
