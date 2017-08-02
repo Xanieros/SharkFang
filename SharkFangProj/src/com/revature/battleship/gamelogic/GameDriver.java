@@ -225,4 +225,26 @@ public class GameDriver {
 		
 		return resultOfAttack;
 	}
+	
+	public int enemyAttack()
+	{
+		ArrayList<Integer> possibleAttacks = new ArrayList<Integer>();
+		
+		String playerOneBoardString = currentGameState.getPlayerOneBoard();
+		
+		StringBuilder playerOneBoardSB = new StringBuilder(playerOneBoardString);
+		for (int i = 0; i < playerOneBoardSB.length(); i++)
+		{
+			char tempChar = playerOneBoardSB.charAt(i);
+			if (tempChar == '0' || tempChar == '3') // either ship or water/empty
+			{
+				possibleAttacks.add(i);
+			}
+		}
+		
+		int enemyTargetIndex = (int) (Math.random() * possibleAttacks.size());
+		
+		// might have to pass back a 2-d array or object of index, hit/miss to the front end
+		return possibleAttacks.get(enemyTargetIndex);
+	}
 }

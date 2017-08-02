@@ -29,10 +29,9 @@
     <servlet-class>com.revature.battleship.servlets.SaveGame</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>playerAttack</servlet-name>
-  	<servlet-class>com.revature.battleship.servlets.PlayerAttackServlet</servlet-class>
+    <servlet-name>playerAttack</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.PlayerAttackServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>login</servlet-name>
     <url-pattern>/html/loginUser</url-pattern>
@@ -58,7 +57,7 @@
     <url-pattern>/html/SaveGame</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>playerAttack</servlet-name>
-  	<url-pattern>/html/PlayerAttack</url-pattern>
+    <servlet-name>playerAttack</servlet-name>
+    <url-pattern>/html/PlayerAttack</url-pattern>
   </servlet-mapping>
 </web-app>
