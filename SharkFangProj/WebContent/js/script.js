@@ -372,9 +372,9 @@ function updateProfile()
 	var xhttp = new XMLHttpRequest();
 
 	var txt = '';
-	txt = $('#email').attr('value') + ":";
-	txt += $('#fname').attr('value') + ":";
-	txt += $('#lname').attr('value');
+	txt = $('#email').prop('value') + ":";
+	txt += $('#fname').prop('value') + ":";
+	txt += $('#lname').prop('value');
 	console.log(txt);
 	var url='UpdatePlayerInfo?values=' + txt;
 	//make call to server asynchronously
