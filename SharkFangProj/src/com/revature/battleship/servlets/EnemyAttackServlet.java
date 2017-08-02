@@ -1,6 +1,7 @@
 package com.revature.battleship.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
 
@@ -39,7 +41,17 @@ public class EnemyAttackServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Service service = ServiceImpl.getService();
 		
-		service.enemyAttack();
+		int enemyAttackResult = service.enemyAttack();
+		
+		Gson gson = new Gson();
+		String resultJson = gson.toJson(enemyAttackResult);
+		//logger.debug("The JSON result is: "+enemyAttackResult);
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		out.write(resultJson);
 	}
 
 }

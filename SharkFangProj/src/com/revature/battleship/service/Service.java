@@ -15,4 +15,5 @@ public interface Service {
 	void saveGame();
 	int playerAttack(int target);
 	int enemyAttack();
+	Player updatePlayer(Player player);
 }
