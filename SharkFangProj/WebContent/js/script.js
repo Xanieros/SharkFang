@@ -142,9 +142,11 @@ function populateMyProfileModal(){
 
 				document.getElementById("myProfileModalTitle").innerHTML = userData.uname;
 	            
-				txt+="<tr><td>Email</td><td>" + userData.email +"</td></tr>";
-				txt+="<tr><td>First Name</td><td>" + userData.fname +"</td></tr>";
-				txt+="<tr><td>Last Name</td><td>" + userData.lname +"</td></tr>";
+				txt+="<tr><td>Email</td><td><input type='email' id='email' value='" + userData.email +"'></td></tr>";
+				txt+="<tr><td>First Name</td><td><input type='text' id='fname' value='" + userData.fname +"'></td></tr>";
+				txt+="<tr><td>Last Name</td><td><input type='text' id='lname' value='" + userData.lname +"'></td></tr>";
+				txt+="<tr><td>New Password</td><td><input type='password' id='pword' value='" + userData.lname +"'></td></tr>";
+				txt+="<tr><td>Confirm Password</td><td><input type='password' id='pwordconfirmed' value='" + userData.lname +"'></td></tr>";
 	            
 				document.getElementById("myProfileTable").innerHTML = txt;
 				
@@ -181,7 +183,7 @@ function loadNewGame(){
 		//make call to server asynchronously
 		xhttp.open('POST','initialize',true);
 		xhttp.send();
-}
+};
 
 function placeShips(){
 	
@@ -232,7 +234,7 @@ function placeShips(){
 
 	console.log(checkedBoxes);
 	
-}
+};
 
 function saveAndQuit(){
 
@@ -273,7 +275,7 @@ function removeBoxes(checkedBoxes){
 	var fieldset = document.getElementById("shipBoardForm").getElementsByTagName("fieldset");
 	fieldset[0].setAttribute("disabled", "");
 	
-}
+};
 
 //Function Delegated to Middle Tier
 /*function saveAndQuit(){
@@ -340,7 +342,7 @@ function sendMove(){
 		xhttp.send();
 		//receiveMove();
 	}
-}
+};
 
 function receiveMove(){
 	
@@ -362,4 +364,22 @@ function receiveMove(){
 
 	xhttp.open('GET', url, true);
 	xhttp.send();
-}
+};
+
+function updateProfile()
+{
+	console.log("updateProfile() Called");
+	var xhttp = new XMLHttpRequest();
+
+	var txt = '';
+	txt = $('#email').attr('value') + ":";
+	txt += $('#fname').attr('value') + ":";
+	txt += $('#lname').attr('value');
+	console.log(txt);
+	var url='UpdatePlayerInfo?values=' + txt;
+	//make call to server asynchronously
+	xhttp.open('GET', url,true);
+	xhttp.send();
+
+
+};
