@@ -1,12 +1,15 @@
 package com.revature.battleship.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.revature.battleship.service.Service;
@@ -18,6 +21,8 @@ import com.revature.battleship.service.ServiceImpl;
 @WebServlet("/BoardInteractionServlet")
 public class PlayerAttackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	static Logger logger = Logger.getLogger(PlayerAttackServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,10 +40,26 @@ public class PlayerAttackServlet extends HttpServlet {
 		
 		// get the number
 		int target = Integer.parseInt(request.getParameter("move"));
+		logger.debug("Player targeted: "+target);
 				
 		int resultOfAttack = service.playerAttack(target);
+		logger.debug("The result is: "+resultOfAttack);
 		
-		response.getWriter().write(resultOfAttack);
+		Gson gson = new Gson();
+		String resultJson = gson.toJson(resultOfAttack);
+		logger.debug("The JSON result is: "+resultJson);
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		out.write(resultJson);
+
+
+		
+		//response.getWriter().write(resultOfAttack);
+		
+		
 	}
 
 	/**
