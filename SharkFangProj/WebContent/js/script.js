@@ -1,5 +1,5 @@
-xSize = 0;
-ySize = 0;
+xSize = 10;
+ySize = 10;
 
 /*var xhttp = new XMLHttpRequest();
 var url='servletName?ships='+checkedBoxes;		  
