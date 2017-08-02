@@ -63,7 +63,7 @@ function generatePlayerBoards(){
 			//Append buttons
 			for(j=0; j<xSize; j++){
 				rows+='<td class="bg-info">';
-				rows+='<input type="radio" name="cell" value="'+counter+'"></td>';
+				rows+='<label><input type="radio" name="cell" value="'+counter+'"></td></label>';
 			    	counter++;
 			    }
 			rows+='</tr>';
@@ -80,9 +80,17 @@ function generatePlayerBoards(){
 		    rows+='<tr><td><label>'+(i+1)+'</label></td>';
 		    	//Append checkboxes
 		        for(j=0; j<xSize; j++){
+		        	
+		        	//rows+='<div class="checkbox"><label>';
 		        	rows+='<td class="bg-info" id="'+ counter +'">';
-		        	rows+='<input type="checkbox" name="ship" value="'+counter+'"></td>';
+		        	rows+='<label><input type="checkbox" name="ship" value="'+counter+'"></td></label>';
 		        	counter++;
+		        	
+		        	
+		            /*<label>
+		              <input type="checkbox"> Check me out
+		            </label>
+		          </div>*/
 		        }
 		    rows+='</tr>';
 		  }
