@@ -113,5 +113,25 @@ public class PlayerDAO implements PlayerInterface{
 		
 		return output;
 	}
+	@Override
+	public String getPassword(int pid) {
+		String password = null;
+		try {
+			String sqlCommand = "call GET_PASSWORD(?,?)";
+			CallableStatement getPasswordCallableStmt = conn.prepareCall(sqlCommand);
+			getPasswordCallableStmt.setInt(1, pid);
+			getPasswordCallableStmt.registerOutParameter(2, OracleTypes.VARCHAR);
+			
+			getPasswordCallableStmt.executeQuery();
+			LOGGER.debug("Getting password");
+			password = getPasswordCallableStmt.getString(2);
+			
+		} catch (SQLException sqlE)
+		{
+			sqlE.printStackTrace();
+			LOGGER.fatal("SQLException in getPassword(" + pid + ")");
+		}
+		return password;
+	}
 	
 }

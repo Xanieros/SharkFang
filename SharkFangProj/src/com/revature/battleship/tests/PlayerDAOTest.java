@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.revature.battleship.daos.PlayerDAO;
+import com.rsa.cryptoj.c.ex;
 
 public class PlayerDAOTest {
 	PlayerDAO pDAO;
@@ -17,6 +18,8 @@ public class PlayerDAOTest {
 
 	@After
 	public void tearDown() throws Exception {
+		pDAO = null;
+		System.gc();
 	}
 
 	@Test
@@ -32,6 +35,17 @@ public class PlayerDAOTest {
 	@Test
 	public void testGetUsername() {
 		assertEquals("Xanieros", PlayerDAO.getUsername(1001));
+	}
+	
+	@Test
+	public void testGetPassword()
+	{
+		String expectedPassword = "test";
+		String actualPassword = pDAO.getPassword(1004);
+		assertEquals(expectedPassword, actualPassword);
+		
+		actualPassword = pDAO.getPassword(-1);
+		assertNull(actualPassword);
 	}
 
 }

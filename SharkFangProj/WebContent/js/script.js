@@ -363,3 +363,28 @@ function receiveMove(){
 	xhttp.open('GET', url, true);
 	xhttp.send();
 }
+
+function rotate() {
+	if (document.getElementById("ship2").classList.contains('rotate90')) /* already rotated */
+	{
+		document.getElementById("ship2").classList.remove('rotate90');
+	}
+	else /* it is not rotated */
+	{
+		document.getElementById("ship2").classList.add('rotate90');
+	}
+};
+
+function allowDrop(ev) {
+    ev.preventDefault();
+};
+
+function drag(ev) {
+    ev.dataTransfer.setData("image", "piece1");
+};
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("image");
+    ev.target.appendChild(document.getElementById(data));
+};
