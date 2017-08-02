@@ -196,4 +196,33 @@ public class GameDriver {
 		
 		currentGameState.setPlayerTwoBoard(currentBoardSB.toString());
 	}
+	
+	public int playerAttack(int target)
+	{
+		String playerTwoBoardString = currentGameState.getPlayerTwoBoard();
+		StringBuilder playerTwoBoardSB = new StringBuilder(playerTwoBoardString);
+		
+		int resultOfAttack;
+		char newChar;
+		
+		switch (playerTwoBoardSB.charAt(target)) {
+		case GameDriver.SHIP: // hit a ship
+		case GameDriver.HIT:
+			resultOfAttack = 1;
+			newChar = GameDriver.HIT;
+			break;
+		case GameDriver.EMPTY: // water spot
+		case GameDriver.MISS:
+		default: // unknown input
+			resultOfAttack = 2;
+			newChar = GameDriver.MISS;
+			break;
+		}
+		
+		playerTwoBoardSB.setCharAt(target, newChar);
+		
+		currentGameState.setPlayerTwoBoard(playerTwoBoardSB.toString());
+		
+		return resultOfAttack;
+	}
 }
