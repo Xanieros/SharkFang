@@ -90,4 +90,9 @@ public class ServiceImpl implements Service {
 		);
 		return updatedPlayer;
 	}
+
+	@Override
+	public String getPassword(int uid) {
+		return myPlayerDatabase.getPassword(uid);
+	}
 }

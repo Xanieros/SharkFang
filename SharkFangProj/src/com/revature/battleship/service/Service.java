@@ -15,5 +15,6 @@ public interface Service {
 	void saveGame();
 	int playerAttack(int target);
 	int enemyAttack();
+	String getPassword(int uid);
 	Player updatePlayer(Player player);
 }

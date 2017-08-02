@@ -15,7 +15,7 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class UpdatePlayerInfoServlet
  */
-@WebServlet("/UpdatePlayerInfoServlet")
+
 public class UpdatePlayerInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,7 +30,7 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doG(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		doPost(request, response);
@@ -41,15 +41,17 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Service service = ServiceImpl.getService();
 		
-		//Retrieve the current Player data from Session
+		//Retrieve the current Player data
 		HttpSession session = request.getSession();
 		int uid 		= (Integer)session.getAttribute("uid");
 		String uname 	= (String) session.getAttribute("username");
-		//String pword  = service .getPassword(uid);
+		String pword  	= service.getPassword(uid); //This requires a DB call as we do not store pass in session
 		String email 	= (String)session.getAttribute("email");
 		String fname 	= (String)session.getAttribute("fname");
-		String lname 	= (String)session.getAttribute("lname");		
+		String lname 	= (String)session.getAttribute("lname");
+		/*Profile Picture*/
 		
 		//This represents player before updates
 		Player player = new Player(uid, uname, pword, email, fname, lname, null);
@@ -77,11 +79,10 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 			player.setEmail(emailNew);
 		}
 		
-		//Call the function
-		Service service = ServiceImpl.getService();
+		//Call the method
 		Player updatedPlayer = service.updatePlayer(player);
 		
-		//Update the session object
+		//Update the session objects
 		if(updatedPlayer != null){
 			session.setAttribute("email", updatedPlayer.getEmail());
 			session.setAttribute("fname", updatedPlayer.getFname());
@@ -90,11 +91,6 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		else{
 			System.out.println("Why you do this");
 		}
-		
-		
-		
-		//Construct Player object using new data and session data
-		//Send to method
 		
 	}
 
