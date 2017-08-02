@@ -213,7 +213,7 @@ function placeShips(){
 				
 				//Reveal Save and Quit				
 				document.getElementById("buttonArea").innerHTML = '<button onclick="sendMove(); ">Attack</button>'
-					+'<button onclick="SaveGame">Save &amp; Quit</button>';
+					+'<button onclick="saveAndQuit();">Save &amp; Quit</button>';
 			}
 			
 		};
@@ -225,6 +225,26 @@ function placeShips(){
 	console.log(checkedBoxes);
 	
 }
+
+function saveAndQuit(){
+
+	  var xhttp = new XMLHttpRequest();
+	  
+	  xhttp.onreadystatechange = function()
+		{
+			//check to see if readystate == 4 and status = 200
+			if(xhttp.readyState == 4 && xhttp.status == 200)
+				{
+					console.log("Called Save and quit");
+					document.getElementById("test").innerHTML += ("Called Save and quit");
+				}
+			
+		}
+		//make call to server asynchronously
+		xhttp.open('POST','SaveGame',true);
+		xhttp.send();
+		
+		};
 
 function removeBoxes(checkedBoxes){
 	
@@ -292,20 +312,25 @@ function sendMove(){
 		console.log(checkedCell);
 		
 		var xhttp = new XMLHttpRequest();
-		var url='servletName?move='+checkedCell;//TODO Change Servlet Name 
+		var url='PlayerAttack?move='+checkedCell;
 		xhttp.onreadystatechange = function()
 		{
 		  console.log(xhttp.readyState+" "+xhttp.status);
 		  if(xhttp.readyState == 4 && xhttp.status == 200)
 			{
-				console.log("sent Move");				
+				console.log("sent Move");
+				var data = xhttp.responseText;
+				console.log("Received move: "+data);
+				//var opponentMove = JSON.parse(data);
+				//console.log("Received move: "+opponentMove);
+				
 			}
 			
 		};
 
-		xhttp.open('GET', url, false);//Don't do a
+		xhttp.open('GET', url, false);//synchronous
 		xhttp.send();
-		receiveMove();
+		//receiveMove();
 	}
 }
 
