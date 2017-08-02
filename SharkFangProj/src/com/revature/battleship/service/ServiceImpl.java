@@ -66,4 +66,9 @@ public class ServiceImpl implements Service {
 	public void saveGame() {
 		myGameDriver.saveGame();
 	}
+
+	@Override
+	public int playerAttack(int target) {
+		return myGameDriver.playerAttack(target);
+	}
 }
