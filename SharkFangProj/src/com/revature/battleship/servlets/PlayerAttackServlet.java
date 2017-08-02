@@ -43,7 +43,7 @@ public class PlayerAttackServlet extends HttpServlet {
 		logger.debug("Player targeted: "+target);
 				
 		int resultOfAttack = service.playerAttack(target);
-		logger.debug("The result is: "+resultOfAttack);
+		logger.debug("The attack 1hit/2missed: "+resultOfAttack);
 		
 		Gson gson = new Gson();
 		String resultJson = gson.toJson(resultOfAttack);

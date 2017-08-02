@@ -76,4 +76,18 @@ public class ServiceImpl implements Service {
 	public int enemyAttack() {
 		return myGameDriver.enemyAttack();
 	}
+
+	@Override
+	public Player updatePlayer(Player player) {
+		// TODO Auto-generated method stub
+
+		Player updatedPlayer = myPlayerDatabase.updateInfo(	
+				player.getUid(), 
+				player.getPword(), 
+				player.getFname(), 
+				player.getLname(), 
+				player.getProfPic()
+		);
+		return updatedPlayer;
+	}
 }
