@@ -118,6 +118,22 @@
   </div>
 </div>
   
+  <img id="ship2" src="ship2.png" draggable="true" ondblclick="rotate();" ondragstart="drag(event)" style="width: 100px; height:50px;"></img>
+	<div id="wholeShip">
+		<div id="piece1" class="ship piece1"  draggable="true"></div>
+		<div id="piece2" class="ship piece2"></div>
+	</div>
+	<table border='1'>
+		<tr>
+			<td style="width: 50px; height:50px;" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+			<td style="width: 50px; height:50px;" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+		</tr>
+		<tr>
+			<td style="width: 50px; height:50px;" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+			<td style="width: 50px; height:50px;" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+		</tr>
+	</table>
+  
 <!-- <video playsinline autoplay muted loop poster="../image/sea-water-hd-1.jpg" id="bgvid">
     <source src="../resources/video/Running_Stream_Of_Water.webm" type="video/webm">
 </video> -->
