@@ -38,27 +38,29 @@ public class PlayerAttackServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Service service = ServiceImpl.getService();
 		
-		// get the number
+		//Retrieve the number of the cell the player targeted
 		int target = Integer.parseInt(request.getParameter("move"));
 		logger.debug("Player targeted: "+target);
 				
+		//Determine the result of the attack
 		int resultOfAttack = service.playerAttack(target);
 		logger.debug("The attack 1hit/2missed: "+resultOfAttack);
 		
+		//Store last player move in session
+		request.getSession().setAttribute("lastPlayerMove", target);
+		request.getSession().setAttribute("lastPlayerResult", resultOfAttack);
+		//Array to send in JSON if needed
+		int lastPlayerMove [] = {target, resultOfAttack}; //TODO Determine if this is needed
+		
 		Gson gson = new Gson();
 		String resultJson = gson.toJson(resultOfAttack);
-		logger.debug("The JSON result is: "+resultJson);
+		logger.debug("The JSON resultOfAttack is: "+resultJson);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		PrintWriter out = response.getWriter();
-		out.write(resultJson);
-
-
-		
-		//response.getWriter().write(resultOfAttack);
-		
+		out.write(resultJson);		
 		
 	}
 
