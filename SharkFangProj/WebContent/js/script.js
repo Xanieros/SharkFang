@@ -145,8 +145,8 @@ function populateMyProfileModal(){
 				txt+="<tr><td>Email</td><td><input type='email' id='email' value='" + userData.email +"'></td></tr>";
 				txt+="<tr><td>First Name</td><td><input type='text' id='fname' value='" + userData.fname +"'></td></tr>";
 				txt+="<tr><td>Last Name</td><td><input type='text' id='lname' value='" + userData.lname +"'></td></tr>";
-				txt+="<tr><td>New Password</td><td><input type='password' id='pword' value='" + userData.lname +"'></td></tr>";
-				txt+="<tr><td>Confirm Password</td><td><input type='password' id='pwordconfirmed' value='" + userData.lname +"'></td></tr>";
+				txt+="<tr><td>New Password</td><td><input type='password' id='pword'></td></tr>";
+				txt+="<tr><td>Confirm Password</td><td><input type='password' id='pwordconfirmed'></td></tr>";
 	            
 				document.getElementById("myProfileTable").innerHTML = txt;
 				
@@ -330,7 +330,18 @@ function sendMove(){
 			{
 				console.log("sent Move");
 				var data = xhttp.responseText;
-				console.log("Received move: "+data);
+				console.log("Received hit/miss: " + data);
+				if(data == 1)
+					{
+					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
+					$('input[name=cell]:checked').parent().parent().addClass("hit");
+					
+					}
+				else
+					{
+					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
+					$('input[name=cell]:checked').parent().parent().addClass("miss");
+					}
 				//var opponentMove = JSON.parse(data);
 				//console.log("Received move: "+opponentMove);
 				
@@ -368,20 +379,24 @@ function receiveMove(){
 
 function updateProfile()
 {
+	
 	console.log("updateProfile() Called");
+	if(validate()){
 	var xhttp = new XMLHttpRequest();
 
 	var txt = '';
 	txt = $('#email').prop('value') + ":";
 	txt += $('#fname').prop('value') + ":";
-	txt += $('#lname').prop('value');
+	txt += $('#lname').prop('value') + ":";
+	txt += $('#pword').prop('value');
+	
 	console.log(txt);
 	var url='UpdatePlayerInfo?values=' + txt;
 	//make call to server asynchronously
 	xhttp.open('GET', url,true);
 	xhttp.send();
 
-
+	}
 };
 function rotate() {
 	if (document.getElementById("ship2").classList.contains('rotate90')) /* already rotated */
@@ -406,4 +421,14 @@ function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("image");
     ev.target.appendChild(document.getElementById(data));
+};
+
+function validate() {
+    var password = document.getElementById("pword").value;
+    var confirmPassword = document.getElementById("pwordconfirmed").value;
+    if (password != confirmPassword) {
+        alert("Passwords do not match.");
+        return false;
+    }
+    return true;
 };
