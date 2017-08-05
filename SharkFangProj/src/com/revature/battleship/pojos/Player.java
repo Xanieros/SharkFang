@@ -69,4 +69,12 @@ public class Player
 	public void setProfPic(String profPic) {
 		this.profPic = profPic;
 	}
+
+	@Override
+	public String toString() {
+		return "Player [uid=" + uid + ", uname=" + uname + ", pword=" + pword + ", email=" + email + ", fname=" + fname
+				+ ", lname=" + lname + ", profPic=" + profPic + "]";
+	}
+	
+	
 }

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.revature.battleship.pojos.Player;
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
@@ -18,6 +20,8 @@ import com.revature.battleship.service.ServiceImpl;
 
 public class UpdatePlayerInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Logger logger = Logger.getLogger(UpdatePlayerInfoServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -55,12 +59,14 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		
 		//This represents player before updates
 		Player player = new Player(uid, uname, pword, email, fname, lname, null);
+		logger.debug("Player Info before: "+player);		
 		
 		//Retrieve the new Player Data from frontend
 		String fnameNew = request.getParameter("fname");
 		String lnameNew = request.getParameter("lname");
 		String emailNew = request.getParameter("email");
 		String pwordNew = request.getParameter("pword");
+		logger.debug(fnameNew+lnameNew+emailNew+pwordNew);
 		
 		//These will change the player to reflect updated value
 		if(pwordNew != null){
@@ -78,6 +84,7 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		if(emailNew != null){
 			player.setEmail(emailNew);
 		}
+		logger.debug("Player Info after: "+player);
 		
 		//Call the method
 		Player updatedPlayer = service.updatePlayer(player);

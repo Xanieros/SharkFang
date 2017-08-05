@@ -8,11 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 /**
  * Servlet implementation class LogoutServlet
  */
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Logger logger = Logger.getLogger(LogoutServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,6 +39,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
+		logger.debug("Ending session. THIS SHOULD BE INVALID: "+session.toString());
 		
 		request.getRequestDispatcher("/html/login.html").forward(request, response);
 	}

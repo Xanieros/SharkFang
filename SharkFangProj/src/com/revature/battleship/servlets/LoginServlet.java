@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.revature.battleship.pojos.Player;
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
@@ -17,6 +19,8 @@ import com.revature.battleship.service.ServiceImpl;
  */
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Logger logger = Logger.getLogger(LoginServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -46,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 		
 		Service service = ServiceImpl.getService();
 		Player currentPlayer = service.login(usernameEntered, passwordEntered);
+		logger.debug("The current player is: "+currentPlayer);
 		
 		String nextPage = "/html/login.html";
 		
