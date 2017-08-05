@@ -73,7 +73,7 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public int enemyAttack() {
+	public int[] enemyAttack() {
 		return myGameDriver.enemyAttack();
 	}
 
