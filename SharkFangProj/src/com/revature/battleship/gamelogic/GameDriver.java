@@ -202,6 +202,7 @@ public class GameDriver {
 		String playerTwoBoardString = currentGameState.getPlayerTwoBoard();
 		StringBuilder playerTwoBoardSB = new StringBuilder(playerTwoBoardString);
 		
+		//TODO Use getResultOfAttack method
 		int resultOfAttack;
 		char newChar;
 		
@@ -226,7 +227,7 @@ public class GameDriver {
 		return resultOfAttack;
 	}
 	
-	public int enemyAttack()
+	public int[] enemyAttack()
 	{
 		ArrayList<Integer> possibleAttacks = new ArrayList<Integer>();
 		
@@ -242,9 +243,36 @@ public class GameDriver {
 			}
 		}
 		
-		int enemyTargetIndex = (int) (Math.random() * possibleAttacks.size());
+		int enemyTargetIndex = (int) (Math.random() * possibleAttacks.size());		
 		
-		// might have to pass back a 2-d array or object of index, hit/miss to the front end
-		return possibleAttacks.get(enemyTargetIndex);
+		int target = possibleAttacks.get(enemyTargetIndex); //Get cell targeted
+		int resultOfAttack = getResultOfAttack(playerOneBoardSB, target); //Determine 1HIT or 2MISS
+		currentGameState.setPlayerOneBoard(playerOneBoardSB.toString()); //Updates P1 board with result of previous method
+		
+		return new int[]{target, resultOfAttack};
+	}
+	
+	private int getResultOfAttack(StringBuilder boardSB, int target){
+		int resultOfAttack;
+		char newChar;
+		
+		switch (boardSB.charAt(target)) {
+		case GameDriver.SHIP: // hit a ship
+		case GameDriver.HIT:
+			resultOfAttack = 1;
+			newChar = GameDriver.HIT;
+			break;
+		case GameDriver.EMPTY: // water spot
+		case GameDriver.MISS:
+		default: // unknown input
+			resultOfAttack = 2;
+			newChar = GameDriver.MISS;
+			break;
+		}
+		
+		boardSB.setCharAt(target, newChar);
+		
+		return resultOfAttack;
+		
 	}
 }

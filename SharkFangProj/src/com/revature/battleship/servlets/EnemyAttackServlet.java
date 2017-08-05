@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
@@ -19,6 +21,8 @@ import com.revature.battleship.service.ServiceImpl;
 @WebServlet("/EnemyAttackServlet")
 public class EnemyAttackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Logger logger = Logger.getLogger(EnemyAttackServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -41,11 +45,11 @@ public class EnemyAttackServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Service service = ServiceImpl.getService();
 		
-		int enemyAttackResult = service.enemyAttack();
+		int[] enemyTarget = service.enemyAttack(); //
 		
 		Gson gson = new Gson();
-		String resultJson = gson.toJson(enemyAttackResult);
-		//logger.debug("The JSON result is: "+enemyAttackResult);
+		String resultJson = gson.toJson(enemyTarget);
+		logger.debug("The JSON target is: "+enemyTarget);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
