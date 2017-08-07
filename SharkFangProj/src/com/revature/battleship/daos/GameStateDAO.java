@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.revature.battleship.pojos.*;
 
-import oracle.jdbc.internal.OracleTypes;
+import oracle.jdbc.OracleTypes;
 
 public class GameStateDAO implements GameStateInterface {
 	private static final Logger LOGGER = LogManager.getLogger(GameStateDAO.class);
