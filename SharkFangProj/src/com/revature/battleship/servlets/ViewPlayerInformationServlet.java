@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.revature.battleship.pojos.Player;
 
@@ -17,6 +19,7 @@ import com.revature.battleship.pojos.Player;
  */
 public class ViewPlayerInformationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger = Logger.getLogger(ViewPlayerInformationServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,7 +42,7 @@ public class ViewPlayerInformationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println("Called ViewPlayerInformationServlet");
+		logger.debug("Called ViewPlayerInformationServlet");
 		
 		HttpSession session = request.getSession();
 		

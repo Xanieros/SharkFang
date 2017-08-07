@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.revature.battleship.service.ServiceImpl;
 
 /**
@@ -16,6 +18,7 @@ import com.revature.battleship.service.ServiceImpl;
 @WebServlet("/PlaceShipsOntoPlayerBoardServlet")
 public class PlaceShipsOntoPlayerBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger = Logger.getLogger(PlaceShipsOntoPlayerBoardServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,6 +38,7 @@ public class PlaceShipsOntoPlayerBoardServlet extends HttpServlet {
 		String[] shipStringArray = shipString.split(",");
 
 		service.placeShipsOntoBoard(shipStringArray);
+		logger.debug("Ships placed on board at: "+shipString); 
 	}
 
 	/**

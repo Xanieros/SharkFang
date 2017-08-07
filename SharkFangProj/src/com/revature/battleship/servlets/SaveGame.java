@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
 
@@ -17,6 +19,7 @@ import com.revature.battleship.service.ServiceImpl;
 @WebServlet("/SaveGame")
 public class SaveGame extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger = Logger.getLogger(SaveGame.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,6 +35,7 @@ public class SaveGame extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Service service = ServiceImpl.getService();
 		service.saveGame();
+		logger.debug("Game saved at: "+java.time.LocalDateTime.now());
 	}
 
 	/**
