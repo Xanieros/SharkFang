@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import com.revature.battleship.pojos.OracleConnection;
 import com.revature.battleship.pojos.Record;
 
-import oracle.jdbc.internal.OracleTypes;
+import oracle.jdbc.OracleTypes;
 
 public class RecordDAO implements RecordInterface {
 	private static final Logger LOGGER = LogManager.getLogger(GameStateDAO.class);
