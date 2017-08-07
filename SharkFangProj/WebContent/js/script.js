@@ -142,7 +142,7 @@ function populateMyProfileModal(){
 
 				document.getElementById("myProfileModalTitle").innerHTML = userData.uname;
 	            
-				txt+="<tr><td>Email</td><td><input type='email' id='email' value='" + userData.email +"'></td></tr>";
+				txt+="<tr><td>Email</td><td><input type='email' id='email' value='" + userData.email +"'disabled></td></tr>";
 				txt+="<tr><td>First Name</td><td><input type='text' id='fname' value='" + userData.fname +"'></td></tr>";
 				txt+="<tr><td>Last Name</td><td><input type='text' id='lname' value='" + userData.lname +"'></td></tr>";
 				txt+="<tr><td>New Password</td><td><input type='password' id='pword'></td></tr>";
@@ -385,16 +385,16 @@ function updateProfile()
 	var xhttp = new XMLHttpRequest();
 
 	var txt = '';
-	txt = $('#email').prop('value') + ":";
-	txt += $('#fname').prop('value') + ":";
-	txt += $('#lname').prop('value') + ":";
-	txt += $('#pword').prop('value');
-	
+	txt = "fname=" + $('#fname').prop('value') + "&";
+	txt += "lname=" + $('#lname').prop('value') + "&";
+	txt += "pword=" + $('#pword').prop('value');
 	console.log(txt);
-	var url='UpdatePlayerInfo?values=' + txt;
+
 	//make call to server asynchronously
-	xhttp.open('GET', url,true);
-	xhttp.send();
+	xhttp.open('POST', 'UpdatePlayerInfo', true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send(txt);
+				
 
 	}
 };
