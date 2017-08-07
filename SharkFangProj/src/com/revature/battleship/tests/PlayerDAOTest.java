@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.revature.battleship.daos.PlayerDAO;
-import com.rsa.cryptoj.c.ex;
 
 public class PlayerDAOTest {
 	PlayerDAO pDAO;
