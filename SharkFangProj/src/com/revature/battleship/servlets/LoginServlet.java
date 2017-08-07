@@ -18,8 +18,7 @@ import com.revature.battleship.service.ServiceImpl;
  * Servlet implementation class LoginServlet
  */
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	Logger logger = Logger.getLogger(LoginServlet.class);
        
     /**
