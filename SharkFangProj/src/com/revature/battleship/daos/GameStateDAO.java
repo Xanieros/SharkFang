@@ -45,7 +45,7 @@ public class GameStateDAO implements GameStateInterface {
 	public GameState loadGame(int gid) {
 		LOGGER.info("in loadGame");
 		GameState gameState = new GameState();
-
+		System.out.println("Hi Shawn");
 		try {
 			LOGGER.info("calling GET_GAME_STATE(?,?)");
 			CallableStatement cs = conn.prepareCall("call GET_GAME_STATE(?,?)");
