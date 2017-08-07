@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -20,8 +21,7 @@ import com.revature.battleship.service.ServiceImpl;
  */
 @WebServlet("/EnemyAttackServlet")
 public class EnemyAttackServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	Logger logger = Logger.getLogger(EnemyAttackServlet.class);
        
     /**
@@ -43,13 +43,23 @@ public class EnemyAttackServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		Service service = ServiceImpl.getService();
 		
-		int[] enemyTarget = service.enemyAttack(); //
+		int[] enemyTarget = service.enemyAttack();
+		session.setAttribute("lastEnemyMove", enemyTarget[0]);
+		session.setAttribute("lastEnemyResult", enemyTarget[1]);
+		
+		int numOfHits = service.countSuccessfulHits(0);
+		logger.debug("Enemy successful hits: "+numOfHits);
+		if(numOfHits == 17){
+			enemyTarget[1] = 5; //Return a value that indicates the winning move
+			session.setAttribute("currGameIDInPlay", null); //Don't want the servlet to be able to take anymore moves
+		}	
 		
 		Gson gson = new Gson();
 		String resultJson = gson.toJson(enemyTarget);
-		logger.debug("The JSON target is: "+enemyTarget);
+		logger.debug("The enemy target/result is: "+enemyTarget);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
