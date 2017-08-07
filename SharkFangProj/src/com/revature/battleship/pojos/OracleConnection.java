@@ -35,7 +35,7 @@ public class OracleConnection {
             DataSource ds = (DataSource)initContext.lookup("oracleBATTLESHIP");
             conn = ds.getConnection();*/
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            String url = "jdbc:oracle:thin:@localhost:1521:xe";
+            String url = "jdbc:oracle:thin:@battleship.cxpxhpeerkg0.us-east-1.rds.amazonaws.com:1521:xe";
             String username = "BATTLESHIP";
             String password = "P4SSW0RD";
             conn = DriverManager.getConnection(url, username, password);
