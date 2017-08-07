@@ -14,6 +14,7 @@ public interface Service {
 	void placeShipsOntoBoard(String[] shipLocations);
 	void saveGame();
 	int playerAttack(int target);
+	int countSuccessfulHits(int playerId);
 	int[] enemyAttack();
 	String getPassword(int uid);
 	Player updatePlayer(Player player);

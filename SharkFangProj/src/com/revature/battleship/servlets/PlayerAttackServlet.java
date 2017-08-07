@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -37,6 +38,7 @@ public class PlayerAttackServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Service service = ServiceImpl.getService();
+		HttpSession session = request.getSession();
 		
 		//Retrieve the number of the cell the player targeted
 		int target = Integer.parseInt(request.getParameter("move"));
@@ -47,11 +49,27 @@ public class PlayerAttackServlet extends HttpServlet {
 		logger.debug("The attack 1hit/2missed: "+resultOfAttack);
 		
 		//Store last player move in session
-		request.getSession().setAttribute("lastPlayerMove", target);
-		request.getSession().setAttribute("lastPlayerResult", resultOfAttack);
-		//Array to send in JSON if needed
-		int lastPlayerMove [] = {target, resultOfAttack}; //TODO Determine if this is needed
+		session.setAttribute("lastPlayerMove", target);
+		session.setAttribute("lastPlayerResult", resultOfAttack);
+				
+		//Increment number of hits
+		int numOfHits = (Integer)session.getAttribute("playerNumOfHits");
+		//int numOfHits = service.countSuccessfulHits((Integer)session.getAttribute("uid")); //This function should be used when loading a game & stored in session
+		if(resultOfAttack==1){
+			numOfHits++;
+			session.setAttribute("playerNumOfHits", numOfHits);
+			logger.debug("Player1 successful hits increased: "+numOfHits);
+		}
+
+		//Determine if move won
+		if(numOfHits == 17){
+			resultOfAttack = 5; //Return a value that indicates the winning move
+			//service.ENDGAME //Update the Database, & nullify GameState
+			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
+		}		
 		
+		//Send the JSON results
+		//int lastPlayerMove [] = {target, resultOfAttack}; //TODO Determine if this is needed -- It isn't
 		Gson gson = new Gson();
 		String resultJson = gson.toJson(resultOfAttack);
 		logger.debug("The JSON resultOfAttack is: "+resultJson);
