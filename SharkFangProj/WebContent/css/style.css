@@ -72,7 +72,7 @@ body,html  {
 }
 
 body {
-    background-image: url(../images/ocean.jpg);
+    background-image: url("../images/ocean.jpg");
     background-attachment: fixed;
 }
 
@@ -117,69 +117,69 @@ body {
 }
 
 .ship2 {
-	background-image:url(../images/ship2.png);
+	background-image:url("../images/ship2.png");
   background-color : transparent;
 	width: 50px;
 	height: 50px;
 }
 .ship2r {
-  background-image:url(../images/ship2r.png);
+  background-image:url("../images/ship2r.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship31 {
-  background-image:url(../images/ship31.png);
+  background-image:url("../images/ship31.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship31r {
-  background-image:url(../images/ship31r.png);
+  background-image:url("../images/ship31r.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship32 {
-  background-image:url(../images/ship32.png);
+  background-image:url("../images/ship32.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship32r {
-  background-image:url(../images/ship32r.png);
+  background-image:url("../images/ship32r.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship4 {
-  background-image:url(../images/ship4.png);
+  background-image:url("../images/ship4.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship4r {
-  background-image:url(../images/ship4r.png);
+  background-image:url("../images/ship4r.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship5 {
-  background-image:url(../images/ship5.png);
+  background-image:url("../images/ship5.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
 }
 
 .ship5r {
-  background-image:url(../images/ship5r.png);
+  background-image:url("../images/ship5r.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
