@@ -24,4 +24,6 @@ public interface Service {
 	GameState loadGame(int gid);
 	Record loadPlayerRecord(int uid);
 	ArrayList<Record> loadTopRecords(int numToShow);
+	void addWin(int uid);
+	void addLoss(int uid);
 }

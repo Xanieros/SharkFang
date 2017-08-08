@@ -64,6 +64,7 @@ public class PlayerAttackServlet extends HttpServlet {
 			resultOfAttack = 10; //Return a value that indicates the winning move
 			//service.ENDGAME //Update the Database, & nullify GameState
 			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
+			service.addWin((Integer)session.getAttribute("uid"));
 		}		
 		
 		//Send the JSON results

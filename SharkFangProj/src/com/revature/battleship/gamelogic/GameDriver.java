@@ -325,5 +325,15 @@ public class GameDriver {
 	public ArrayList<Record> loadTopRecords(int numToShow) {
 		return rDAO.getTopRank(numToShow);
 	}
+
+	public void addWin(int uid) {
+		rDAO.addWin(uid);
+		
+	}
+
+	public void addLoss(int uid) {
+		rDAO.addLoss(uid);
+		
+	}
   
 }
