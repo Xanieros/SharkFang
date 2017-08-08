@@ -6,6 +6,7 @@ package com.revature.battleship.service;
 
 import java.util.ArrayList;
 
+import com.revature.battleship.pojos.GameState;
 import com.revature.battleship.pojos.Player;
 
 public interface Service {
@@ -18,4 +19,6 @@ public interface Service {
 	int[] enemyAttack();
 	String getPassword(int uid);
 	Player updatePlayer(Player player);
+	ArrayList<GameState> loadPlayerGames(int uid, int offset);
+	GameState loadGame(int gid);
 }
