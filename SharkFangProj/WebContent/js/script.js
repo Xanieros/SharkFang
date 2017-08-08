@@ -463,10 +463,10 @@ function generateTable()
 	for (var i = 0; i < ySize; i++)
 	{
 		tableString += "<tr>";
-		tableString +='<td class="playerGridCell"><label>'+(i+1)+'</label></td>';
+		tableString +="<td class='playerGridCell'><label>"+(i+1)+"</label></td>";
 		for (var j = 0; j < xSize; j++)
 		{
-			tableString += "<td id='" + (ySize*i + j) + "' style='width: 51px; height:51px;' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+			tableString += "<td id='" + (ySize*i + j) + "'class='playerGridCell' style='width: 51px; height:51px;' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
 		}
 		tableString += "</tr>";
 	}
