@@ -64,7 +64,18 @@ td {
 .table-condensed > tfoot > tr > td {
   padding: 0px;
 }
-  
+
+body,html  {
+  height: 100%;
+  width:100%;
+  margin: 0;
+}
+
+body {
+    background-image: url(../images/ocean.jpg);
+    background-attachment: fixed;
+}
+
 /*   video#bgvid { 
     position: fixed;
     top: 50%;
@@ -82,6 +93,21 @@ td {
     background-size: cover; 
 } */
 
+.handOnHover {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.playerGridCell {
+  text-align: center;
+  color: lime;
+}
+
+.enemyGridCell {
+  text-align: center;
+  color: red;
+}
+
 .rotate90 {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
@@ -90,18 +116,111 @@ td {
     transform: rotate(90deg);
 }
 
-.ship {
-	background-image:url(../html/ship2.png);
+.ship2 {
+	background-image:url(../images/ship2.png);
+  background-color : transparent;
 	width: 50px;
 	height: 50px;
 }
+.ship2r {
+  background-image:url(../images/ship2r.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship31 {
+  background-image:url(../images/ship31.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship31r {
+  background-image:url(../images/ship31r.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship32 {
+  background-image:url(../images/ship32.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship32r {
+  background-image:url(../images/ship32r.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship4 {
+  background-image:url(../images/ship4.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship4r {
+  background-image:url(../images/ship4r.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship5 {
+  background-image:url(../images/ship5.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.ship5r {
+  background-image:url(../images/ship5r.png);
+  background-color : transparent;
+  width: 50px;
+  height: 50px;
+}
 
 .piece1 {
-	float: left;
-	background-position: 0 0;
+  background-position: 0 0;
 }
 
 .piece2 {
-	float: left;
-	background-position: -50px 0px;
+  background-position: -50px 0px;
+}
+
+.piece3 {
+  background-position: -100px 0px;
+}
+
+.piece4 {
+  background-position: -150px 0px;
+}
+
+.piece5 {
+  background-position: -200px 0px;
+}
+
+.piece1r {
+  background-position: 0 0;
+}
+
+.piece2r {
+  background-position: 0px -50px;
+}
+
+.piece3r {
+  background-position: 0px -100px;
+}
+
+.piece4r {
+  background-position: 0px -150px;
+}
+
+.piece5r {
+  background-position: 0px -200px;
 }
