@@ -2,7 +2,7 @@ package com.revature.battleship.daos;
 
 
 import java.sql.*;
-
+import java.util.ArrayList;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -45,7 +45,6 @@ public class GameStateDAO implements GameStateInterface {
 	public GameState loadGame(int gid) {
 		LOGGER.info("in loadGame");
 		GameState gameState = new GameState();
-		System.out.println("Hi Shawn");
 		try {
 			LOGGER.info("calling GET_GAME_STATE(?,?)");
 			CallableStatement cs = conn.prepareCall("call GET_GAME_STATE(?,?)");
@@ -210,6 +209,40 @@ public class GameStateDAO implements GameStateInterface {
 			LOGGER.fatal("SQL Exception in DeleteGameState(" + gameStateID + ")");
 			sqlE.printStackTrace();
 		}
+	}
+
+	@Override
+	public ArrayList<GameState> loadPlayerGames(int uid, int offset) {
+		ArrayList<GameState> gameStates = new ArrayList<GameState>();
+		LOGGER.debug("in loadPlayerGames");
+		try {
+			CallableStatement cs = conn.prepareCall("call GET_PLAYER_GAME_STATES(?,?,?)");
+			
+			cs.setInt(1, uid);
+			cs.setInt(2, offset);
+			cs.registerOutParameter(3, OracleTypes.CURSOR);
+
+			cs.executeQuery();
+			ResultSet rs = (ResultSet) cs.getObject(2);
+			if (rs.next()) {
+				GameState gameState = new GameState();
+				gameState.setBoardLength(rs.getInt("BOARD_LENGTH"));
+				gameState.setGameStateId(rs.getInt("GS_ID"));
+				gameState.setPlayerOneBoard(rs.getString("P1_BOARD"));
+				gameState.setPlayerOneId(rs.getInt("P1_ID"));
+				gameState.setPlayerTwoBoard(rs.getString("P2_BOARD"));
+				gameState.setPlayerTwoId(rs.getInt("P2_ID"));
+				gameState.setActive(rs.getInt("ACTIVE"));
+				gameState.setTimeStamp(rs.getTimestamp("SAVE_TIME"));
+				
+				gameStates.add(gameState);
+			}
+			
+		} catch (SQLException sqlE) {
+			LOGGER.fatal("SQL Exception in loadPlayerGames(" + uid + ")");
+			sqlE.printStackTrace();
+		}
+		return gameStates;
 	}
 
 }

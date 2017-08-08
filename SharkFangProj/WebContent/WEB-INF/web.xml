@@ -40,6 +40,24 @@
     <servlet-name>checkLogin</servlet-name>
     <servlet-class>com.revature.battleship.servlets.CheckAnyoneLoginServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>enemyAttack</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.EnemyAttackServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>loadGame</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.LoadGameServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>loadPlayerGames</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.LoadPlayerGamesServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>viewRecords</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.ViewRecordsServlet</servlet-class>
+  </servlet>
+  
+  
   <servlet-mapping>
     <servlet-name>login</servlet-name>
     <url-pattern>/html/loginUser</url-pattern>
@@ -75,5 +93,21 @@
   <servlet-mapping>
     <servlet-name>checkLogin</servlet-name>
     <url-pattern>/html/checkAnyoneLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>enemyAttack</servlet-name>
+    <url-pattern>/html/enemyAttack</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>loadGame</servlet-name>
+    <url-pattern>/html/loadGame</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>loadPlayerGames</servlet-name>
+    <url-pattern>/html/loadGames</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>viewRecords</servlet-name>
+    <url-pattern>/html/viewRecords</url-pattern>
   </servlet-mapping>
 </web-app>

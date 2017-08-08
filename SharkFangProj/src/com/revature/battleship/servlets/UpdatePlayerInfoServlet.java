@@ -19,8 +19,7 @@ import com.revature.battleship.service.ServiceImpl;
  */
 
 public class UpdatePlayerInfoServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	Logger logger = Logger.getLogger(UpdatePlayerInfoServlet.class);
        
     /**

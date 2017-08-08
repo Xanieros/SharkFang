@@ -17,10 +17,10 @@ public class OracleConnection {
 
 	// static connection variable for singleton design pattern
 	private static Connection conn;
-	private String url;
-	private String username;
-	private String password;
-	private String oracleClass;
+    private String url = "jdbc:oracle:thin:@battleship.cxpxhpeerkg0.us-east-1.rds.amazonaws.com:1521:xe";
+    private String username = "BATTLESHIP";
+    private String password = "P4SSW0RD";
+	private String oracleClass = "oracle.jdbc.driver.OracleDriver";
 	
 	// private constructor for singleton design pattern
 	private OracleConnection()
@@ -34,10 +34,7 @@ public class OracleConnection {
             Context initContext = new InitialContext(h);
             DataSource ds = (DataSource)initContext.lookup("oracleBATTLESHIP");
             conn = ds.getConnection();*/
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            String url = "jdbc:oracle:thin:@localhost:1521:xe";
-            String username = "BATTLESHIP";
-            String password = "P4SSW0RD";
+			Class.forName(oracleClass);
             conn = DriverManager.getConnection(url, username, password);
 			//create an instance of java.util.Properties class
 			//Properties prop = new Properties();

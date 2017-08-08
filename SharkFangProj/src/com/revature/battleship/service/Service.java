@@ -6,7 +6,9 @@ package com.revature.battleship.service;
 
 import java.util.ArrayList;
 
+import com.revature.battleship.pojos.GameState;
 import com.revature.battleship.pojos.Player;
+import com.revature.battleship.pojos.Record;
 
 public interface Service {
 	Player login(String usernameEntered, String passwordEntered);
@@ -14,8 +16,12 @@ public interface Service {
 	void placeShipsOntoBoard(String[] shipLocations);
 	void saveGame();
 	int playerAttack(int target);
-	int countSuccessfulHits(int playerId);
+	int[] countSuccessfulHits();
 	int[] enemyAttack();
 	String getPassword(int uid);
 	Player updatePlayer(Player player);
+	ArrayList<GameState> loadPlayerGames(int uid, int offset);
+	GameState loadGame(int gid);
+	Record loadPlayerRecord(int uid);
+	ArrayList<Record> loadTopRecords(int numToShow);
 }

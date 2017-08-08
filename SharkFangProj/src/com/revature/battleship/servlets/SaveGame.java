@@ -16,7 +16,6 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class SaveGame
  */
-@WebServlet("/SaveGame")
 public class SaveGame extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(SaveGame.class);

@@ -19,7 +19,6 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class EnemyAttackServlet
  */
-@WebServlet("/EnemyAttackServlet")
 public class EnemyAttackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;	
 	Logger logger = Logger.getLogger(EnemyAttackServlet.class);
@@ -50,22 +49,33 @@ public class EnemyAttackServlet extends HttpServlet {
 		session.setAttribute("lastEnemyMove", enemyTarget[0]);
 		session.setAttribute("lastEnemyResult", enemyTarget[1]);
 		
-		int numOfHits = service.countSuccessfulHits(0);
-		logger.debug("Enemy successful hits: "+numOfHits);
+		//Increment number of hits
+		int numOfHits = (Integer)session.getAttribute("enemyNumOfHits");
+		//int numOfHits = service.countSuccessfulHits((Integer)session.getAttribute("uid")); //This function should be used when loading a game & stored in session
+		if(enemyTarget[1]==1){
+			numOfHits++;
+			session.setAttribute("enemyNumOfHits", numOfHits);
+			logger.debug("Enemy successful hits increased: "+numOfHits);
+		}
+
+		//Determine if move won
 		if(numOfHits == 17){
-			enemyTarget[1] = 5; //Return a value that indicates the winning move
-			session.setAttribute("currGameIDInPlay", null); //Don't want the servlet to be able to take anymore moves
-		}	
+			enemyTarget[1] = 10; //Return a value that indicates the winning move
+			//service.ENDGAME //Update the Database, & nullify GameState
+			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
+		}		
 		
+		//Send the JSON results
+		//int lastPlayerMove [] = {target, resultOfAttack}; //TODO Determine if this is needed -- It isn't
 		Gson gson = new Gson();
 		String resultJson = gson.toJson(enemyTarget);
-		logger.debug("The enemy target/result is: "+enemyTarget);
+		logger.debug("The JSON resultOfAttack is: "+resultJson);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		PrintWriter out = response.getWriter();
-		out.write(resultJson);
+		out.write(resultJson);		
 	}
 
 }
