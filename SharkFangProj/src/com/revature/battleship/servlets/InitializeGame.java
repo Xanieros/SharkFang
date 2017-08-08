@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
 
@@ -16,6 +18,7 @@ import com.revature.battleship.service.ServiceImpl;
  */
 public class InitializeGame extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger = Logger.getLogger(InitializeGame.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,8 +41,16 @@ public class InitializeGame extends HttpServlet {
 		int enemyPlayerID = Integer.parseInt(request.getParameter("enemyID"));
 		
 		int gameID = service.initializeGame(xSize, ySize, userPlayerID, enemyPlayerID);
+		logger.debug("\nCreated a game w. these values:\n"
+				+"X: "+xSize+",\n"
+				+"Y: "+ySize+",\n"
+				+"P1: "+userPlayerID+",\n"
+				+"P2: "+enemyPlayerID);
 		
 		session.setAttribute("currGameIDInPlay", gameID);
+		session.setAttribute("playerNumOfHits", 0);
+		session.setAttribute("enemyNumOfHits", 0);
+		logger.debug("Stored currGameIDInPlay into session: "+gameID);
 	}
 
 	/**

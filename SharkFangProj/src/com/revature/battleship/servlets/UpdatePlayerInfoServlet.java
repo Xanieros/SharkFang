@@ -64,26 +64,22 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		//Retrieve the new Player Data from frontend
 		String fnameNew = request.getParameter("fname");
 		String lnameNew = request.getParameter("lname");
-		String emailNew = request.getParameter("email");
 		String pwordNew = request.getParameter("pword");
-		logger.debug(fnameNew+lnameNew+emailNew+pwordNew);
+		logger.debug(fnameNew+lnameNew+pwordNew);
 		
 		//These will change the player to reflect updated value
-		if(pwordNew != null){
+		if(pwordNew.length()>0){
 			player.setPword(pwordNew);
 		}
 
-		if(fnameNew != null){
+		if(fnameNew.length()>0){
 			player.setFname(fnameNew);
 		}
 		
-		if(lnameNew != null){
+		if(lnameNew.length()>0){
 			player.setLname(lnameNew);
 		}
 		
-		if(emailNew != null){
-			player.setEmail(emailNew);
-		}
 		logger.debug("Player Info after: "+player);
 		
 		//Call the method
@@ -91,12 +87,9 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		
 		//Update the session objects
 		if(updatedPlayer != null){
-			session.setAttribute("email", updatedPlayer.getEmail());
+			//session.setAttribute("email", updatedPlayer.getEmail());
 			session.setAttribute("fname", updatedPlayer.getFname());
 			session.setAttribute("lname", updatedPlayer.getLname());
-		}
-		else{
-			System.out.println("Why you do this");
 		}
 		
 	}

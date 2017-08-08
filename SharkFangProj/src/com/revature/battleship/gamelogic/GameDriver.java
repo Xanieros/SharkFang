@@ -275,4 +275,27 @@ public class GameDriver {
 		return resultOfAttack;
 		
 	}
+	
+	//Counts the successful hits of either player
+	public int countSuccessfulHits(int playerID) {
+		int successfulHits = 0;
+		String board;
+		
+		//Get the correct board for the count
+		if(playerID == currentGameState.getPlayerOneId()){
+			board = currentGameState.getPlayerTwoBoard();
+		}else{
+			board = currentGameState.getPlayerOneBoard();
+		}
+		
+		//Find all the successful hits on the board and increment
+		char [] boardChars = board.toCharArray();
+		for (char character : boardChars) {
+			if(character=='1'){
+				successfulHits++;
+			}
+		}
+		return successfulHits;
+		
+	}
 }

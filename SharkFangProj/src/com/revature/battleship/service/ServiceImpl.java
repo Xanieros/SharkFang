@@ -95,4 +95,11 @@ public class ServiceImpl implements Service {
 	public String getPassword(int uid) {
 		return myPlayerDatabase.getPassword(uid);
 	}
+
+	@Override
+	public int countSuccessfulHits(int playerId) {
+		return myGameDriver.countSuccessfulHits(playerId);
+	}
+
+
 }

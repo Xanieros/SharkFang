@@ -14,8 +14,7 @@ import org.apache.log4j.Logger;
  * Servlet implementation class LogoutServlet
  */
 public class LogoutServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	Logger logger = Logger.getLogger(LogoutServlet.class);
        
     /**
