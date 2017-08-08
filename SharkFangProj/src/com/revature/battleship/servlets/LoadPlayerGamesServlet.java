@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.opensaml.common.transport.http.HTTPRequest;
 
 import com.google.gson.Gson;
 import com.revature.battleship.pojos.GameState;
@@ -46,9 +45,10 @@ public class LoadPlayerGamesServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("Called LoadPlayerGamesServlet");
 		HttpSession session = request.getSession();
 		int uid = (Integer)session.getAttribute("uid");
-		int offset = (Integer)session.getAttribute("offset");
+		int offset = Integer.parseInt(request.getParameter("offset"));
 
 		Service service = ServiceImpl.getService();
 		ArrayList<GameState> gs = service.loadPlayerGames(uid, offset);
