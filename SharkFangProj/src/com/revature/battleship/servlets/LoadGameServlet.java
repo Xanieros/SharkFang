@@ -19,7 +19,6 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class LoadGameServlet
  */
-@WebServlet("/LoadGameServlet")
 public class LoadGameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(ViewPlayerInformationServlet.class);
@@ -44,6 +43,7 @@ public class LoadGameServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		logger.debug("Called LoadGameServlet");
 		HttpSession session = request.getSession();
 		Service service = ServiceImpl.getService();
 		

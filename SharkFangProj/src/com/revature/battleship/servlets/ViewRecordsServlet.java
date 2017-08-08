@@ -20,7 +20,6 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class ViewRecordsServlet
  */
-@WebServlet("/ViewRecordsServlet")
 public class ViewRecordsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(ViewPlayerInformationServlet.class);

@@ -15,7 +15,6 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class PlaceShipsOntoPlayerBoardServlet
  */
-@WebServlet("/PlaceShipsOntoPlayerBoardServlet")
 public class PlaceShipsOntoPlayerBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(PlaceShipsOntoPlayerBoardServlet.class);
