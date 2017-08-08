@@ -19,7 +19,6 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class EnemyAttackServlet
  */
-@WebServlet("/EnemyAttackServlet")
 public class EnemyAttackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;	
 	Logger logger = Logger.getLogger(EnemyAttackServlet.class);

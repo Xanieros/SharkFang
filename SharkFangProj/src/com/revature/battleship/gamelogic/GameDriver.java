@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.revature.battleship.daos.GameStateDAO;
+import com.revature.battleship.daos.RecordDAO;
 import com.revature.battleship.pojos.GameState;
+import com.revature.battleship.pojos.Record;
 
 public class GameDriver {
 	
 	GameStateDAO myGameStateDatabase = new GameStateDAO();
 	GameState currentGameState;
+	RecordDAO rDAO = new RecordDAO();
 	
 	
 	public static final char EMPTY = '0';
@@ -313,6 +316,14 @@ public class GameDriver {
 		
 		return new int[]{successfulHitsP1, successfulHitsP2};
 		
+	}
+
+	public Record loadPlayerRecord(int uid) {
+		return rDAO.getPlayerRecord(uid);
+	}
+
+	public ArrayList<Record> loadTopRecords(int numToShow) {
+		return rDAO.getTopRank(numToShow);
 	}
   
 }

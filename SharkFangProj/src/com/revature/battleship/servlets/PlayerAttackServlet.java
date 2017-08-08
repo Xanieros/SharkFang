@@ -19,7 +19,6 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class BoardInteractionServlet
  */
-@WebServlet("/BoardInteractionServlet")
 public class PlayerAttackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

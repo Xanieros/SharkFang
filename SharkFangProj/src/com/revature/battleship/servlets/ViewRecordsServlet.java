@@ -1,32 +1,32 @@
 package com.revature.battleship.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
-import com.revature.battleship.pojos.GameState;
+import com.revature.battleship.pojos.Record;
 import com.revature.battleship.service.Service;
 import com.revature.battleship.service.ServiceImpl;
 
 /**
- * Servlet implementation class LoadGameServlet
+ * Servlet implementation class ViewRecordsServlet
  */
-public class LoadGameServlet extends HttpServlet {
+public class ViewRecordsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(ViewPlayerInformationServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoadGameServlet() {
+    public ViewRecordsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +35,9 @@ public class LoadGameServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doPost(request, response);
+		
 	}
 
 	/**
@@ -43,21 +45,23 @@ public class LoadGameServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		logger.debug("Called LoadGameServlet");
+		logger.debug("Called the ViewRecordsServlet");
+		
 		HttpSession session = request.getSession();
 		Service service = ServiceImpl.getService();
 		
-		int gid = Integer.parseInt(request.getParameter("gid"));
+		//Get UID from session and limit from frontend
+		int uid = (Integer)session.getAttribute("uid");
+		int limit = Integer.parseInt(request.getParameter("limit"));
 		
-		GameState gs = service.loadGame(gid);
-		int[] numOfHits = service.countSuccessfulHits();
-		
-		session.setAttribute("currGameIDInPlay", gid);
-		session.setAttribute("playerNumOfHits", numOfHits[0]);
-		session.setAttribute("enemyNumOfHits", numOfHits[1]);
+		//allRecords contains the Player Record at index 0
+		//And the top <limit> records at index > 0
+		ArrayList<Record> allRecords = service.loadTopRecords(limit);
+		allRecords.add(0, service.loadPlayerRecord(uid));
 		
 		Gson gson = new Gson();
-		String JSON = gson.toJson(gs);		
+		String JSON = gson.toJson(allRecords);
+		
 		response.getWriter().write(JSON);
 		
 	}
