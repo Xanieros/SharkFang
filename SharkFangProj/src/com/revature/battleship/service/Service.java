@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.revature.battleship.pojos.GameState;
 import com.revature.battleship.pojos.Player;
+import com.revature.battleship.pojos.Record;
 
 public interface Service {
 	Player login(String usernameEntered, String passwordEntered);
@@ -21,4 +22,6 @@ public interface Service {
 	Player updatePlayer(Player player);
 	ArrayList<GameState> loadPlayerGames(int uid, int offset);
 	GameState loadGame(int gid);
+	Record loadPlayerRecord(int uid);
+	ArrayList<Record> loadTopRecords(int numToShow);
 }

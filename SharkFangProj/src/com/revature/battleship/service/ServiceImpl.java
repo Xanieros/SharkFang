@@ -10,6 +10,7 @@ import com.revature.battleship.daos.PlayerDAO;
 import com.revature.battleship.gamelogic.GameDriver;
 import com.revature.battleship.pojos.GameState;
 import com.revature.battleship.pojos.Player;
+import com.revature.battleship.pojos.Record;
 
 public class ServiceImpl implements Service {
 
@@ -110,6 +111,19 @@ public class ServiceImpl implements Service {
 	@Override
 	public GameState loadGame(int gid) {
 		return myGameDriver.loadGame(gid);
+	}
+
+	@Override
+	public Record loadPlayerRecord(int uid) {
+		// TODO Auto-generated method stub
+		return myGameDriver.loadPlayerRecord(uid);
+
+	}
+
+	@Override
+	public ArrayList<Record> loadTopRecords(int numToShow) {
+		return myGameDriver.loadTopRecords(numToShow);
+
 	}
 
 }
