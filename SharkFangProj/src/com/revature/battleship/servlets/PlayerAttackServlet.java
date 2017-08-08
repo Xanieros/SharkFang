@@ -54,7 +54,6 @@ public class PlayerAttackServlet extends HttpServlet {
 				
 		//Increment number of hits
 		int numOfHits = (Integer)session.getAttribute("playerNumOfHits");
-		//int numOfHits = service.countSuccessfulHits((Integer)session.getAttribute("uid")); //This function should be used when loading a game & stored in session
 		if(resultOfAttack==1){
 			numOfHits++;
 			session.setAttribute("playerNumOfHits", numOfHits);
@@ -63,7 +62,7 @@ public class PlayerAttackServlet extends HttpServlet {
 
 		//Determine if move won
 		if(numOfHits == 17){
-			resultOfAttack = 5; //Return a value that indicates the winning move
+			resultOfAttack = 10; //Return a value that indicates the winning move
 			//service.ENDGAME //Update the Database, & nullify GameState
 			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
 		}		

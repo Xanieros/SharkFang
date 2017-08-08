@@ -98,8 +98,8 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public int countSuccessfulHits(int playerId) {
-		return myGameDriver.countSuccessfulHits(playerId);
+	public int[] countSuccessfulHits() {
+		return myGameDriver.countSuccessfulHits();
 	}
 
 	@Override
@@ -109,9 +109,7 @@ public class ServiceImpl implements Service {
 
 	@Override
 	public GameState loadGame(int gid) {
-		myGameDriver.loadGame(gid);
-		return null;
+		return myGameDriver.loadGame(gid);
 	}
-
 
 }

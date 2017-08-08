@@ -275,39 +275,44 @@ public class GameDriver {
 		return resultOfAttack;
 		
 	}
-	
-	//Counts the successful hits of either player
-	public int countSuccessfulHits(int playerID) {
-		int successfulHits = 0;
-		String board;
-		
-		//Get the correct board for the count
-		if(playerID == currentGameState.getPlayerOneId()){
-			board = currentGameState.getPlayerTwoBoard();
-		}else{
-			board = currentGameState.getPlayerOneBoard();
-		}
-		
-		//Find all the successful hits on the board and increment
-		char [] boardChars = board.toCharArray();
-		for (char character : boardChars) {
-			if(character=='1'){
-				successfulHits++;
-			}
-		}
-		return successfulHits;
-		
-	}
 
 	public ArrayList<GameState> loadPlayerGames(int uid, int offset) {
 		// TODO Auto-generated method stub
-		myGameStateDatabase.loadPlayerGames(uid, offset);
-		return null;
+		return myGameStateDatabase.loadPlayerGames(uid, offset);
 		
 	}
 
-	public void loadGame(int gid) {
-		myGameStateDatabase.loadGame(gid);
+	public GameState loadGame(int gid) {
+		currentGameState = myGameStateDatabase.loadGame(gid);
+		return currentGameState;
 		
 	}
+	
+	//Counts successful hits to store in session
+	public int[] countSuccessfulHits() {
+		String p1Board = currentGameState.getPlayerOneBoard();
+		String p2Board = currentGameState.getPlayerTwoBoard();
+		int successfulHitsP1 = 0; 
+		int successfulHitsP2 = 0;
+		char [] boardChars;
+		
+		//Find all the successful hits on the board and increment
+		boardChars = p1Board.toCharArray();
+		for (char character : boardChars) {
+			if(character=='1'){
+				successfulHitsP2++;
+			}
+		}
+		
+		boardChars = p2Board.toCharArray();
+		for (char character : boardChars) {
+			if(character=='1'){
+				successfulHitsP1++;
+			}
+		}
+		
+		return new int[]{successfulHitsP1, successfulHitsP2};
+		
+	}
+  
 }

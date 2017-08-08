@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 import org.apache.log4j.Logger;
 
@@ -42,8 +44,17 @@ public class LoadGameServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
 		Service service = ServiceImpl.getService();
-		GameState gs = service.loadGame(Integer.parseInt(request.getParameter("gid")));
+		
+		int gid = Integer.parseInt(request.getParameter("gid"));
+		
+		GameState gs = service.loadGame(gid);
+		int[] numOfHits = service.countSuccessfulHits(); //This function should be used when loading a game & stored in session
+		
+		session.setAttribute("currGameIDInPlay", gid);
+		session.setAttribute("playerNumOfHits", numOfHits[0]);
+		session.setAttribute("enemyNumOfHits", numOfHits[1]);
 		
 		Gson gson = new Gson();
 		String JSON = gson.toJson(gs);		
