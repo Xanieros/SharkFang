@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
@@ -54,7 +55,6 @@ public class LoadGameServlet extends HttpServlet {
 		session.setAttribute("currGameIDInPlay", gid);
 		session.setAttribute("playerNumOfHits", numOfHits[0]);
 		session.setAttribute("enemyNumOfHits", numOfHits[1]);
-		
 		
 		Gson gson = new Gson();
 		String JSON = gson.toJson(gs);		
