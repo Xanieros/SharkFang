@@ -314,4 +314,16 @@ public class GameDriver {
 		return new int[]{successfulHitsP1, successfulHitsP2};
 		
 	}
+
+	public ArrayList<GameState> loadPlayerGames(int uid, int offset) {
+		// TODO Auto-generated method stub
+		myGameStateDatabase.loadPlayerGames(uid, offset);
+		return null;
+		
+	}
+
+	public void loadGame(int gid) {
+		myGameStateDatabase.loadGame(gid);
+		
+	}
 }

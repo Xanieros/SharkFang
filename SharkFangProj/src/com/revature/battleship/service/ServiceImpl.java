@@ -112,5 +112,16 @@ public class ServiceImpl implements Service {
 		return myGameDriver.loadGame(gid);
 	}
 
+	@Override
+	public ArrayList<GameState> loadPlayerGames(int uid, int offset) {
+		return myGameDriver.loadPlayerGames(uid, offset);
+	}
+
+	@Override
+	public GameState loadGame(int gid) {
+		myGameDriver.loadGame(gid);
+		return null;
+	}
+
 
 }
