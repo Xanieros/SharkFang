@@ -86,26 +86,7 @@ function checkUserLoggedIn()
 function hideErrorMessage()
 {
 	document.getElementById('loginErrorMessage').innerHTML = "";
-};
-
-function logoutJsServlet()
-{
-	var xhttpr = new XMLHttpRequest();
-	xhttpr.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200)
-		{
-			console.log("Logout comapleted");
-			document.getElementById('loginModalNavButton').style.display='';
-			
-			document.getElementById('logoutModalNavButton').style.display='none';
-			document.getElementById('profileModalNavButton').style.display='none';
-			document.getElementById('scoresModalNavButton').style.display='none';
-			document.getElementById('newGameModalNavButton').style.display='none';
-			document.getElementById('loadGameModalNavButton').style.display='none';
-		}
-	};
-	xhttpr.open('POST', 'logoutUser', true);
-	xhttpr.send();
+	/*window.alert($('#horizontal-scroll').css("background-position"));*/
 };
 
 function generatePlayerBoards(){
@@ -830,7 +811,7 @@ function generateShips() {
 }
 
  $(function(){
-        var x = 0;
+	 var x = 0;
         setInterval(function(){
             x-=1;
             $('body').css('background-position', x + 'px 0');

@@ -26,19 +26,16 @@ public class CheckAnyoneLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("checking");
 		HttpSession session = request.getSession(false);
 		if (session == null)
 		{
 			response.getWriter().write("null");
-			System.out.println("Session is null");
 			return;
 		}
 		String attemptedUsername = (String) session.getAttribute("attemptedUsername");
 		String username = (String) session.getAttribute("username");
 		if (username != null)
 		{
-			System.out.println("username is: " + username);
 			response.getWriter().write("true");
 			return;
 		}

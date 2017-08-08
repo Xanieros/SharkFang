@@ -14,7 +14,7 @@
 <script src="../js/script.js"></script>
 <link  rel="stylesheet" href="../css/style.css">
 </head>
-<body id="horizontal-scroll"  onpageshow="checkUserLoggedIn();" onhashchange="checkUserLoggedIn();">
+<body id="horizontal-scroll"  onpageshow="checkUserLoggedIn();" >
 <div class="bg"></div>
 <!-- Nav Navbar Nav bar Navarino -->
 <nav class="navbar navbar-inverse">
@@ -40,7 +40,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li id='loginModalNavButton'><a data-toggle="modal" data-target="#loginModal" class="handOnHover" onclick="hideErrorMessage();"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
-        <li id='logoutModalNavButton' style='display:none;'><a class="handOnHover" onclick="logoutJsServlet();"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
+        <li id='logoutModalNavButton' style='display:none;'><a data-toggle="modal" data-target="#logoutModal" class="handOnHover"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        
       </ul>       
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -68,6 +69,32 @@
       <div class="modal-footer">
       <p id='loginErrorMessage' style='color:red; text-align:center;'> </p> 
         <input type="submit" class="btn btn-primary" form="loginForm" value="Login" />
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Logout Modal -->
+<div id="logoutModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+      	<button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" align='center'>Are you sure you want to logout?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" id=>
+          <form id="logoutForm" action="logoutUser" method="POST">
+          	<div align='center'>
+        		<input class="btn btn-primary handOnHover" type='submit' value='Yes, Logout'>
+        		<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+      		</div>
+      		</form>
+          <p id="errorMessage"></p>
+        </div>
       </div>
     </div>
 
