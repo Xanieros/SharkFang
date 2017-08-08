@@ -315,15 +315,4 @@ public class GameDriver {
 		
 	}
 
-	public ArrayList<GameState> loadPlayerGames(int uid, int offset) {
-		// TODO Auto-generated method stub
-		myGameStateDatabase.loadPlayerGames(uid, offset);
-		return null;
-		
-	}
-
-	public void loadGame(int gid) {
-		myGameStateDatabase.loadGame(gid);
-		
-	}
 }
