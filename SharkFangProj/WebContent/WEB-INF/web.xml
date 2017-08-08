@@ -36,7 +36,10 @@
     <servlet-name>updatePlayer</servlet-name>
     <servlet-class>com.revature.battleship.servlets.UpdatePlayerInfoServlet</servlet-class>
   </servlet>
-  
+  <servlet>
+    <servlet-name>checkLogin</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.CheckAnyoneLoginServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>login</servlet-name>
     <url-pattern>/html/loginUser</url-pattern>
@@ -68,5 +71,9 @@
   <servlet-mapping>
     <servlet-name>updatePlayer</servlet-name>
     <url-pattern>/html/UpdatePlayerInfo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>checkLogin</servlet-name>
+    <url-pattern>/html/checkAnyoneLogin</url-pattern>
   </servlet-mapping>
 </web-app>

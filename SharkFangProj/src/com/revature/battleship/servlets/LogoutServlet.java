@@ -36,11 +36,18 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		System.out.println("loggingout");
+		HttpSession session = request.getSession(false);
+		session.removeAttribute("uid");
+		session.removeAttribute("username");
+		session.removeAttribute("email");
+		session.removeAttribute("fname");
+		session.removeAttribute("lname");
+		session.removeAttribute("profPic");
 		session.invalidate();
 		logger.debug("Ending session. THIS SHOULD BE INVALID: "+session.toString());
 		
-		request.getRequestDispatcher("/html/login.html").forward(request, response);
+		request.getRequestDispatcher("/html/game.html").forward(request, response);
 	}
 
 }

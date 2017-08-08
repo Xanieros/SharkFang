@@ -33,6 +33,81 @@ function testFunction(){
   //$("#errorMessage").delay(5000).fadeOut();
 };*/
 
+function checkUserLoggedIn()
+{
+	var xhttpr = new XMLHttpRequest();
+	
+	xhttpr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200)
+		{
+			var authenticated = this.responseText;
+			if (authenticated == 'null')
+			{
+				document.getElementById('loginModalNavButton').style.display='';
+				
+				document.getElementById('logoutModalNavButton').style.display='none';
+				document.getElementById('profileModalNavButton').style.display='none';
+				document.getElementById('scoresModalNavButton').style.display='none';
+				document.getElementById('newGameModalNavButton').style.display='none';
+				document.getElementById('loadGameModalNavButton').style.display='none';
+			}
+			else if (authenticated == 'true') // someone is logged in
+			{
+				document.getElementById('loginModalNavButton').style.display='none';
+				
+				document.getElementById('logoutModalNavButton').style.display='';
+				document.getElementById('profileModalNavButton').style.display='';
+				document.getElementById('scoresModalNavButton').style.display='';
+				document.getElementById('newGameModalNavButton').style.display='';
+				document.getElementById('loadGameModalNavButton').style.display='';
+			}
+			else if (authenticated == 'false')
+			{
+				document.getElementById('loginErrorMessage').innerHTML = "Invalid Username or Password";
+				$('#loginModal').modal('toggle');
+			}
+			else // authenticated == '', returned null
+			{
+				document.getElementById('loginErrorMessage').innerHTML = "";
+				document.getElementById('loginModalNavButton').style.display='';
+				
+				document.getElementById('logoutModalNavButton').style.display='none';
+				document.getElementById('profileModalNavButton').style.display='none';
+				document.getElementById('scoresModalNavButton').style.display='none';
+				document.getElementById('newGameModalNavButton').style.display='none';
+				document.getElementById('loadGameModalNavButton').style.display='none';
+			}
+		}
+	};
+	xhttpr.open('GET', 'checkAnyoneLogin', true);
+	xhttpr.send();
+};
+
+function hideErrorMessage()
+{
+	document.getElementById('loginErrorMessage').innerHTML = "";
+};
+
+function logoutJsServlet()
+{
+	var xhttpr = new XMLHttpRequest();
+	xhttpr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200)
+		{
+			console.log("Logout comapleted");
+			document.getElementById('loginModalNavButton').style.display='';
+			
+			document.getElementById('logoutModalNavButton').style.display='none';
+			document.getElementById('profileModalNavButton').style.display='none';
+			document.getElementById('scoresModalNavButton').style.display='none';
+			document.getElementById('newGameModalNavButton').style.display='none';
+			document.getElementById('loadGameModalNavButton').style.display='none';
+		}
+	};
+	xhttpr.open('POST', 'logoutUser', true);
+	xhttpr.send();
+};
+
 function generatePlayerBoards(){
 	//Get values from form w/o redirect
 	xSize = document.sizeForm.xSize.value;
