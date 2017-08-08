@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.revature.battleship.daos.PlayerDAO;
 import com.revature.battleship.gamelogic.GameDriver;
+import com.revature.battleship.pojos.GameState;
 import com.revature.battleship.pojos.Player;
 
 public class ServiceImpl implements Service {
@@ -99,6 +100,17 @@ public class ServiceImpl implements Service {
 	@Override
 	public int countSuccessfulHits(int playerId) {
 		return myGameDriver.countSuccessfulHits(playerId);
+	}
+
+	@Override
+	public ArrayList<GameState> loadPlayerGames(int uid, int offset) {
+		return myGameDriver.loadPlayerGames(uid, offset);
+	}
+
+	@Override
+	public GameState loadGame(int gid) {
+		myGameDriver.loadGame(gid);
+		return null;
 	}
 
 
