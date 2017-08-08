@@ -126,4 +126,16 @@ public class ServiceImpl implements Service {
 
 	}
 
+	@Override
+	public void addWin(int uid) {
+		myGameDriver.addWin(uid);
+		
+	}
+
+	@Override
+	public void addLoss(int uid) {
+		myGameDriver.addLoss(uid);
+		
+	}
+
 }

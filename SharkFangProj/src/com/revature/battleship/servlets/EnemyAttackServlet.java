@@ -51,7 +51,6 @@ public class EnemyAttackServlet extends HttpServlet {
 		
 		//Increment number of hits
 		int numOfHits = (Integer)session.getAttribute("enemyNumOfHits");
-		//int numOfHits = service.countSuccessfulHits((Integer)session.getAttribute("uid")); //This function should be used when loading a game & stored in session
 		if(enemyTarget[1]==1){
 			numOfHits++;
 			session.setAttribute("enemyNumOfHits", numOfHits);
@@ -63,6 +62,7 @@ public class EnemyAttackServlet extends HttpServlet {
 			enemyTarget[1] = 10; //Return a value that indicates the winning move
 			//service.ENDGAME //Update the Database, & nullify GameState
 			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
+			service.addLoss((Integer)session.getAttribute("uid"));
 		}		
 		
 		//Send the JSON results
