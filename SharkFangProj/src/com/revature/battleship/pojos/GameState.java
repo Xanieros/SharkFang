@@ -1,6 +1,6 @@
 package com.revature.battleship.pojos;
 
-import org.apache.commons.net.ntp.TimeStamp;
+import java.sql.Timestamp;;
 
 public class GameState {
 	private int gameStateId;
@@ -10,10 +10,10 @@ public class GameState {
 	private String playerTwoBoard;
 	private int boardLength;
 	private int active;
-	private TimeStamp timeStamp;
+	private Timestamp timeStamp;
 	
 	public GameState(int gameStateId, int playerOneId, int playerTwoId, String playerOneBoard, String playerTwoBoard,
-			int boardLength, int active, TimeStamp timeStamp) {
+			int boardLength, int active, Timestamp timeStamp) {
 		super();
 		this.gameStateId = gameStateId;
 		this.playerOneId = playerOneId;
@@ -68,10 +68,10 @@ public class GameState {
 	public void setActive(int active) {
 		this.active = active;
 	}
-	public TimeStamp getTimeStamp() {
+	public Timestamp getTimeStamp() {
 		return timeStamp;
 	}
-	public void setTimeStamp(TimeStamp timeStamp) {
+	public void setTimeStamp(Timestamp timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 }
