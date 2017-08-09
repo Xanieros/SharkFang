@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.revature.battleship.daos.PlayerDAO;
+import com.revature.battleship.pojos.Player;
 
 public class PlayerDAOTest {
 	PlayerDAO pDAO;
@@ -33,18 +34,26 @@ public class PlayerDAOTest {
 
 	@Test
 	public void testGetUsername() {
-		assertEquals("Xanieros", PlayerDAO.getUsername(1001));
+		assertEquals("test", PlayerDAO.getUsername(1001));
 	}
 	
 	@Test
 	public void testGetPassword()
 	{
-		String expectedPassword = "test";
-		String actualPassword = pDAO.getPassword(1004);
+		String expectedPassword = "p4ssw0rd";
+		String actualPassword = pDAO.getPassword(1001);
 		assertEquals(expectedPassword, actualPassword);
 		
 		actualPassword = pDAO.getPassword(-1);
 		assertNull(actualPassword);
 	}
 
+	@Test
+	public void testCreateNewPlayer()
+	{
+		String expected = "testing";
+		Player actual = PlayerDAO.createNewPlayer("testing", "testing", "test", "test", "test@test.com", null);
+		System.out.println(actual.getUname());
+		assertTrue(expected.equals(actual.getUname()));
+	}
 }
