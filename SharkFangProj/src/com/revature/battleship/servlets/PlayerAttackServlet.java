@@ -64,9 +64,9 @@ public class PlayerAttackServlet extends HttpServlet {
 		//Determine if move won
 		if(numOfHits == 17){
 			resultOfAttack = 10; //Return a value that indicates the winning move
-			service.closeGame(gid, uid); //Change active to show winner and update both players win/loss
+			service.saveGame(); //Record the final state of the board
+			service.closeGame(gid, uid); //Change active to show winner and update both players' win/loss
 			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
-			//service.addWin(uid);
 			
 		}		
 		
