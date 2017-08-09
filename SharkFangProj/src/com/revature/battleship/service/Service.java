@@ -27,4 +27,5 @@ public interface Service {
 	void addWin(int uid);
 	void addLoss(int uid);
 	void closeGame(int gid, int uid);
+	void deleteGame(int gid);
 }

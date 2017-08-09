@@ -144,4 +144,10 @@ public class ServiceImpl implements Service {
 		
 	}
 
+	@Override
+	public void deleteGame(int gid) {
+		myGameDriver.deleteGame(gid);
+		
+	}
+
 }

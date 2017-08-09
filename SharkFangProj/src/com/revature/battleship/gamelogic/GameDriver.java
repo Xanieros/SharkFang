@@ -357,5 +357,10 @@ public class GameDriver {
 		myGameStateDatabase.endGame(gid, uid);
 		
 	}
+
+	public void deleteGame(int gid) {
+		myGameStateDatabase.deleteGameState(gid);
+		
+	}
   
 }
