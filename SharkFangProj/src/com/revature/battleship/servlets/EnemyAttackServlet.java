@@ -60,13 +60,11 @@ public class EnemyAttackServlet extends HttpServlet {
 		//Determine if move won
 		if(numOfHits == 17){
 			enemyTarget[1] = 10; //Return a value that indicates the winning move
-			//service.ENDGAME //Update the Database, & nullify GameState
+			service.closeGame((Integer)session.getAttribute("currGameIDInPlay"), 0); //Change active to show winner and update both players' win/loss
 			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
-			service.addLoss((Integer)session.getAttribute("uid"));
 		}		
 		
 		//Send the JSON results
-		//int lastPlayerMove [] = {target, resultOfAttack}; //TODO Determine if this is needed -- It isn't
 		Gson gson = new Gson();
 		String resultJson = gson.toJson(enemyTarget);
 		logger.debug("The JSON resultOfAttack is: "+resultJson);

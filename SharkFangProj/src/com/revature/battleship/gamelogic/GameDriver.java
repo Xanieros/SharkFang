@@ -352,5 +352,10 @@ public class GameDriver {
 		rDAO.addLoss(uid);
 		
 	}
+
+	public void closeGame(int gid, int uid) {
+		myGameStateDatabase.endGame(gid, uid);
+		
+	}
   
 }

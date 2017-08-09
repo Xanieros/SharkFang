@@ -38,6 +38,8 @@ public class PlayerAttackServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Service service = ServiceImpl.getService();
 		HttpSession session = request.getSession();
+		int uid = (Integer)session.getAttribute("uid");
+		int gid = (Integer)session.getAttribute("currGameIDInPlay");
 		
 		//Retrieve the number of the cell the player targeted
 		int target = Integer.parseInt(request.getParameter("move"));
@@ -62,9 +64,10 @@ public class PlayerAttackServlet extends HttpServlet {
 		//Determine if move won
 		if(numOfHits == 17){
 			resultOfAttack = 10; //Return a value that indicates the winning move
-			//service.ENDGAME //Update the Database, & nullify GameState
+			service.closeGame(gid, uid); //Change active to show winner and update both players win/loss
 			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
-			service.addWin((Integer)session.getAttribute("uid"));
+			//service.addWin(uid);
+			
 		}		
 		
 		//Send the JSON results

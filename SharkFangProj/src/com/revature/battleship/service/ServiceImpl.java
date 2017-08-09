@@ -138,4 +138,10 @@ public class ServiceImpl implements Service {
 		
 	}
 
+	@Override
+	public void closeGame(int gid, int uid) {
+		myGameDriver.closeGame(gid, uid);
+		
+	}
+
 }
