@@ -134,4 +134,47 @@ public class PlayerDAO implements PlayerInterface{
 		return password;
 	}
 	
+	public static Player createNewPlayer(String uname, String pword, String fname, String lname, String email, String profPic)
+	{
+		LOGGER.info("in createNewPlayer");
+		Player newPlayer = new Player();
+		
+		try
+		{
+			LOGGER.info("calling CREATE_PLAYER(?,?,?,?,?,?,?,?)");
+			CallableStatement cs = conn.prepareCall("call CREATE_PLAYER(?,?,?,?,?,?,?,?)");
+			cs.setString(1, uname);
+			cs.setString(2, pword);
+			cs.setString(3, fname);
+			cs.setString(4, lname);
+			cs.setString(5, email);
+			cs.setString(6, profPic);
+			cs.registerOutParameter(7, OracleTypes.CURSOR);
+			cs.registerOutParameter(8, OracleTypes.NUMBER);
+			
+			cs.executeQuery();
+			
+			ResultSet rs = (ResultSet)cs.getObject(7);
+			if(rs.next())
+			{
+				newPlayer.setUid(rs.getInt("U_ID"));
+				newPlayer.setUname(rs.getString("USERNAME"));
+				newPlayer.setPword(rs.getString("PASSWORD"));
+				newPlayer.setFname(rs.getString("FIRST_NAME"));
+				newPlayer.setLname(rs.getString("LAST_NAME"));
+				newPlayer.setEmail(rs.getString("EMAIL"));
+				newPlayer.setProfPic(rs.getString("PROFILE_PICTURE"));
+				
+				LOGGER.debug("New Player ID: " + newPlayer.getUid());
+			}
+			else
+				newPlayer = null;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			newPlayer = null;
+		}
+		return newPlayer;
+	}
 }

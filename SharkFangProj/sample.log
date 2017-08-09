@@ -1,0 +1,1 @@
+0    2017-08-09 12:47:53,197 [main] FATAL com.revature.battleship.daos.PlayerDAO  - SQLException in getPassword(1004)
