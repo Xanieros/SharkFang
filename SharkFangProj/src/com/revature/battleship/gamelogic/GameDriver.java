@@ -18,18 +18,35 @@ public class GameDriver {
 	public static final char EMPTY = '0';
 	public static final char HIT = '1';
 	public static final char MISS = '2';
-	public static final char SHIP = '3';
+	public static final char SHIP = '3'; //4 spaces
+	public static final char CARRIER = '4'; //5 spaces
+	public static final char CRUISER = '5'; //3 spaces
+	public static final char SUBMARINE = '6'; //3 spaces
+	public static final char DESTROYER = '7'; //2 spaces
+
 	
-	// size of each ship that is placable on both boards
+	// size of each ship that is placeable on both boards
 	private ArrayList<Integer> boardShips = new ArrayList<Integer>(Arrays.asList(5, 4, 3, 3, 2)); 
 	
 	public void placeShipsOnPlayerBoard(ArrayList<Integer> playerShipLocations)
 	{
 		StringBuilder playerBoard = new StringBuilder(currentGameState.getPlayerOneBoard());
-		
-		for (Integer shipLocation : playerShipLocations)
-		{
-			playerBoard.setCharAt(shipLocation, GameDriver.SHIP);
+
+		//From smallest to biggest ship. Cruiser before submarine.
+		for(int i = 0; i<2; i++){
+			playerBoard.setCharAt(playerShipLocations.get(i), GameDriver.DESTROYER);
+		}
+		for(int i = 2; i<5; i++){
+			playerBoard.setCharAt(playerShipLocations.get(i), GameDriver.CRUISER);
+		}
+		for(int i = 5; i<8; i++){
+			playerBoard.setCharAt(playerShipLocations.get(i), GameDriver.SUBMARINE);
+		}
+		for(int i = 8; i<12; i++){
+			playerBoard.setCharAt(playerShipLocations.get(i), GameDriver.SHIP);
+		}
+		for(int i = 12; i<17; i++){
+			playerBoard.setCharAt(playerShipLocations.get(i), GameDriver.CARRIER);
 		}
 		
 		currentGameState.setPlayerOneBoard(playerBoard.toString());
