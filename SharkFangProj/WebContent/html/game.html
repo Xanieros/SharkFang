@@ -36,7 +36,7 @@
       	<li id='profileModalNavButton' style='display:none;'><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal" class='handOnHover'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
         <li id='scoresModalNavButton' style='display:none;'><a onclick="" href="#"><span class="glyphicon glyphicon-king handOnHover"></span> Scores</a></li>
       	<li id='newGameModalNavButton' style='display:none;'><a data-toggle="modal" data-target="#newGameModal" class="handOnHover"><span class="glyphicon glyphicon-screenshot"></span> New Game</a></li>
-      	<li id='loadGameModalNavButton' style='display:none;'><a data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
+      	<li id='loadGameModalNavButton' style='display:none;'><a onclick="populateLoadGameModal(0)" data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li id='loginModalNavButton'><a data-toggle="modal" data-target="#loginModal" class="handOnHover" onclick="hideErrorMessage();"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
@@ -136,18 +136,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Game</h4>
+        <h4 class="modal-title">Load Game</h4>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <table>
-          <tr> <th> Got here </th> </tr>
-          <tr> <td> <p>paragraph </p></td> </tr>
-        </table>
-        </div>
+    
+          <div id='loadGameModalContent' class='container' style='width:100%;'></div>
+        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <div id='nextPrevLoadGameDiv' class='container' style='width:100%;'></div>
       </div>
     </div>
 
@@ -223,6 +220,22 @@
 	</div>
 
 	<div id="shipPiecesDiv"></div>
+	
+	<audio id='kaboomSoundEnemy' controls style='display:none;'>
+	  <source src="../audio/kaboom.mp3" type="audio/mpeg">
+	</audio>
+	
+	<audio id='splooshSoundEnemy' controls style='display:none;'>
+	  <source src="../audio/sploosh.mp3" type="audio/mpeg">
+	</audio>
+	
+	<audio id='kaboomSoundPlayer' controls style='display:none;'>
+	  <source src="../audio/kaboom.mp3" type="audio/mpeg">
+	</audio>
+	
+	<audio id='splooshSoundPlayer' controls style='display:none;'>
+	  <source src="../audio/sploosh.mp3" type="audio/mpeg">
+	</audio>
   
 <!-- <video playsinline autoplay muted loop poster="../image/sea-water-hd-1.jpg" id="bgvid">
     <source src="../resources/video/Running_Stream_Of_Water.webm" type="video/webm">

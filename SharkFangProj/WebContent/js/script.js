@@ -253,29 +253,82 @@ function populateMyProfileModal(){
 
 };
 
-function loadNewGame(){
-	var xhttp = new XMLHttpRequest();
-	var txt='';
-	console.log("loadNewGame() Called");
-	  
-	  xhttp.onreadystatechange = function()
+function populateLoadGameModal(offsetInput)
+{
+	var offset = offsetInput;
+	var xhttpr = new XMLHttpRequest();
+	var url = 'loadGames';
+	
+	xhttpr.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200)
 		{
-		  //document.getElementById("test").innerHTML = xhttp.readyState+" "+xhttp.status;
-		  console.log(xhttp.readyState+" "+xhttp.status);
-			//check to see if readystate == 4 and status = 200
-			if(xhttp.readyState == 4 && xhttp.status == 200)
-				{
-				console.log("Sent Load Request");
-				//var data = xhttp.responseText;
-				//console.log(data);
-	            //var userData = JSON.parse(data);
-				
-				}
+			var output = this.responseText;
 			
-		};
-		//make call to server asynchronously
-		xhttp.open('POST','initialize',true);
-		xhttp.send();
+			/* have to parse the JSON */
+			var gameState = JSON.parse(output);
+			
+			var tableString = "<table class='table table-hover table-responsive' style='text-align:center'" +
+								"<tr>" +
+									"<th style='text-align:center'> Opponent </th>" +
+									"<th style='text-align:center'> Board Length </th>" +
+									"<th style='text-align:center'> Last Savepoint </th>" +
+									"<th style='text-align:center'> </th>" +
+								"</tr>";
+			
+			for (i in gameState)
+			{
+				var opponent = gameState[i].playerTwoId;
+				if (gameState[i].playerTwoId == '0')
+				{
+					opponent = 'Computer';
+				}
+				/* access through gameState[i].key */
+				tableString += "<tr>" +
+								"<td>" + opponent + "</td>" +
+								"<td>" + gameState[i].boardLength + "</td>" +
+								"<td>" + gameState[i].timeStamp + "</td>" +
+								"<td> <button onclick='loadGame("+ gameState[i].gameStateId + ");'> Load Game </button></td>" +
+								"</tr>";
+			}
+			
+			tableString += "</table>";
+			document.getElementById('loadGameModalContent').innerHTML = tableString;
+			
+			var footerString = "<table align='center'>" +
+								"<tr>" + 
+								"<td style='width: 120px;'> <button id='loadPrevButton' onclick=populateLoadGameModal("+ (parseInt(offset)-1) + ")> Previous Page </button> </td>" +
+								"<td style='width:20%'> </td>" +
+								"<td style='width: 120px;'> <button id='loadPrevButton' onclick=populateLoadGameModal("+ (parseInt(offset)+1) + ")> Next Page </button> </td>" +
+								"</tr>" +
+								"</table>";
+			document.getElementById('nextPrevLoadGameDiv').innerHTML = footerString;
+		}
+	};
+	xhttpr.open('POST', url, true);
+	xhttpr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttpr.send("offset=" + offset);
+};
+
+function loadGame(gameID)
+{
+	var xhttpr = new XMLHttpRequest();
+	var url = 'loadGame';
+	
+	console.log("loadNewGame() Called");
+	xhttpr.onreadystatechange = function()
+	{	
+		//check to see if readystate == 4 and status = 200
+		if(this.readyState == 4 && this.status == 200)
+		{
+			console.log("Sent Load Request");
+			var output = this.responseText;
+			window.alert(output);
+		}
+	};
+	//make call to server asynchronously
+	xhttpr.open('POST', url, true);
+	xhttpr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttpr.send("gid=" + gameID);
 };
 
 function placeShips(){
@@ -339,7 +392,6 @@ function saveAndQuit(){
 			if(xhttp.readyState == 4 && xhttp.status == 200)
 				{
 					console.log("Called Save and quit");
-					document.getElementById("test").innerHTML += ("Called Save and quit");
 				}
 			
 		}
@@ -424,20 +476,28 @@ function sendMove(){
 				console.log("sent Move");
 				var data = xhttp.responseText;
 				console.log("Received hit/miss: " + data);
+				var sound;
 				if(data == 1)
 					{
 					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
 					$('input[name=cell]:checked').parent().parent().addClass("hit");
+					sound = 'kaboomSoundEnemy';
 					
 					}
 				else
 					{
 					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
 					$('input[name=cell]:checked').parent().parent().addClass("miss");
+					sound = 'splooshSoundEnemy';
 					}
 				//var opponentMove = JSON.parse(data);
 				//console.log("Received move: "+opponentMove);
-				
+				var soundElement = document.getElementById(sound);
+				soundElement.play();
+				soundElement.onended = function() 
+				{
+					receiveAttack();
+				}
 			}
 			
 		};
@@ -446,6 +506,47 @@ function sendMove(){
 		xhttp.send();
 		//receiveMove();
 	}
+};
+
+function receiveAttack() 
+{
+	var url = 'enemyAttack';
+	
+	var xhttpr = new XMLHttpRequest();
+	xhttpr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200)
+		{
+			var output = this.responseText;
+			outputArrayNumber = JSON.parse(output);
+			console.log("Received attack:" + outputArrayNumber.toString());
+			var attackIndex = outputArrayNumber[0];
+			var attackResult = outputArrayNumber[1];
+			
+			if (attackResult == 10) // end game
+			{
+				
+			}
+			else // either hit or miss
+			{
+				var result;
+				var sound;
+				if (attackResult == 1) // hit
+				{
+					result = 'hit';
+					sound = 'kaboomSoundPlayer';
+				}
+				else if (attackResult == 2) // miss
+				{
+					result = 'miss';
+					sound = 'splooshSoundPlayer';
+				}
+				document.getElementById(attackIndex.toString()).classList.add(result);
+				document.getElementById(sound).play();
+			}
+		}
+	};
+	xhttpr.open('POST', url, true);
+	xhttpr.send();
 };
 
 function receiveMove(){
@@ -753,14 +854,26 @@ function printShipArray() {
 	xSize = document.sizeForm.xSize.value;
 	ySize = document.sizeForm.ySize.value;
 
-	for(var i = 0; i < xSize*ySize; i++)
+	var shipSizeArray = [2, 31, 32, 4, 5];
+
+	for (k in shipSizeArray)
 	{
-		if (document.getElementById(i.toString()).hasChildNodes())
+		var shipDiv = 'ship' + shipSizeArray[k];
+		var shipDivR = shipDiv + 'r';
+		for(var i = 0; i < xSize*ySize; i++)
 		{
-			shipList.push(i);
+			var tableCell = document.getElementById(i.toString());
+			if (tableCell.hasChildNodes())
+			{
+				if (tableCell.firstChild.classList.contains(shipDiv) || tableCell.firstChild.classList.contains(shipDivR))
+			 	{
+			 		shipList.push(i);
+			 	}
+			}
 		}
 	}
 	/* need to pass this to servlet*/
+	window.alert(shipList);
 	return shipList;
 };
 

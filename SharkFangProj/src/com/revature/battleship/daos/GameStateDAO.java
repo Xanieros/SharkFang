@@ -223,8 +223,8 @@ public class GameStateDAO implements GameStateInterface {
 			cs.registerOutParameter(3, OracleTypes.CURSOR);
 
 			cs.executeQuery();
-			ResultSet rs = (ResultSet) cs.getObject(2);
-			if (rs.next()) {
+			ResultSet rs = (ResultSet) cs.getObject(3);
+			while (rs.next()) {
 				GameState gameState = new GameState();
 				gameState.setBoardLength(rs.getInt("BOARD_LENGTH"));
 				gameState.setGameStateId(rs.getInt("GS_ID"));
