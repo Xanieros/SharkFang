@@ -73,7 +73,7 @@ public class PlayerDAO implements PlayerInterface{
 			if(rs.next())
 			{
 				LOGGER.info("creating new player from database");
-				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("EMAIL"), rs.getString("PROFILE_PICTURE"));
+				player = new Player(rs.getInt("U_ID"), rs.getString("USERNAME"), rs.getString("PASSWORD"),  rs.getString("EMAIL"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"), rs.getString("PROFILE_PICTURE"));
 				LOGGER.debug("userID of player: " + player.getUid());
 			}
 			else{
