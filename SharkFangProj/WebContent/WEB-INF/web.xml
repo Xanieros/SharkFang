@@ -36,7 +36,11 @@
     <servlet-name>updatePlayer</servlet-name>
     <servlet-class>com.revature.battleship.servlets.UpdatePlayerInfoServlet</servlet-class>
   </servlet>
- <servlet>
+  <servlet>
+    <servlet-name>checkLogin</servlet-name>
+    <servlet-class>com.revature.battleship.servlets.CheckAnyoneLoginServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>enemyAttack</servlet-name>
     <servlet-class>com.revature.battleship.servlets.EnemyAttackServlet</servlet-class>
   </servlet>
@@ -52,6 +56,7 @@
     <servlet-name>viewRecords</servlet-name>
     <servlet-class>com.revature.battleship.servlets.ViewRecordsServlet</servlet-class>
   </servlet>
+  
   
   <servlet-mapping>
     <servlet-name>login</servlet-name>
@@ -84,6 +89,10 @@
   <servlet-mapping>
     <servlet-name>updatePlayer</servlet-name>
     <url-pattern>/html/UpdatePlayerInfo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>checkLogin</servlet-name>
+    <url-pattern>/html/checkAnyoneLogin</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>enemyAttack</servlet-name>

@@ -1,6 +1,7 @@
 package com.revature.battleship.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,31 +41,30 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Inside logging out");
 		HttpSession session = request.getSession();
 
 		String usernameEntered = request.getParameter("username");
 		String passwordEntered = request.getParameter("password");
 		
-		session.setAttribute("username", usernameEntered);
+		session.setAttribute("attemptedUsername", usernameEntered);
 		
 		Service service = ServiceImpl.getService();
 		Player currentPlayer = service.login(usernameEntered, passwordEntered);
 		logger.debug("The current player is: "+currentPlayer);
 		
-		String nextPage = "/html/login.html";
-		
 		if (currentPlayer != null)
 		{
+			session.removeAttribute("attemptedUsername");
 			session.setAttribute("uid", currentPlayer.getUid());
 			session.setAttribute("username", currentPlayer.getUname());
 			session.setAttribute("email", currentPlayer.getEmail());
 			session.setAttribute("fname", currentPlayer.getFname());
 			session.setAttribute("lname", currentPlayer.getLname());
 			session.setAttribute("profPic", currentPlayer.getProfPic());
-			 
-			nextPage = "/html/game.html";
 		}
-		request.getRequestDispatcher(nextPage).forward(request, response);
+		
+		request.getRequestDispatcher("/html/game.html").forward(request, response);
 	}
 
 }
