@@ -60,22 +60,12 @@ function checkUserLoggedIn()
 				document.getElementById('newGameModalNavButton').style.display='none';
 				document.getElementById('loadGameModalNavButton').style.display='none';
 			}
-			else if (authenticated == 'true') // someone is logged in
-			{
-				document.getElementById('loginModalNavButton').style.display='none';
-				
-				document.getElementById('logoutModalNavButton').style.display='';
-				document.getElementById('profileModalNavButton').style.display='';
-				document.getElementById('scoresModalNavButton').style.display='';
-				document.getElementById('newGameModalNavButton').style.display='';
-				document.getElementById('loadGameModalNavButton').style.display='';
-			}
 			else if (authenticated == 'false')
 			{
 				document.getElementById('loginErrorMessage').innerHTML = "Invalid Username or Password";
 				$('#loginModal').modal('toggle');
 			}
-			else // authenticated == '', returned null
+			else if (authenticated == '') // authenticated == '', returned null
 			{
 				document.getElementById('loginErrorMessage').innerHTML = "";
 				document.getElementById('loginModalNavButton').style.display='';
@@ -85,6 +75,19 @@ function checkUserLoggedIn()
 				document.getElementById('scoresModalNavButton').style.display='none';
 				document.getElementById('newGameModalNavButton').style.display='none';
 				document.getElementById('loadGameModalNavButton').style.display='none';
+			}
+			else // if (authenticated == 'true') // someone is logged in 
+			{
+				document.getElementById('loginModalNavButton').style.display='none';
+				
+				document.getElementById('logoutModalNavButton').style.display='';
+				document.getElementById('profileModalNavButton').style.display='';
+				document.getElementById('scoresModalNavButton').style.display='';
+				document.getElementById('newGameModalNavButton').style.display='';
+				document.getElementById('loadGameModalNavButton').style.display='';
+				
+				// need to set the profile picture
+				document.getElementById('profileModalImage').src = authenticated;
 			}
 		}
 	};
@@ -130,6 +133,7 @@ function generatePlayerBoards(){
 	xhttp.send();
 
 	$('#newGameModal').modal('hide');
+	document.getElementById('resetShipButton').style.display = '';
 };
 
 function generatePlayerBoardss(){
@@ -278,11 +282,16 @@ function populateLoadGameModal(offsetInput)
 			
 			var tableString = "<table class='table table-hover table-responsive' style='text-align:center'" +
 								"<tr>" +
+									"<th style='text-align:center'> </th>" +
 									"<th style='text-align:center'> Opponent </th>" +
 									"<th style='text-align:center'> Board Length </th>" +
 									"<th style='text-align:center'> Last Savepoint </th>" +
 									"<th style='text-align:center'> </th>" +
 								"</tr>";
+			
+			/* <a href="#">
+          <span class="glyphicon glyphicon-trash"></span>
+        </a> */
 			
 			for (i in gameState)
 			{
@@ -293,10 +302,12 @@ function populateLoadGameModal(offsetInput)
 				}
 				/* access through gameState[i].key */
 				tableString += "<tr>" +
+								"<td> <a href='#'> <span class='glyphicon glyphicon-trash'></span> Delete</a>" +
 								"<td>" + opponent + "</td>" +
 								"<td>" + gameState[i].boardLength + "</td>" +
 								"<td>" + gameState[i].timeStamp + "</td>" +
-								"<td> <button onclick='loadGame("+ gameState[i].gameStateId + ");'> Load Game </button></td>" +
+								//"<td> <button onclick='loadGame("+ gameState[i].gameStateId + ");'> Load Game </button></td>" +
+								"<td> <a href='javascript:loadGame("+ gameState[i].gameStateId + ");'> <span class='glyphicon glyphicon-play'></span> Play </a> </td>" +
 								"</tr>";
 			}
 			
@@ -1087,6 +1098,7 @@ function checkDonePlacingShips() {
 				document.getElementById("buttonArea").innerHTML = '<button onclick="sendMove(); ">Attack</button>'
 					+'<button onclick="saveAndQuit();">Save &amp; Quit</button>';
 				document.getElementById("buttonArea").style.display= '';
+				document.getElementById('resetShipButton').style.display = 'none';
 			}
 			
 		};
