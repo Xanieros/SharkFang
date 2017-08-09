@@ -3,6 +3,15 @@ ySize = 10;
 shipsPlaced = 0;
 maxShips = 5;
 
+var EMPTY = '0'; // water
+var HIT = '1'; // hit
+var MISS = '2'; // miss
+var SHIP = '3'; //4 spaces
+var CARRIER = '4'; //5 spaces
+var CRUISER = '5'; //3 spaces
+var SUBMARINE = '6'; //3 spaces
+var DESTROYER = '7'; //2 spaces
+
 /*var xhttp = new XMLHttpRequest();
 var url='servletName?ships='+checkedBoxes;		  
 xhttp.onreadystatechange = function()
@@ -321,14 +330,183 @@ function loadGame(gameID)
 		if(this.readyState == 4 && this.status == 200)
 		{
 			console.log("Sent Load Request");
-			var output = this.responseText;
-			window.alert(output);
+			var outputJSON = this.responseText;
+			var output = JSON.parse(outputJSON);
+			var playerOneBoard = output.playerOneBoard;
+			var playerTwoBoard = output.playerTwoBoard;
+			var boardLength = output.boardLength;
+			
+			//hide the jumbotron
+			document.getElementById('welcomeDiv').style.display = 'none';
+			
+			// hide the modal
+			$('#loadGameModal').modal('hide');
+			
+			generateTable();
+			// generate player's board
+			loadGeneratePlayerBoard(playerOneBoard, boardLength);
+			
+			// get rid of the extra space
+			document.getElementById('shipsImageDiv').style.width = '0';
+			document.getElementById('tableGridDiv').style.float = 'left';
+			
+			generateEnemyTable();
+			// generate enemy's Board
+			loadGenerateEnemyBoard(playerTwoBoard);
+			
+			//show the attack button
+			document.getElementById("buttonArea").innerHTML = '<button onclick="sendMove(); ">Attack</button>'
+				+'<button onclick="saveAndQuit();">Save &amp; Quit</button>';
+			document.getElementById("buttonArea").style.display= '';
 		}
 	};
 	//make call to server asynchronously
 	xhttpr.open('POST', url, true);
 	xhttpr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttpr.send("gid=" + gameID);
+};
+
+function loadGeneratePlayerBoard(playerOneBoard, boardLength)
+{
+	var shipsFound = [];
+	for (i in playerOneBoard)
+	{
+		var cellValue = playerOneBoard[i];
+		var iInt = parseInt(i);
+		if (cellValue == EMPTY) // water
+		{
+			continue;
+		}
+		else if (cellValue == HIT) // a hit
+		{
+			document.getElementById(i).classList.add('hit');
+		}
+		else if (cellValue == MISS) // a miss
+		{
+			document.getElementById(i).classList.add('miss');
+		}
+		else if (cellValue == DESTROYER)
+		{
+			if (shipsFound.indexOf(DESTROYER) == -1) //ship not found yet
+			{
+				shipsFound.push(DESTROYER);
+				if (playerOneBoard[iInt + 1] == DESTROYER) // ship is horizontal
+				{
+					document.getElementById(i).innerHTML = "<div id='ship21div' class='ship2 piece1'></div>";
+					document.getElementById(iInt + 1).innerHTML = "<div id='ship22div' class='ship2 piece2'></div>";
+				}
+				else // ship is vertical
+				{
+					document.getElementById(i).innerHTML = "<div id='ship21div' class='ship2r piece1r'></div>";
+					document.getElementById(iInt + boardLength).innerHTML = "<div id='ship22div' class='ship2r piece2r'></div>";
+				}
+			}
+		}
+		else if (cellValue == CRUISER)
+		{
+			if (shipsFound.indexOf(CRUISER) == -1) //ship not found yet
+			{
+				shipsFound.push(CRUISER);
+				if (playerOneBoard[iInt + 1] == CRUISER) // ship is horizontal
+				{
+					document.getElementById(i).innerHTML = "<div id='ship311div' class='ship31 piece1'></div>";
+					document.getElementById(iInt + 1).innerHTML ="<div id='ship312div' class='ship31 piece2'></div>";
+					document.getElementById(iInt + 2).innerHTML ="<div id='ship313div' class='ship31 piece3'></div>";
+				}
+				else // ship is vertical
+				{
+					document.getElementById(i).innerHTML = "<div id='ship311div' class='ship31r piece1r'></div>";
+					document.getElementById(iInt + boardLength).innerHTML ="<div id='ship312div' class='ship31r piece2r'></div>";
+					document.getElementById(iInt + boardLength*2).innerHTML ="<div id='ship313div' class='ship31r piece3r'></div>";
+				}
+			}
+		}
+		else if (cellValue == SUBMARINE)
+		{
+			if (shipsFound.indexOf(SUBMARINE) == -1) //ship not found yet
+			{
+				shipsFound.push(SUBMARINE);
+				if (playerOneBoard[iInt + 1] == SUBMARINE) // ship is horizontal
+				{
+					document.getElementById(i).innerHTML = "<div id='ship321div' class='ship32 piece1'></div>";
+					document.getElementById(iInt + 1).innerHTML ="<div id='ship322div' class='ship32 piece2'></div>";
+					document.getElementById(iInt + 2).innerHTML ="<div id='ship323div' class='ship32 piece3'></div>";
+				}
+				else // ship is vertical
+				{
+					document.getElementById(i).innerHTML = "<div id='ship321div' class='ship32r piece1r'></div>";
+					document.getElementById(iInt + boardLength).innerHTML ="<div id='ship322div' class='ship32r piece2r'></div>";
+					document.getElementById(iInt + boardLength*2).innerHTML ="<div id='ship323div' class='ship32r piece3r'></div>";
+				}
+			}
+		}
+		else if (cellValue == SHIP)
+		{
+			if (shipsFound.indexOf(SHIP) == -1) //ship not found yet
+			{
+				shipsFound.push(SHIP);
+				if (playerOneBoard[iInt + 1] == SHIP) // ship is horizontal
+				{
+					document.getElementById(i).innerHTML = "<div id='ship41div' class='ship4 piece1'></div>";
+					document.getElementById(iInt + 1).innerHTML = "<div id='ship42div' class='ship4 piece2'></div>";
+					document.getElementById(iInt + 2).innerHTML ="<div id='ship43div' class='ship4 piece3'></div>";
+					document.getElementById(iInt + 3).innerHTML ="<div id='ship44div' class='ship4 piece4'></div>";
+				}
+				else // ship is vertical
+				{
+					document.getElementById(i).innerHTML = "<div id='ship41div' class='ship4r piece1r'></div>";
+					document.getElementById(iInt + boardLength).innerHTML ="<div id='ship42div' class='ship4r piece2r'></div>";
+					document.getElementById(iInt + boardLength*2).innerHTML ="<div id='ship43div' class='ship4r piece3r'></div>";
+					document.getElementById(iInt + boardLength*3).innerHTML = "<div id='ship44div' class='ship4r piece4r'></div>"
+				}
+			}
+		}
+		else if (cellValue == CARRIER)
+		{
+			if (shipsFound.indexOf(CARRIER) == -1) //ship not found yet
+			{
+				shipsFound.push(CARRIER);
+				if (playerOneBoard[iInt + 1] == CARRIER) // ship is horizontal
+				{
+					document.getElementById(i).innerHTML = "<div id='ship51div' class='ship5 piece1'></div>";
+					document.getElementById(iInt + 1).innerHTML = "<div id='ship52div' class='ship5 piece2'></div>";
+					document.getElementById(iInt + 2).innerHTML ="<div id='ship53div' class='ship5 piece3'></div>";
+					document.getElementById(iInt + 3).innerHTML ="<div id='ship54div' class='ship5 piece4'></div>";
+					document.getElementById(iInt + 3).innerHTML ="<div id='ship55div' class='ship5 piece5'></div>";
+				}
+				else // ship is vertical
+				{
+					document.getElementById(i).innerHTML = "<div id='ship51div' class='ship5r piece1r'></div>";
+					document.getElementById(iInt + boardLength).innerHTML ="<div id='ship52div' class='ship5r piece2r'></div>";
+					document.getElementById(iInt + boardLength*2).innerHTML ="<div id='ship53div' class='ship5r piece3r'></div>";
+					document.getElementById(iInt + boardLength*3).innerHTML = "<div id='ship54div' class='ship5r piece4r'></div>";
+					document.getElementById(iInt + boardLength*4).innerHTML = "<div id='ship55div' class='ship5r piece5r'></div>";
+				}
+			}
+		}
+	}
+};
+
+function loadGenerateEnemyBoard(playerTwoBoard)
+{
+	for (i in playerTwoBoard)
+	{
+		var cellValue = playerTwoBoard[i];
+		if (cellValue == '1') // a hit
+		{
+			//document.getElementById(i +'e').classList.removeClass("bg-info");
+			document.getElementById(i +'e').classList.add('hit');
+		}
+		else if (cellValue == '2') // a miss
+		{
+			//document.getElementById(i +'e').classList.removeClass("bg-info");
+			document.getElementById(i +'e').classList.add('miss');
+		}
+		else // either ship or water, unknown
+		{
+			
+		}
+	}
 };
 
 function placeShips(){
@@ -477,14 +655,19 @@ function sendMove(){
 				var data = xhttp.responseText;
 				console.log("Received hit/miss: " + data);
 				var sound;
-				if(data == 1)
+				if (data == 10)
+				{
+					// user won
+					// show celebration
+				}
+				else if(data == 1)
 					{
 					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
 					$('input[name=cell]:checked').parent().parent().addClass("hit");
 					sound = 'kaboomSoundEnemy';
 					
 					}
-				else
+				else // data  == 2
 					{
 					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
 					$('input[name=cell]:checked').parent().parent().addClass("miss");
@@ -524,7 +707,8 @@ function receiveAttack()
 			
 			if (attackResult == 10) // end game
 			{
-				
+				//user lost
+				// just display "You are a  loser"
 			}
 			else // either hit or miss
 			{
@@ -648,7 +832,7 @@ function generateEnemyTable() {
 	    rows+='<tr><td class="enemyGridCell"><label>'+(i+1)+'</label></td>';
 		//Append buttons
 		for(j=0; j<xSize; j++){
-			rows+='<td  class="enemyGridCell" style="width: 51px; height:51px;">';
+			rows+='<td id="' + (ySize*i + j) + 'e" class="enemyGridCell" style="width: 51px; height:51px;">';
 			rows+='<label style="border:1 px solid yellow; padding-top:25%;"><input type="radio" name="cell" value="'+counter+'"></td></label>';
 		    	counter++;
 		    }
