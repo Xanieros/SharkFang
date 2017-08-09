@@ -188,6 +188,7 @@
         <h4 class="modal-title" id="myProfileModalTitle">User</h4>
       </div>
       <div class="modal-body">
+      	<img id='profileModalImage'/>
         <table class="table table-bordered table-responsive" id="myProfileTable"></table>
       </div>
       <div class="modal-footer">
@@ -204,9 +205,7 @@
     <h1 align='center' style='color:red;'> <strong> SHARK FANG </strong></h1>
     <h1 align='center' style='color:red;'> <strong> BATTLESHIP! </strong></h1>
   </div>
-	<button onclick="generateTable();generateShipPiecesDiv();generateShips();"> Initialize Board </button>
-	<button onclick="resetBoard();"> Reset Ships </button>
-	<button onclick="printShipArray();"> Place Ships </button>
+	<button id='resetShipButton' onclick="resetBoard();" style='display:none;'> Reset Ships </button>
 	<div class='container' style="border: 1px solid green;">
 		<div id='shipsImageDiv' style="border: 1px solid black; float:left; width:500px;">
 		</div>
@@ -222,19 +221,19 @@
 	<div id="shipPiecesDiv"></div>
 	
 	<audio id='kaboomSoundEnemy' controls style='display:none;'>
-	  <source src="../audio/kaboom.mp3" type="audio/mpeg">
+	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/kaboom.mp3" type="audio/mpeg">
 	</audio>
 	
 	<audio id='splooshSoundEnemy' controls style='display:none;'>
-	  <source src="../audio/sploosh.mp3" type="audio/mpeg">
+	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/sploosh.mp3" type="audio/mpeg">
 	</audio>
 	
 	<audio id='kaboomSoundPlayer' controls style='display:none;'>
-	  <source src="../audio/kaboom.mp3" type="audio/mpeg">
+	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/kaboom.mp3" type="audio/mpeg">
 	</audio>
 	
 	<audio id='splooshSoundPlayer' controls style='display:none;'>
-	  <source src="../audio/sploosh.mp3" type="audio/mpeg">
+	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/sploosh.mp3" type="audio/mpeg">
 	</audio>
   
 <!-- <video playsinline autoplay muted loop poster="../image/sea-water-hd-1.jpg" id="bgvid">
