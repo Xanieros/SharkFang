@@ -54,17 +54,18 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		String email 	= (String)session.getAttribute("email");
 		String fname 	= (String)session.getAttribute("fname");
 		String lname 	= (String)session.getAttribute("lname");
-		/*Profile Picture*/
+		String profPic 	= (String)session.getAttribute("profPic");
 		
 		//This represents player before updates
-		Player player = new Player(uid, uname, pword, email, fname, lname, null);
+		Player player = new Player(uid, uname, pword, email, fname, lname, profPic);
 		logger.debug("Player Info before: "+player);		
 		
 		//Retrieve the new Player Data from frontend
 		String fnameNew = request.getParameter("fname");
 		String lnameNew = request.getParameter("lname");
 		String pwordNew = request.getParameter("pword");
-		logger.debug(fnameNew+lnameNew+pwordNew);
+		String profPicNew = request.getParameter("profPic");
+		logger.debug(fnameNew+lnameNew+pwordNew+profPicNew);
 		
 		//These will change the player to reflect updated value
 		if(pwordNew.length()>0){
@@ -79,6 +80,10 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 			player.setLname(lnameNew);
 		}
 		
+		if(profPicNew.length()>0){
+			player.setLname(profPicNew);
+		}
+		
 		logger.debug("Player Info after: "+player);
 		
 		//Call the method
@@ -89,6 +94,7 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 			//session.setAttribute("email", updatedPlayer.getEmail());
 			session.setAttribute("fname", updatedPlayer.getFname());
 			session.setAttribute("lname", updatedPlayer.getLname());
+			session.setAttribute("profPic", updatedPlayer.getProfPic());
 		}
 		
 	}
