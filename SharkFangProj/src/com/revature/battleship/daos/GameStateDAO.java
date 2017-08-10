@@ -13,12 +13,12 @@ import oracle.jdbc.OracleTypes;
 
 public class GameStateDAO implements GameStateInterface {
 	private static final Logger LOGGER = LogManager.getLogger(GameStateDAO.class);
-	private Connection conn = OracleConnection.getOracleConnection();
+	private static Connection conn;
 
 	@Override
 	public int startGame(int p1Id, int p2Id, String p1Board, String p2Board, int rowLength) {
 		LOGGER.info("in startGame");
-
+		conn = OracleConnection.getOracleConnection();
 		int output = -1;
 
 		try {
@@ -34,6 +34,7 @@ public class GameStateDAO implements GameStateInterface {
 			cs.executeQuery();
 			LOGGER.info("getting gameState ID");
 			output = cs.getInt(6);
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,6 +46,7 @@ public class GameStateDAO implements GameStateInterface {
 	public GameState loadGame(int gid) {
 		LOGGER.info("in loadGame");
 		GameState gameState = new GameState();
+		conn = OracleConnection.getOracleConnection();
 		try {
 			LOGGER.info("calling GET_GAME_STATE(?,?)");
 			CallableStatement cs = conn.prepareCall("call GET_GAME_STATE(?,?)");
@@ -63,6 +65,7 @@ public class GameStateDAO implements GameStateInterface {
 			} else {
 				gameState = null;
 			}
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			gameState = null;
@@ -77,6 +80,7 @@ public class GameStateDAO implements GameStateInterface {
 	public Record endGame(int gid, int winner) {
 	//public ArrayList<Record> endGame(int gid, int winner) {
 		LOGGER.info("in endGame");
+		conn = OracleConnection.getOracleConnection();
 		RecordDAO rDAO = new RecordDAO();
 		Record p1Record = new Record();
 		//Record p2Record = new Record();
@@ -168,6 +172,7 @@ public class GameStateDAO implements GameStateInterface {
 				 * record.setWins(rs2.getInt("WINS")); }
 				 */
 				LOGGER.debug("record id: " + p1Record.getRid());
+				conn.close();
 			} else {
 				p1Record = null;
 			}
@@ -181,6 +186,7 @@ public class GameStateDAO implements GameStateInterface {
 	@Override
 	public void saveGame(int gid, String p1Board, String p2Board) {
 		LOGGER.info("in saveGame");
+		conn = OracleConnection.getOracleConnection();
 		try {
 			LOGGER.info("calling UPDATE_GAME(?,?,?)");
 			CallableStatement cs = conn.prepareCall("call UPDATE_GAME(?,?,?)");
@@ -189,6 +195,7 @@ public class GameStateDAO implements GameStateInterface {
 			cs.setString(3, p2Board);
 
 			cs.executeQuery();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -198,13 +205,14 @@ public class GameStateDAO implements GameStateInterface {
 	@Override
 	public void deleteGameState(int gameStateID) {
 		LOGGER.debug("in deleteGameState");
+		conn = OracleConnection.getOracleConnection();
 		try {
 			String sqlCommand = "call DELETE_GAME_STATE(?)";
 			CallableStatement deleteGSCallableStmt = conn.prepareCall(sqlCommand);
 			deleteGSCallableStmt.setInt(1, gameStateID);
 			
 			deleteGSCallableStmt.executeUpdate();
-			
+			conn.close();
 		} catch (SQLException sqlE) {
 			LOGGER.fatal("SQL Exception in DeleteGameState(" + gameStateID + ")");
 			sqlE.printStackTrace();
@@ -215,6 +223,7 @@ public class GameStateDAO implements GameStateInterface {
 	public ArrayList<GameState> loadPlayerGames(int uid, int offset) {
 		ArrayList<GameState> gameStates = new ArrayList<GameState>();
 		LOGGER.debug("in loadPlayerGames");
+		conn = OracleConnection.getOracleConnection();
 		try {
 			CallableStatement cs = conn.prepareCall("call GET_PLAYER_GAME_STATES(?,?,?)");
 			
@@ -237,6 +246,7 @@ public class GameStateDAO implements GameStateInterface {
 				
 				gameStates.add(gameState);
 			}
+			conn = OracleConnection.getOracleConnection();
 			
 		} catch (SQLException sqlE) {
 			LOGGER.fatal("SQL Exception in loadPlayerGames(" + uid + ")");
