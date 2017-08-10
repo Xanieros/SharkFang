@@ -88,6 +88,7 @@ function checkUserLoggedIn()
 				
 				// need to set the profile picture
 				document.getElementById('profileModalImage').src = authenticated;
+				document.getElementById('navbarImage').src = authenticated;
 			}
 		}
 	};
@@ -279,6 +280,12 @@ function populateLoadGameModal(offsetInput)
 			
 			/* have to parse the JSON */
 			var gameState = JSON.parse(output);
+			if (gameState == '')
+			{
+				document.getElementById('loadGameModalContent').innerHTML = "You have no saved games";
+				document.getElementById('loadGameFooter').innerHTML = "<button type='button' onclick='populateMyModalProfile()' class='btn btn-primary' data-dismiss='modal'>Close</button>";
+				return;
+			}
 			
 			var tableString = "<table class='table table-hover table-responsive' style='text-align:center'" +
 								"<tr>" +
@@ -289,9 +296,6 @@ function populateLoadGameModal(offsetInput)
 									"<th style='text-align:center'> </th>" +
 								"</tr>";
 			
-			/* <a href="#">
-          <span class="glyphicon glyphicon-trash"></span>
-        </a> */
 			
 			for (i in gameState)
 			{
@@ -670,6 +674,11 @@ function sendMove(){
 				{
 					// user won
 					// show celebration
+					document.getElementById('overlay').style.backgroundColor = 'rgba(0,155,0,0.5)';
+					document.getElementById('overlayText').innerHTML = "You Win<br> <h5>Click anywhere on the screen to close</h5>";
+					turnOnOverlay();
+					// delay this to the end of the function after sound has gone
+					// also board does not save properly 
 				}
 				else if(data == 1)
 					{
@@ -720,6 +729,9 @@ function receiveAttack()
 			{
 				//user lost
 				// just display "You are a  loser"
+				document.getElementById('overlay').style.backgroundColor = 'rgba(155,0,0,0.5)';
+				document.getElementById('overlayText').innerHTML = "You Lose<br> <h5>Click anywhere on the screen to close</h5>";
+				turnOnOverlay();
 			}
 			else // either hit or miss
 			{
@@ -1108,6 +1120,18 @@ function checkDonePlacingShips() {
 	}
 };
 
+function turnOnOverlay()
+{
+	 document.getElementById("overlay").style.display = "block"; 
+};
+
+function turnOffOverlay()
+{
+	 document.getElementById("overlay").style.display = "none"; 
+	 // reload the page
+	 location.reload();
+};
+
 function generateShips() {
 	var shipString = "";
 	shipString += "<img id='ship2' src='../images/ship2.png' draggable='true' ondblclick='rotate(this);' ondragstart='drag(event)' style='width: 100px; height:50px; float:left; margin:25px 0px;'></img>" +
@@ -1126,4 +1150,3 @@ function generateShips() {
             $('body').css('background-position', x + 'px 0');
         }, 30);
     })
-
