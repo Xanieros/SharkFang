@@ -36,7 +36,7 @@
       	<li id='profileModalNavButton' style='display:none;'><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal" class='handOnHover'><img id='navbarImage' style='max-width:20px;'/> Profile</a></li>
         <li id='scoresModalNavButton' style='display:none;'><a onclick="" href="#"><span class="glyphicon glyphicon-king handOnHover"></span> Scores</a></li>
       	<li id='newGameModalNavButton' style='display:none;'><a data-toggle="modal" data-target="#newGameModal" class="handOnHover"><span class="glyphicon glyphicon-screenshot"></span> New Game</a></li>
-      	<li id='loadGameModalNavButton' style='display:none;'><a onclick="populateLoadGameModal(0)" data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
+      	<li id='loadGameModalNavButton' style='display:none;'><a id='loadGameAnchor' onclick="populateLoadGameModal(0)" data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li id='loginModalNavButton'><a data-toggle="modal" data-target="#loginModal" class="handOnHover" onclick="hideErrorMessage();"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
@@ -59,7 +59,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group" id=>
-          <form id="loginForm" action="loginUser" method="POST" onsubmit='attemptedLogin();'>
+          <form id="loginForm" action="loginUser" method="POST">
             <label>Username</label><input class="form-control" type=text name="username" required='required'>
             <label>Password</label><input class="form-control" type=password name="password" required='required'>
           </form>
