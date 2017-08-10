@@ -283,7 +283,7 @@ function populateLoadGameModal(offsetInput)
 			if (gameState == '')
 			{
 				document.getElementById('loadGameModalContent').innerHTML = "You have no saved games";
-				document.getElementById('loadGameFooter').innerHTML = "<button type='button' onclick='populateMyModalProfile()' class='btn btn-primary' data-dismiss='modal'>Close</button>";
+				document.getElementById('nextPrevLoadGameDiv').innerHTML = "<button type='button' onclick='populateMyModalProfile()' class='btn btn-primary' data-dismiss='modal'>Close</button>";
 				return;
 			}
 			
@@ -306,7 +306,7 @@ function populateLoadGameModal(offsetInput)
 				}
 				/* access through gameState[i].key */
 				tableString += "<tr>" +
-								"<td> <a href='#'> <span class='glyphicon glyphicon-trash'></span> Delete</a>" +
+								"<td> <a href='javascript:deleteGame(" + gameState[i].gameStateId +");'> <span class='glyphicon glyphicon-trash'></span> Delete</a>" +
 								"<td>" + opponent + "</td>" +
 								"<td>" + gameState[i].boardLength + "</td>" +
 								"<td>" + gameState[i].timeStamp + "</td>" +
@@ -379,6 +379,29 @@ function loadGame(gameID)
 	xhttpr.open('POST', url, true);
 	xhttpr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttpr.send("gid=" + gameID);
+};
+
+function deleteGame(gid)
+{
+	var xhttpr = new XMLHttpRequest();
+	var url = 'deleteGame';
+	
+	console.log("loadNewGame() Called");
+	xhttpr.onreadystatechange = function()
+	{	
+		//check to see if readystate == 4 and status = 200
+		if(this.readyState == 4 && this.status == 200)
+		{
+			console.log("Delete Game: " + gid +  " requested");
+			
+			// reload the modal
+			$("#loadGameAnchor").triggerHandler("click");
+		}
+	};
+	//make call to server asynchronously
+	xhttpr.open('POST', url, true);
+	xhttpr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttpr.send("gid=" + gid);
 };
 
 function loadGeneratePlayerBoard(playerOneBoard, boardLength)
@@ -583,9 +606,10 @@ function saveAndQuit(){
 		{
 			//check to see if readystate == 4 and status = 200
 			if(xhttp.readyState == 4 && xhttp.status == 200)
-				{
-					console.log("Called Save and quit");
-				}
+			{
+				console.log("Called Save and quit");
+				location.reload();
+			}
 			
 		}
 		//make call to server asynchronously
@@ -670,15 +694,18 @@ function sendMove(){
 				var data = xhttp.responseText;
 				console.log("Received hit/miss: " + data);
 				var sound;
+				var gameEnded = false;
 				if (data == 10)
 				{
 					// user won
 					// show celebration
 					document.getElementById('overlay').style.backgroundColor = 'rgba(0,155,0,0.5)';
-					document.getElementById('overlayText').innerHTML = "You Win<br> <h5>Click anywhere on the screen to close</h5>";
-					turnOnOverlay();
+					document.getElementById('overlayText').innerHTML = "Congratulations! You Win!<br> <h5>Click anywhere on the screen to close</h5>";
+					sound = 'kaboomSoundEnemy';
+					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
+					$('input[name=cell]:checked').parent().parent().addClass("hit");
 					// delay this to the end of the function after sound has gone
-					// also board does not save properly 
+					gameEnded = true;
 				}
 				else if(data == 1)
 					{
@@ -699,7 +726,14 @@ function sendMove(){
 				soundElement.play();
 				soundElement.onended = function() 
 				{
-					receiveAttack();
+					if (gameEnded)
+					{
+						turnOnOverlay();
+					}
+					else
+					{
+						receiveAttack();
+					}
 				}
 			}
 			
@@ -732,6 +766,19 @@ function receiveAttack()
 				document.getElementById('overlay').style.backgroundColor = 'rgba(155,0,0,0.5)';
 				document.getElementById('overlayText').innerHTML = "You Lose<br> <h5>Click anywhere on the screen to close</h5>";
 				turnOnOverlay();
+				/* Need to change this so that play sound and then the overlay pops up
+				 * solution?: make a new sound for hit that is end game so i can call for both sides
+				 * soundElement.onended = function() 
+				{
+					if (gameEnded)
+					{
+						turnOnOverlay();
+					}
+					else
+					{
+						receiveAttack();
+					}
+				} */
 			}
 			else // either hit or miss
 			{
