@@ -38,7 +38,7 @@ public class CheckAnyoneLoginServlet extends HttpServlet {
 		String profPic = (String) session.getAttribute("profPic");
 		if (username != null)
 		{
-			if(profPic.length() > 0){
+			if(profPic != null && profPic.length() > 0){
 				response.getWriter().write(profPic);
 				return;
 			}else{				

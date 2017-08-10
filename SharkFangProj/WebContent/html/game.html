@@ -33,7 +33,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-      	<li id='profileModalNavButton' style='display:none;'><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal" class='handOnHover'><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+      	<li id='profileModalNavButton' style='display:none;'><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal" class='handOnHover'><img id='navbarImage' style='max-width:20px;'/> Profile</a></li>
         <li id='scoresModalNavButton' style='display:none;'><a onclick="" href="#"><span class="glyphicon glyphicon-king handOnHover"></span> Scores</a></li>
       	<li id='newGameModalNavButton' style='display:none;'><a data-toggle="modal" data-target="#newGameModal" class="handOnHover"><span class="glyphicon glyphicon-screenshot"></span> New Game</a></li>
       	<li id='loadGameModalNavButton' style='display:none;'><a onclick="populateLoadGameModal(0)" data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
@@ -143,7 +143,7 @@
           <div id='loadGameModalContent' class='container' style='width:100%;'></div>
         
       </div>
-      <div class="modal-footer">
+      <div id='loadGameFooter' class="modal-footer">
         <div id='nextPrevLoadGameDiv' class='container' style='width:100%;'></div>
       </div>
     </div>
@@ -188,7 +188,8 @@
         <h4 class="modal-title" id="myProfileModalTitle">User</h4>
       </div>
       <div class="modal-body">
-      	<img id='profileModalImage'/>
+      	<img id='profileModalImage' style='width:100px; height: 100px'/>
+      	<button >Choose New..</button>
         <table class="table table-bordered table-responsive" id="myProfileTable"></table>
       </div>
       <div class="modal-footer">
@@ -235,6 +236,12 @@
 	<audio id='splooshSoundPlayer' controls style='display:none;'>
 	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/sploosh.mp3" type="audio/mpeg">
 	</audio>
+	
+	<button onclick='turnOnOverlay();'>Overlay</button>
+	
+	<div id="overlay" onclick="turnOffOverlay();">
+	  <div id="overlayText"></div>
+	</div>
   
 <!-- <video playsinline autoplay muted loop poster="../image/sea-water-hd-1.jpg" id="bgvid">
     <source src="../resources/video/Running_Stream_Of_Water.webm" type="video/webm">
