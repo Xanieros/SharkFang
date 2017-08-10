@@ -12,13 +12,13 @@ import oracle.jdbc.OracleTypes;
 
 public class PlayerDAO implements PlayerInterface{
 	private static final Logger LOGGER = LogManager.getLogger(PlayerDAO.class);
-	private static Connection conn = OracleConnection.getOracleConnection();
+	private static Connection conn;
 	
 	@Override
 	public Player login(String username, String password) {
 		LOGGER.info("in login");
 		Player player = new Player();
-		
+		conn = OracleConnection.getOracleConnection();
 		try{
 			LOGGER.info("calling AUTH(?,?,?)");
 			CallableStatement cs = conn.prepareCall("call AUTH(?,?,?)");
@@ -45,7 +45,7 @@ public class PlayerDAO implements PlayerInterface{
 				LOGGER.info("login failed");
 				player = null;
 			}
-				
+			conn.close();
 		}
 		catch(Exception e)
 		{
@@ -58,6 +58,7 @@ public class PlayerDAO implements PlayerInterface{
 	public Player updateInfo(int pid, String pword, String fname, String lname, String profPic) {
 		LOGGER.info("in updateInfo");
 		Player player = new Player();
+		conn = OracleConnection.getOracleConnection();
 		try
 		{
 			LOGGER.info("calling UPDATE_PLAYER(?,?,?,?,?,?)");
@@ -81,7 +82,7 @@ public class PlayerDAO implements PlayerInterface{
 				player = null;
 			}
 				
-			
+			conn.close();
 		}
 		catch (Exception e)
 		{
@@ -95,7 +96,7 @@ public class PlayerDAO implements PlayerInterface{
 	{
 		LOGGER.info("in getUsername");
 		String output = "";
-		
+		conn = OracleConnection.getOracleConnection();
 		try{
 			LOGGER.info("calling GET_USERNAME(?,?)");
 			CallableStatement cs = conn.prepareCall("call GET_USERNAME(?,?)");
@@ -105,6 +106,7 @@ public class PlayerDAO implements PlayerInterface{
 			cs.executeQuery();
 			
 			output = cs.getString(2);
+			conn.close();
 		}
 		catch(Exception e)
 		{
@@ -116,6 +118,7 @@ public class PlayerDAO implements PlayerInterface{
 	@Override
 	public String getPassword(int pid) {
 		String password = null;
+		conn = OracleConnection.getOracleConnection();
 		try {
 			String sqlCommand = "call GET_PASSWORD(?,?)";
 			CallableStatement getPasswordCallableStmt = conn.prepareCall(sqlCommand);
@@ -125,7 +128,7 @@ public class PlayerDAO implements PlayerInterface{
 			getPasswordCallableStmt.executeQuery();
 			LOGGER.debug("Getting password");
 			password = getPasswordCallableStmt.getString(2);
-			
+			conn.close();
 		} catch (SQLException sqlE)
 		{
 			sqlE.printStackTrace();
@@ -138,7 +141,7 @@ public class PlayerDAO implements PlayerInterface{
 	{
 		LOGGER.info("in createNewPlayer");
 		Player newPlayer = new Player();
-		
+		conn = OracleConnection.getOracleConnection();
 		try
 		{
 			LOGGER.info("calling CREATE_PLAYER(?,?,?,?,?,?,?,?)");
@@ -166,6 +169,7 @@ public class PlayerDAO implements PlayerInterface{
 				newPlayer.setProfPic(rs.getString("PROFILE_PICTURE"));
 				
 				LOGGER.debug("New Player ID: " + newPlayer.getUid());
+				conn.close();
 			}
 			else
 				newPlayer = null;
