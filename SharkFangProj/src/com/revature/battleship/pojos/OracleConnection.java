@@ -17,7 +17,7 @@ import java.io.FileReader;
 public class OracleConnection {
 
 	// static connection variable for singleton design pattern
-	private static Connection conn;
+	private static Connection conn = null;
     private String url;
     private String username;
     private String password;
@@ -44,7 +44,6 @@ public class OracleConnection {
 			
 			//3 - Get connection object;
 			conn = DriverManager.getConnection(url, username, password);
-			
 		}
 		catch(Exception e)
 		{
