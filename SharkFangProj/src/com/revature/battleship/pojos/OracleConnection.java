@@ -18,56 +18,43 @@ public class OracleConnection {
 
 	// static connection variable for singleton design pattern
 	private static Connection conn = null;
-    private String url;
-    private String username;
-    private String password;
+	private String url;
+	private String username;
+	private String password;
 	private String oracleClass;
-	
+
 	// private constructor for singleton design pattern
-	private OracleConnection()
-	{
-		try{
-			//Class.forName(oracleClass);
-            //conn = DriverManager.getConnection(url, username, password);
-			//create an instance of java.util.Properties class
+	private OracleConnection() {
+		try {
+			// Class.forName(oracleClass);
+			// conn = DriverManager.getConnection(url, username, password);
+			// create an instance of java.util.Properties class
 			Properties prop = new Properties();
-			
-			//load the prop instance with the file
+
+			// load the prop instance with the file
 			prop.load(new FileReader(new File("connection.properties")));
-			
+
 			url = prop.getProperty("Url");
 			username = prop.getProperty("Username");
 			password = prop.getProperty("Password");
 			oracleClass = prop.getProperty("OracleClass");
-			//2 - Load Driver
+			// 2 - Load Driver
 			Class.forName(oracleClass);
-			
-			//3 - Get connection object;
+
+			// 3 - Get connection object;
 			conn = DriverManager.getConnection(url, username, password);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// static method to create new connection using singleton design pattern
-	public static Connection getOracleConnection()
-	{
-			// check to see if static variable conn has been initialized
-			/*try {*/
-				if(conn == null)
-				{
-					new OracleConnection();
-				}
-				/*else if(conn.isClosed())
-				{
-					new OracleConnection();
-				}*/
-			/*} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-			return conn;
+	public static Connection getOracleConnection() {
+
+		if (conn == null) {
+			new OracleConnection();
+		}
+
+		return conn;
 	}
 }
