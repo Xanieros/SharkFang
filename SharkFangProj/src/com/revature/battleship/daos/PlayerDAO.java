@@ -169,10 +169,10 @@ public class PlayerDAO implements PlayerInterface{
 				newPlayer.setProfPic(rs.getString("PROFILE_PICTURE"));
 				
 				LOGGER.debug("New Player ID: " + newPlayer.getUid());
-				conn.close();
 			}
 			else
 				newPlayer = null;
+			conn.close();
 		}
 		catch(Exception e)
 		{
