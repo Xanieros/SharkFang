@@ -55,19 +55,19 @@ public class OracleConnection {
 	public static Connection getOracleConnection()
 	{
 			// check to see if static variable conn has been initialized
-			try {
+			/*try {*/
 				if(conn == null)
 				{
 					new OracleConnection();
 				}
-				else if(conn.isClosed())
+				/*else if(conn.isClosed())
 				{
 					new OracleConnection();
-				}
-			} catch (SQLException e) {
+				}*/
+			/*} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			return conn;
 	}
 }
