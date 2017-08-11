@@ -31,6 +31,10 @@ function testFunction(){
 	window.alert("test called");
 };
 
+function reloadCurrentPage() {
+	location.reload();
+};
+
 //Unused due to Page Redirect
 /*function toggleLoginModal(){
 	
@@ -290,6 +294,7 @@ function populateLoadGameModal(offsetInput)
 			var tableString = "<table class='table table-hover table-responsive' style='text-align:center'" +
 								"<tr>" +
 									"<th style='text-align:center'> </th>" +
+									"<th style='text-align:center'> Game ID </th>" +
 									"<th style='text-align:center'> Opponent </th>" +
 									"<th style='text-align:center'> Board Length </th>" +
 									"<th style='text-align:center'> Last Savepoint </th>" +
@@ -307,6 +312,7 @@ function populateLoadGameModal(offsetInput)
 				/* access through gameState[i].key */
 				tableString += "<tr>" +
 								"<td> <a href='javascript:deleteGame(" + gameState[i].gameStateId +");'> <span class='glyphicon glyphicon-trash'></span> Delete</a>" +
+								"<td>" + gameState[i].gameStateId + "</td>" +
 								"<td>" + opponent + "</td>" +
 								"<td>" + gameState[i].boardLength + "</td>" +
 								"<td>" + gameState[i].timeStamp + "</td>" +
@@ -836,6 +842,7 @@ function updateProfile()
 	txt = "fname=" + $('#fname').prop('value') + "&";
 	txt += "lname=" + $('#lname').prop('value') + "&";
 	txt += "pword=" + $('#pword').prop('value');
+	// need to add profPic
 	console.log(txt);
 
 	//make call to server asynchronously
@@ -1127,7 +1134,6 @@ function printShipArray() {
 		}
 	}
 	/* need to pass this to servlet*/
-	window.alert(shipList);
 	return shipList;
 };
 
