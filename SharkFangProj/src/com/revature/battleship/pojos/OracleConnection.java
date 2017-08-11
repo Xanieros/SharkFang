@@ -57,7 +57,11 @@ public class OracleConnection {
 	{
 			// check to see if static variable conn has been initialized
 			try {
-				if(conn.isClosed() || conn == null)
+				if(conn == null)
+				{
+					new OracleConnection();
+				}
+				else if(conn.isClosed())
 				{
 					new OracleConnection();
 				}
