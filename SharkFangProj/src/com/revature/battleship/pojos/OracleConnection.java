@@ -8,6 +8,7 @@ package com.revature.battleship.pojos;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import java.io.File;
@@ -55,9 +56,14 @@ public class OracleConnection {
 	public static Connection getOracleConnection()
 	{
 			// check to see if static variable conn has been initialized
-			if(conn==null)
-			{
-				new OracleConnection();
+			try {
+				if(conn==null || conn.isClosed())
+				{
+					new OracleConnection();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return conn;
 	}
