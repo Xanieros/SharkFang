@@ -16,13 +16,12 @@ import oracle.jdbc.OracleTypes;
 
 public class RecordDAO implements RecordInterface {
 	private static final Logger LOGGER = LogManager.getLogger(GameStateDAO.class);
-	private static Connection conn;
+	private static Connection conn = OracleConnection.getOracleConnection();
 
 	@Override
 	public Record addWin(int pid) {
 		LOGGER.info("in addWin");
 		Record rec = new Record();
-		conn = OracleConnection.getOracleConnection();
 		try {
 			LOGGER.info("calling ADD_WIN(?) for " + pid);
 			CallableStatement cs = conn.prepareCall("call ADD_WIN(?)");
@@ -32,7 +31,6 @@ public class RecordDAO implements RecordInterface {
 			rec = getPlayerRecord(pid);
 			
 			LOGGER.debug(pid + "'s wins: " + rec.getWins());
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -43,7 +41,6 @@ public class RecordDAO implements RecordInterface {
 	public Record addLoss(int pid) {
 		LOGGER.info("in addLoss");
 		Record rec = new Record();
-		conn = OracleConnection.getOracleConnection();
 		try {
 			LOGGER.info("calling ADD_LOSS(?) for " + pid);
 			CallableStatement cs = conn.prepareCall("call ADD_LOSS(?)");
@@ -52,7 +49,6 @@ public class RecordDAO implements RecordInterface {
 
 			rec = getPlayerRecord(pid);
 			LOGGER.debug(pid + "'s wins: " + rec.getLosses());
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,7 +59,6 @@ public class RecordDAO implements RecordInterface {
 	public Record getPlayerRecord(int uid) {
 		LOGGER.info("in getPlayerRecord");
 		Record record = new Record();
-		conn = OracleConnection.getOracleConnection();
 		try {
 			LOGGER.info("calling GET_RECORD(?,?)");
 			CallableStatement cs = conn.prepareCall("call GET_RECORD(?,?)");
@@ -81,7 +76,6 @@ public class RecordDAO implements RecordInterface {
 
 			} else
 				record = null;
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			record = null;
@@ -93,7 +87,6 @@ public class RecordDAO implements RecordInterface {
 	public ArrayList<Record> getTopRank(int limit) {
 		LOGGER.info("in getTopRank");
 		ArrayList<Record> recordsAL = new ArrayList<Record>();
-		conn = OracleConnection.getOracleConnection();
 		try {
 			LOGGER.info("calling GET_TOP_RECORDS");
 			CallableStatement cs = conn.prepareCall("call GET_TOP_RECORDS(?,?)");
@@ -109,7 +102,6 @@ public class RecordDAO implements RecordInterface {
 				recordsAL.add(curRec);
 			}
 			LOGGER.debug("top records: " + recordsAL.toString());
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			recordsAL = null;
