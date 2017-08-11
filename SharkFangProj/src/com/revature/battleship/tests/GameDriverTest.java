@@ -51,8 +51,14 @@ public class GameDriverTest {
 
 	@Test
 	public void testEnemyAttack() {
-		//This is a predefined game from Jon's DB. Player Ships may not be valid
-		currentGameState.setPlayerOneBoard("3000000000300000000030000000003300000000330000000033000000003300000000330000000033000000003300000000");		
+		//This is a predefined game from DB
+		/*currentGameState.setPlayerOneBoard("0000770000000666000000055500000004444400000033330000000000000000000000000000000000000000000000000000");		
+		int[] attackedCell = gd.enemyAttack();
+		assertTrue((attackedCell[0] >= 0) && (attackedCell[0] <= 99));//Valid range for the board given
+		System.out.println(attackedCell[0]+" "+attackedCell[1]);
+		System.out.println(currentGameState.getPlayerOneBoard());*/
+		
+		currentGameState.setPlayerOneBoard("7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777");		
 		int[] attackedCell = gd.enemyAttack();
 		assertTrue((attackedCell[0] >= 0) && (attackedCell[0] <= 99));//Valid range for the board given
 		System.out.println(attackedCell[0]+" "+attackedCell[1]);

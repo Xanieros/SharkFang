@@ -18,11 +18,20 @@ public class GameDriver {
 	public static final char EMPTY = '0';
 	public static final char HIT = '1';
 	public static final char MISS = '2';
+	
+	//Ship Values
 	public static final char SHIP = '3'; //4 spaces
 	public static final char CARRIER = '4'; //5 spaces
 	public static final char CRUISER = '5'; //3 spaces
 	public static final char SUBMARINE = '6'; //3 spaces
 	public static final char DESTROYER = '7'; //2 spaces
+	
+	//Hit ship values
+	public static final char HIT_SHIP = 'A'; //65
+	public static final char HIT_CARRIER = 'B'; //66
+	public static final char HIT_CRUISER = 'C'; //67
+	public static final char HIT_SUBMARINE = 'D'; //68
+	public static final char HIT_DESTROYER = 'E'; //69
 
 	
 	// size of each ship that is placeable on both boards
@@ -257,41 +266,77 @@ public class GameDriver {
 		for (int i = 0; i < playerOneBoardSB.length(); i++)
 		{
 			char tempChar = playerOneBoardSB.charAt(i);
-			if (tempChar == '0' || tempChar == '3') // either ship or water/empty
+			
+			//Adds to possible attacks based on unplayed squares
+			switch(tempChar)
 			{
-				possibleAttacks.add(i);
-			}
+				case '0':
+				case '3':
+				case '4':
+				case '5':	
+				case '6':
+				case '7':
+					possibleAttacks.add(i);
+					break;
+				default:
+					break;
+			}			
+			
 		}
 		
-		int enemyTargetIndex = (int) (Math.random() * possibleAttacks.size());		
+		int enemyTargetIndex = (int) (Math.random() * possibleAttacks.size());
 		
 		int target = possibleAttacks.get(enemyTargetIndex); //Get cell targeted
-		int resultOfAttack = getResultOfAttack(playerOneBoardSB, target); //Determine 1HIT or 2MISS
+		int resultOfAttack = getResultOfAttack(playerOneBoardSB, target); //Determine HIT or MISS
 		currentGameState.setPlayerOneBoard(playerOneBoardSB.toString()); //Updates P1 board with result of previous method
 		
 		return new int[]{target, resultOfAttack};
 	}
 	
+	//TODO Integrate this function into player attack
 	private int getResultOfAttack(StringBuilder boardSB, int target){
 		int resultOfAttack;
 		char newChar;
 		
 		switch (boardSB.charAt(target)) {
-		case GameDriver.SHIP: // hit a ship
-		case GameDriver.HIT:
-			resultOfAttack = 1;
-			newChar = GameDriver.HIT;
-			break;
-		case GameDriver.EMPTY: // water spot
-		case GameDriver.MISS:
-		default: // unknown input
-			resultOfAttack = 2;
-			newChar = GameDriver.MISS;
-			break;
+		
+			//Targeted a ship
+			case GameDriver.SHIP:
+				resultOfAttack = 'A';
+				newChar = GameDriver.HIT_SHIP;
+				break;
+			case GameDriver.CARRIER:
+				resultOfAttack = 'B';
+				newChar = GameDriver.HIT_CARRIER;
+				break;
+			case GameDriver.CRUISER:
+				resultOfAttack = 'C';
+				newChar = GameDriver.HIT_CRUISER;
+				break;
+			case GameDriver.SUBMARINE:
+				resultOfAttack = 'D';
+				newChar = GameDriver.HIT_SUBMARINE;
+				break;
+			case GameDriver.DESTROYER:
+				resultOfAttack = 'E';
+				newChar = GameDriver.HIT_DESTROYER;
+				break;
+			case GameDriver.HIT: //This case should  not be possible in the final version
+				resultOfAttack = 1;
+				newChar = GameDriver.HIT;
+				break;
+				
+			//Targeted Water
+			case GameDriver.EMPTY:
+			case GameDriver.MISS:
+			default: // unknown input
+				resultOfAttack = 2;
+				newChar = GameDriver.MISS;
+				break;
+								
 		}
 		
 		boardSB.setCharAt(target, newChar);
-		
 		return resultOfAttack;
 		
 	}
@@ -319,15 +364,33 @@ public class GameDriver {
 		//Find all the successful hits on the board and increment
 		boardChars = p1Board.toCharArray();
 		for (char character : boardChars) {
-			if(character=='1'){
-				successfulHitsP2++;
+			switch(character){
+				case '1':
+				case 'A':
+				case 'B':
+				case 'C':
+				case 'D':
+				case 'E':
+					successfulHitsP2++;
+					break;
+				default:
+					break;
 			}
 		}
 		
 		boardChars = p2Board.toCharArray();
 		for (char character : boardChars) {
-			if(character=='1'){
-				successfulHitsP1++;
+			switch(character){
+				case '1':
+				case 'A':
+				case 'B':
+				case 'C':
+				case 'D':
+				case 'E':
+					successfulHitsP1++;
+					break;
+				default:
+					break;
 			}
 		}
 		
