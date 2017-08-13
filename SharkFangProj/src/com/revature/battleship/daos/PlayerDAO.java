@@ -17,6 +17,7 @@ public class PlayerDAO implements PlayerInterface{
 	@Override
 	public Player login(String username, String password) {
 		LOGGER.info("in login");
+		conn = OracleConnection.getOracleConnection();
 		Player player = new Player();
 		try{
 			LOGGER.info("calling AUTH(?,?,?)");
@@ -171,5 +172,15 @@ public class PlayerDAO implements PlayerInterface{
 			newPlayer = null;
 		}
 		return newPlayer;
+	}
+	
+	public void logout()
+	{
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
