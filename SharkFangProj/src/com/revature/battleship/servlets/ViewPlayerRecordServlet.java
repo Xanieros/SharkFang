@@ -19,14 +19,14 @@ import com.revature.battleship.service.ServiceImpl;
 /**
  * Servlet implementation class ViewRecordsServlet
  */
-public class ViewRecordsServlet extends HttpServlet {
+public class ViewPlayerRecordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(ViewPlayerInformationServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewRecordsServlet() {
+    public ViewPlayerRecordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,16 +45,17 @@ public class ViewRecordsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		logger.debug("Called the ViewRecordsServlet");
+		logger.debug("Called the ViewPlayerRecordServlet");
 		
+		HttpSession session = request.getSession();
 		Service service = ServiceImpl.getService();
 		
-		//Get limit from frontend
-		int limit = Integer.parseInt(request.getParameter("limit"));
-		ArrayList<Record> allRecords = service.loadTopRecords(limit);
+		//Get UID from session
+		int uid = (Integer)session.getAttribute("uid");
+		Record playerRecord = service.loadPlayerRecord(uid);
 		
 		Gson gson = new Gson();
-		String JSON = gson.toJson(allRecords);
+		String JSON = gson.toJson(playerRecord);
 		
 		response.getWriter().write(JSON);
 		
