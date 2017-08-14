@@ -27,7 +27,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">SF Battleship</a>
+      <a class="navbar-brand" href="#" onclick='reloadCurrentPage();'>SF Battleship</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -236,8 +236,6 @@
 	<audio id='splooshSoundPlayer' controls style='display:none;'>
 	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/sploosh.mp3" type="audio/mpeg">
 	</audio>
-	
-	<button onclick='turnOnOverlay();'>Overlay</button>
 	
 	<div id="overlay" onclick="turnOffOverlay();">
 	  <div id="overlayText"></div>
