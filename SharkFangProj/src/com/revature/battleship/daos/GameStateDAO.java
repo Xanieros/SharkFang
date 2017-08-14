@@ -8,6 +8,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.revature.battleship.pojos.*;
+import com.revature.ws.*;
 
 import oracle.jdbc.OracleTypes;
 
@@ -82,6 +83,10 @@ public class GameStateDAO implements GameStateInterface {
 		//ArrayList<Record recordAL = new ArrayList<Record>();
 
 		try {
+			ArchiveWSServiceLocator loc = new ArchiveWSServiceLocator();
+			ArchiveWS port = loc.getArchiveWSPort();
+			port.archive(winner);
+			
 			LOGGER.info("calling END_GAME(?,?,?)");
 			CallableStatement cs = conn.prepareCall("call END_GAME(?,?,?)");
 			cs.setInt(1, gid);
