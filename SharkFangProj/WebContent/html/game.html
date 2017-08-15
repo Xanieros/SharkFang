@@ -35,7 +35,7 @@
       <ul class="nav navbar-nav">
       
       	<li id='profileModalNavButton' style='display:none;'><a onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal" class='handOnHover'><span class="glyphicon glyphicon-user"></span>  Profile</a></li>
-        <li id='scoresModalNavButton' style='display:none;'><a onclick="" href="#"><span class="glyphicon glyphicon-king handOnHover"></span> Scores</a></li>
+        <li id='scoresModalNavButton' style='display:none;'><a onclick="showTopScores(10);" data-toggle="modal" data-target="#topScoresModal" class="handOnHover"><span class="glyphicon glyphicon-king handOnHover"></span> Scores</a></li>
       	<li id='newGameModalNavButton' style='display:none;'><a data-toggle="modal" data-target="#newGameModal" class="handOnHover"><span class="glyphicon glyphicon-screenshot"></span> New Game</a></li>
       	<li id='loadGameModalNavButton' style='display:none;'><a id='loadGameAnchor' onclick="populateLoadGameModal(0)" data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
       </ul>
@@ -117,7 +117,7 @@
           <form name="sizeForm" action="#" method="POST">
             <label>X-Size</label><input id="xSize" type="number" value="10" min="10" max="25" name="xSize" step="1" required/>
             <label>Y-Size</label><input id="ySize" type="number" value="10" min="10" max="25" name="ySize" step="1" required/>
-            <label>Opponent</label><input type="number" value="0" name="enemyID" disabled/>
+            <label>Opponent</label><input type="number" value="-1" name="enemyID" disabled/>
           </form>
         </div>
       </div>
@@ -194,6 +194,27 @@
       <div class="modal-footer">
         <button type="button" onclick="updateProfile()" class="btn btn-default">Update</button>
         <button type="button" onclick="populateMyModalProfile()" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Top scores modal -->
+<div id="topScoresModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="myProfileModalTitle">Top Scores!</h4>
+      </div>
+      <div class="modal-body">
+        <div id='topScoresModalContent' class='container' style='width:100%;'></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="populateMyModalProfile()" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
 

@@ -71,7 +71,7 @@ public class EnemyAttackServlet extends HttpServlet {
 		if(numOfHits == 17){
 			enemyTarget[1] = 10; //Return a value that indicates the winning move
 			service.saveGame(); //Record the final state of the board
-			service.closeGame((Integer)session.getAttribute("currGameIDInPlay"), 0); //Change active to show winner and update both players' win/loss
+			service.closeGame((Integer)session.getAttribute("currGameIDInPlay"), -1); //Change active to show winner and update both players' win/loss
 			session.removeAttribute("currGameIDInPlay");//Remove game from session so servlet can't alter DB if called
 		}		
 		

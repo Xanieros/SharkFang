@@ -102,6 +102,56 @@ function checkUserLoggedIn()
 	xhttpr.send();
 };
 
+function showTopScores(topNum)
+{
+	var xhttpr = new XMLHttpRequest();
+	
+	var url = 'viewRecords?limit=' + topNum;
+	xhttpr.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200)
+		{
+			var output = this.responseText;
+			var scores = JSON.parse(output);
+			
+			var tableString = "<table class='table table-hover table-responsive' style='text-align:center'" +
+			"<tr>" +
+				"<th style='text-align:center'> Rank </th>" +
+				"<th style='text-align:center'> Gamer ID </th>" +
+				"<th style='text-align:center'> Wins </th>" +
+				"<th style='text-align:center'> Losses </th>" +
+				"<th style='text-align:center'> Win Ratio </th>" +
+			"</tr>";
+
+
+			for (i in scores)
+			{
+				var user = scores[i].uid;
+				if (scores[i].uid == '-1')
+				{
+					user = 'Computer';
+				}
+				
+				var totalWins = parseInt(scores[i].wins);
+				var totalLosses = parseInt(scores[i].losses);
+				var total = totalWins + totalLosses;
+
+				tableString += "<tr>" +
+							"<td>" + (parseInt(i) + 1) + "</td>" +
+							"<td>" + user + "</td>" +
+							"<td>" + scores[i].wins + "</td>" +
+							"<td>" + scores[i].losses + "</td>" +
+							"<td>" + (100*(totalWins/total)).toFixed(2) + "%</td>" +
+							"</tr>";
+			}
+			tableString += "</table>";
+			
+			document.getElementById('topScoresModalContent').innerHTML = tableString;
+		}
+	};
+	xhttpr.open('GET', url, true);
+	xhttpr.send();
+};
+
 function hideErrorMessage()
 {
 	document.getElementById('loginErrorMessage').innerHTML = "";
@@ -852,6 +902,7 @@ function receiveAttack()
 				document.getElementById('overlayText').innerHTML = "You Lose<br> <h5>Click anywhere on the screen to close</h5>";
 				gameEnded = true;
 				sound = "kaboomSoundEnd";
+				result = 'hit';
 				//turnOnOverlay();
 				/* Need to change this so that play sound and then the overlay pops up
 				 * solution?: make a new sound for hit that is end game so i can call for both sides
@@ -881,8 +932,8 @@ function receiveAttack()
 					result = 'hit';
 					sound = 'kaboomSoundPlayer';
 				}
-				document.getElementById(attackIndex.toString()).classList.add(result);
 			}
+			document.getElementById(attackIndex.toString()).classList.add(result);
 			var soundElement = document.getElementById(sound);
 			soundElement.play();
 			soundElement.onended = function() 
