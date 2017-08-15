@@ -299,12 +299,16 @@ function populateMyProfileModal(){
 				console.log("Populating Modal");
 				var data = xhttp.responseText;
 				console.log(data);
-	            var userData = JSON.parse(data);
+	            var userDataArray = JSON.parse(data);
 				
+	            var userData = userDataArray[0];
+	            var recordData = userDataArray[1];
+	            var recordString = recordData.wins + '-' + recordData.losses;
 	            //document.getElementById("test").innerHTML = userData.uid;
 
-				document.getElementById("myProfileModalTitle").innerHTML = userData.uname;
-	            
+				document.getElementById("myProfileModalTitle").innerHTML = 'Welcome, ' + userData.uname;
+				txt+='<tr> <th> </th><th></th></tr>';
+				txt+="<tr><td>Record</td><td><input type='text' id='record' value='" + recordString +"'disabled></td></tr>";
 				txt+="<tr><td>Email</td><td><input type='email' id='email' value='" + userData.email +"'disabled></td></tr>";
 				txt+="<tr><td>First Name</td><td><input type='text' id='fname' value='" + userData.fname +"'></td></tr>";
 				txt+="<tr><td>Last Name</td><td><input type='text' id='lname' value='" + userData.lname +"'></td></tr>";
@@ -357,7 +361,7 @@ function populateLoadGameModal(offsetInput)
 			for (i in gameState)
 			{
 				var opponent = gameState[i].playerTwoId;
-				if (gameState[i].playerTwoId == '0')
+				if (gameState[i].playerTwoId == '-1')
 				{
 					opponent = 'Computer';
 				}
@@ -380,10 +384,15 @@ function populateLoadGameModal(offsetInput)
 								"<tr>" + 
 								"<td style='width: 120px;'> <button id='loadPrevButton' onclick=populateLoadGameModal("+ (parseInt(offset)-1) + ")> Previous Page </button> </td>" +
 								"<td style='width:20%'> </td>" +
-								"<td style='width: 120px;'> <button id='loadPrevButton' onclick=populateLoadGameModal("+ (parseInt(offset)+1) + ")> Next Page </button> </td>" +
+								"<td style='width: 120px;'> <button id='loadNextButton' onclick=populateLoadGameModal("+ (parseInt(offset)+1) + ")> Next Page </button> </td>" +
 								"</tr>" +
 								"</table>";
 			document.getElementById('nextPrevLoadGameDiv').innerHTML = footerString;
+			
+			if (parseInt(offsetInput) == 0)
+			{
+				document.getElementById('loadPrevButton').style.display = 'none';
+			}
 		}
 	};
 	xhttpr.open('POST', url, true);
@@ -942,10 +951,6 @@ function receiveAttack()
 				{
 					turnOnOverlay();
 				}
-				else
-				{
-					receiveAttack();
-				}
 			}
 		}
 	};
@@ -993,9 +998,13 @@ function updateProfile()
 	xhttp.open('POST', 'UpdatePlayerInfo', true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send(txt);
-				
-
 	}
+	
+	$('#myProfileModal').modal('hide');
+	document.getElementById('overlay').style.backgroundColor = 'rgba(0,155,0,0.5)';
+	document.getElementById('overlayText').innerHTML = "Update Profile Successful!<br> <h5>Click anywhere on the screen to close</h5>";
+	$("#profileAnchor").triggerHandler("click");
+	turnOnOverlay();
 };
 
 function validate() {
@@ -1339,6 +1348,10 @@ function generateShips() {
 		  	"<img id='ship5' src='../images/ship5.png' draggable='true' ondblclick='rotate(this);' ondragstart='drag(event)' style='width: 250px; height:50px; float:left; margin:100px 0px;'></img>";
 	document.getElementById('shipsImageDiv').innerHTML = shipString;
 }
+
+function endKaboom() {
+	
+};
 
  $(function(){
 	 var x = 0;
