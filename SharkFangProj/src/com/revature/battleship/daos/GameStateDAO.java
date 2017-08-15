@@ -79,13 +79,14 @@ public class GameStateDAO implements GameStateInterface {
 		LOGGER.info("in endGame");
 		RecordDAO rDAO = new RecordDAO();
 		Record p1Record = new Record();
+		Record p2Record = new Record();
 		//Record p2Record = new Record();
 		//ArrayList<Record recordAL = new ArrayList<Record>();
 
 		try {
-			ArchiveWSServiceLocator loc = new ArchiveWSServiceLocator();
+			/*ArchiveWSServiceLocator loc = new ArchiveWSServiceLocator();
 			ArchiveWS port = loc.getArchiveWSPort();
-			port.archive(winner);
+			port.archive(winner);*/
 			
 			LOGGER.info("calling END_GAME(?,?,?)");
 			CallableStatement cs = conn.prepareCall("call END_GAME(?,?,?)");
@@ -94,16 +95,19 @@ public class GameStateDAO implements GameStateInterface {
 			cs.registerOutParameter(3, OracleTypes.CURSOR);
 			cs.executeQuery();
 			ResultSet rs = (ResultSet) cs.getObject(3);
+			
 			if (rs.next()) {
-				if(winner == 1)
+				int playerOneID = rs.getInt("P1_ID");
+				int playerTwoID = rs.getInt("P2_ID");
+				if(winner == playerOneID)
 				{
-					p1Record = rDAO.addWin(rs.getInt("P1_ID"));
-					//p2Record = rDAO.addLoss(rs.getInt("P2_ID"));
+					p1Record = rDAO.addWin(playerOneID);
+					p2Record = rDAO.addLoss(playerTwoID);
 				}
 				else
 				{
-					p1Record = rDAO.addLoss(rs.getInt("P1_ID"));
-					//p2Record = rDAO.addWin(rs.getInt("P2_ID"));
+					p1Record = rDAO.addLoss(playerOneID);
+					p2Record = rDAO.addWin(playerTwoID);
 				}
 				
 				//recordAL.add(p1Record);
