@@ -26,7 +26,6 @@ public class CheckAnyoneLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final String DEFAULT_PROF_PIC = "https://s3.amazonaws.com/battleshipbucket/profilePictures/profile_default.png";
 		HttpSession session = request.getSession(false);
 		if (session == null)
 		{
@@ -35,16 +34,10 @@ public class CheckAnyoneLoginServlet extends HttpServlet {
 		}
 		String attemptedUsername = (String) session.getAttribute("attemptedUsername");
 		String username = (String) session.getAttribute("username");
-		String profPic = (String) session.getAttribute("profPic");
 		if (username != null)
 		{
-			if(profPic != null && profPic.length() > 0){
-				response.getWriter().write(profPic);
-				return;
-			}else{				
-				response.getWriter().write(DEFAULT_PROF_PIC);
-				return;
-			}
+			response.getWriter().write("true");
+			return;
 		}
 		
 		if (attemptedUsername == null)

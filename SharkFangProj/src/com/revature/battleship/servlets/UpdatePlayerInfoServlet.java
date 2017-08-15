@@ -64,8 +64,7 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		String fnameNew = request.getParameter("fname");
 		String lnameNew = request.getParameter("lname");
 		String pwordNew = request.getParameter("pword");
-		String profPicNew = request.getParameter("profPic");
-		logger.debug(fnameNew+lnameNew+pwordNew+profPicNew);
+		logger.debug(fnameNew+lnameNew+pwordNew);
 		
 		//These will change the player to reflect updated value
 		if(pwordNew.length()>0){
@@ -78,10 +77,6 @@ public class UpdatePlayerInfoServlet extends HttpServlet {
 		
 		if(lnameNew.length()>0){
 			player.setLname(lnameNew);
-		}
-		
-		if(profPicNew.length()>0){
-			player.setLname(profPicNew);
 		}
 		
 		logger.debug("Player Info after: "+player);
