@@ -51,10 +51,20 @@ public class EnemyAttackServlet extends HttpServlet {
 		
 		//Increment number of hits
 		int numOfHits = (Integer)session.getAttribute("enemyNumOfHits");
-		if(enemyTarget[1]==1){
-			numOfHits++;
-			session.setAttribute("enemyNumOfHits", numOfHits);
-			logger.debug("Enemy successful hits increased: "+numOfHits);
+		
+		switch(enemyTarget[1]){
+			case '1':
+			case 'A':
+			case 'B':
+			case 'C':
+			case 'D':
+			case 'E':
+				numOfHits++;
+				session.setAttribute("enemyNumOfHits", numOfHits);
+				logger.debug("Enemy successful hits increased: "+numOfHits);
+				break;
+			default:
+				break;
 		}
 
 		//Determine if move won
