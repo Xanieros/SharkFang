@@ -142,7 +142,7 @@ body {
 }
 
 .ship2 {
-	background-image:url("https://s3.amazonaws.com/battleshipbucket/resources/images/ship2.png");
+	background-image:url("../images/ship2.png");
   background-color : transparent;
 	width: 50px;
 	height: 50px;
@@ -155,7 +155,7 @@ body {
 }
 
 .ship31 {
-  background-image:url("https://s3.amazonaws.com/battleshipbucket/resources/images/ship31.png");
+  background-image:url("../images/ship31.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
@@ -169,7 +169,7 @@ body {
 }
 
 .ship32 {
-  background-image:url("https://s3.amazonaws.com/battleshipbucket/resources/images/ship32.png");
+  background-image:url("../images/ship32.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
@@ -183,7 +183,7 @@ body {
 }
 
 .ship4 {
-  background-image:url("https://s3.amazonaws.com/battleshipbucket/resources/images/ship4.png");
+  background-image:url("../images/ship4.png");
   background-color : transparent;
   width: 50px;
   height: 50px;
@@ -197,7 +197,7 @@ body {
 }
 
 .ship5 {
-  background-image:url("https://s3.amazonaws.com/battleshipbucket/resources/images/ship5.png");
+  background-image:url("../images/ship5.png");
   background-color : transparent;
   width: 50px;
   height: 50px;

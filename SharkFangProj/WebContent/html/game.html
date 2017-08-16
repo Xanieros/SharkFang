@@ -33,11 +33,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-      
+      <!-- data-toggle="modal" data-target="#newGameModal" -->
       	<li id='profileModalNavButton' style='display:none;'><a id='profileAnchor' onclick="populateMyProfileModal()" data-toggle="modal" data-target="#myProfileModal" class='handOnHover'><span class="glyphicon glyphicon-user"></span>  Profile</a></li>
-        <li id='scoresModalNavButton' style='display:none;'><a onclick="showTopScores(10);" data-toggle="modal" data-target="#topScoresModal" class="handOnHover"><span class="glyphicon glyphicon-king handOnHover"></span> Scores</a></li>
-      	<li id='newGameModalNavButton' style='display:none;'><a data-toggle="modal" data-target="#newGameModal" class="handOnHover"><span class="glyphicon glyphicon-screenshot"></span> New Game</a></li>
-      	<li id='loadGameModalNavButton' style='display:none;'><a id='loadGameAnchor' onclick="populateLoadGameModal(0)" data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
+        <li id='scoresModalNavButton' style='display:none;'><a onclick="showTopScores(10);" data-toggle="modal" data-target="#topScoresModal" class="handOnHover"><span class="glyphicon glyphicon-king handOnHover"></span> All-Time Ranks</a></li>
+      	<li id='newGameModalNavButton' style='display:none;'><a href="#" onclick="generatePlayerBoards();" class="handOnHover"><span class="glyphicon glyphicon-screenshot"></span> New Game</a></li>
+      	<li id='loadGameModalNavButton' style='display:none;'><a href="#" id='loadGameAnchor' onclick="populateLoadGameModal(0)" data-toggle="modal" data-target="#loadGameModal" class="handOnHover"><span class="glyphicon glyphicon glyphicon-import"></span> Load Game</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li id='loginModalNavButton'><a data-toggle="modal" data-target="#loginModal" class="handOnHover" onclick="hideErrorMessage();"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
@@ -208,7 +208,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" id="myProfileModalTitle">Top Scores!</h4>
+        <h4 class="modal-title" id="myProfileModalTitle">Top Players!</h4>
       </div>
       <div class="modal-body">
         <div id='topScoresModalContent' class='container' style='width:100%;'></div>
@@ -222,30 +222,32 @@
 </div>
   
 <div id='welcomeDiv' class='jumbotron' style='background-color:transparent;'>
-    <h1 align='center' style='color:red;'> <strong> Welcome to </strong> </h1>
-    <h1 align='center' style='color:red;'> <strong> SHARK FANG </strong></h1>
-    <h1 align='center' style='color:red;'> <strong> BATTLESHIP! </strong></h1>
+    <h1 align='center' style='color:red; font-family: "Stencil", Sans-serif;'> <strong> Welcome to </strong> </h1>
+    <h1 align='center' style='color:red;font-family: "Stencil", Sans-serif;'> <strong> SHARK FANG </strong></h1>
+    <h1 align='center' style='color:red;font-family: "Stencil", Sans-serif;'> <strong> BATTLESHIP! </strong></h1>
   </div>
-	<button id='resetShipButton' onclick="resetBoard();" style='display:none;'> Reset Ships </button>
-	<div class='container' style="border: 1px solid green;">
-		<div id='shipsImageDiv' style="border: 1px solid black; float:left; width:500px;">
+  	<div align="center">
+		<button id='resetShipButton' onclick="resetBoard();" style='display:none;' class="btn btn-primary"> Reset Ships </button>
+	</div>
+	<div class='container'>
+		<div id='shipsImageDiv' style=" float:left; width:500px;">
 		</div>
-		<div id='tableGridDiv' style="border: 1px solid red; float:left; padding-bottom: 3%; padding-right: 3%;" >
+		<div id='tableGridDiv' style=" float:left; padding-bottom: 3%; padding-right: 3%;" >
 			<table border='1' id='tableGrid' style='border: 1px solid lime; color: lime;'></table>
 		</div>
-		<div style='width:10px; border:1px black; float:left;'> </div>
-		<div id='enemyTableGridDiv' style='border: 1px solid blue; float:left;'> 
+		<div style='width:10px; float:left;'> </div>
+		<div id='enemyTableGridDiv' style='float:left;'> 
 			<table  border='1' id='enemyTableGrid' style='border: 1px solid red;'></table>
 		</div>
 	</div>
 
 	<div id="shipPiecesDiv"></div>
 	
-	<audio id='kaboomSoundEnemy' controls style='display:none;'>
+	<audio id='kaboomSoundEnemy' controls style='display:none;' onended='endEnemySound();'>
 	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/kaboom.mp3" type="audio/mpeg">
 	</audio>
 	
-	<audio id='splooshSoundEnemy' controls style='display:none;'>
+	<audio id='splooshSoundEnemy' controls style='display:none;' onended='endEnemySound();'>
 	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/sploosh.mp3" type="audio/mpeg">
 	</audio>
 	
@@ -257,7 +259,7 @@
 	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/sploosh.mp3" type="audio/mpeg">
 	</audio>
 	
-	<audio id='kaboomSoundEnd' controls style='display:none;' onended='endKaboom'>
+	<audio id='kaboomSoundEnd' controls style='display:none;' onended='endKaboom();'>
 	  <source src="https://s3.amazonaws.com/battleshipbucket/resources/audio/kaboom.mp3" type="audio/mpeg">
 	</audio>
 	
