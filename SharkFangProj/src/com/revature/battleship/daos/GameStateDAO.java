@@ -84,9 +84,9 @@ public class GameStateDAO implements GameStateInterface {
 		//ArrayList<Record recordAL = new ArrayList<Record>();
 
 		try {
-			ArchiveWSServiceLocator loc = new ArchiveWSServiceLocator();
+			/*ArchiveWSServiceLocator loc = new ArchiveWSServiceLocator();
 			ArchiveWS port = loc.getArchiveWSPort();
-			port.archive(winner);
+			port.archive(winner);*/
 			
 			LOGGER.info("calling END_GAME(?,?,?)");
 			CallableStatement cs = conn.prepareCall("call END_GAME(?,?,?)");

@@ -308,7 +308,7 @@ function populateMyProfileModal(){
 
 				document.getElementById("myProfileModalTitle").innerHTML = 'Welcome, ' + userData.uname;
 				txt+='<tr> <th> </th><th></th></tr>';
-				txt+="<tr><td>Record</td><td><input type='text' id='record' value='" + recordString +"'disabled></td></tr>";
+				txt+="<tr><td>Overall Record</td><td><input type='text' id='record' value='" + recordString +"'disabled></td></tr>";
 				txt+="<tr><td>Email</td><td><input type='email' id='email' value='" + userData.email +"'disabled></td></tr>";
 				txt+="<tr><td>First Name</td><td><input type='text' id='fname' value='" + userData.fname +"'></td></tr>";
 				txt+="<tr><td>Last Name</td><td><input type='text' id='lname' value='" + userData.lname +"'></td></tr>";
@@ -339,7 +339,9 @@ function populateLoadGameModal(offsetInput)
 			var output = this.responseText;
 			
 			/* have to parse the JSON */
-			var gameState = JSON.parse(output);
+			var gameStateArray = JSON.parse(output);
+			var gameState = gameStateArray[0];
+			var moreContent = gameStateArray[1];
 			if (gameState == '')
 			{
 				document.getElementById('loadGameModalContent').innerHTML = "You have no saved games";
@@ -360,6 +362,7 @@ function populateLoadGameModal(offsetInput)
 			
 			for (i in gameState)
 			{
+				
 				var opponent = gameState[i].playerTwoId;
 				if (gameState[i].playerTwoId == '-1')
 				{
@@ -393,12 +396,29 @@ function populateLoadGameModal(offsetInput)
 			{
 				document.getElementById('loadPrevButton').style.display = 'none';
 			}
+			if (moreContent.toString() == 'false')
+			{
+				document.getElementById('loadNextButton').style.display = 'none';
+			}
 		}
 	};
 	xhttpr.open('POST', url, true);
 	xhttpr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttpr.send("offset=" + offset);
 };
+
+/*function checkIfEmpty(board) {
+	window.alert(board);
+	for (i in board)
+	{
+		if (board[i].toString() != '0')
+		{
+			window.alert("Not empty");
+			return false;
+		}
+	}
+	return true;
+};*/
 
 function loadGame(gameID)
 {
@@ -437,8 +457,8 @@ function loadGame(gameID)
 			loadGenerateEnemyBoard(playerTwoBoard);
 			
 			//show the attack button
-			document.getElementById("buttonArea").innerHTML = '<button onclick="sendMove(); ">Attack</button>'
-				+'<button onclick="saveAndQuit();">Save &amp; Quit</button>';
+			document.getElementById("buttonArea").innerHTML = '<button id="attackButton" class="btn btn-danger" onclick="sendMove(); " style="margin-right:10px;">Attack</button>'
+				+'<button class="btn btn-primary" onclick="saveAndQuit();" style="margin-left:30px;">Save &amp; Quit</button>';
 			document.getElementById("buttonArea").style.display= '';
 		}
 	};
@@ -464,6 +484,7 @@ function deleteGame(gid)
 			// reload the modal
 			$("#loadGameAnchor").triggerHandler("click");
 		}
+		location.reload();
 	};
 	//make call to server asynchronously
 	xhttpr.open('POST', url, true);
@@ -474,6 +495,7 @@ function deleteGame(gid)
 function loadGeneratePlayerBoard(playerOneBoard, boardLength)
 {
 	var shipsFound = [];
+	
 	for (i in playerOneBoard)
 	{
 		var cellValue = playerOneBoard[i];
@@ -676,11 +698,13 @@ function loadGenerateEnemyBoard(playerTwoBoard)
 		{
 			//document.getElementById(i +'e').classList.removeClass("bg-info");
 			document.getElementById(i +'e').classList.add('hit');
+			document.getElementById(i + 'eRadio').disabled = true;
 		}
 		else if (cellValue == '2') // a miss
 		{
 			//document.getElementById(i +'e').classList.removeClass("bg-info");
 			document.getElementById(i +'e').classList.add('miss');
+			document.getElementById(i + 'eRadio').disabled = true;
 		}
 		else // either ship or water, unknown
 		{
@@ -726,8 +750,8 @@ function placeShips(){
 				fieldset[0].removeAttribute("disabled");
 				
 				//Reveal Save and Quit				
-				document.getElementById("buttonArea").innerHTML = '<button onclick="sendMove(); ">Attack</button>'
-					+'<button onclick="saveAndQuit();">Save &amp; Quit</button>';
+				document.getElementById("buttonArea").innerHTML = '<button id="attackButton" class="btn btn-danger" onclick="sendMove(); " style="margin-right:10px;">Attack</button>'
+					+'<button class="btn btn-primary" onclick="saveAndQuit();" style="margin-left:30px;">Save &amp; Quit</button>';
 			}
 			
 		};
@@ -846,6 +870,8 @@ function sendMove(){
 					sound = 'kaboomSoundEnd';
 					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
 					$('input[name=cell]:checked').parent().parent().addClass("hit");
+					document.getElementById(checkedCell.toString() + 'eRadio').disabled = true;
+					document.getElementById(checkedCell.toString() + 'eRadio').checked = false;
 					// delay this to the end of the function after sound has gone
 					gameEnded = true;
 				}
@@ -853,20 +879,25 @@ function sendMove(){
 					{
 					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
 					$('input[name=cell]:checked').parent().parent().addClass("hit");
+					document.getElementById(checkedCell.toString() + 'eRadio').disabled = true;
+					document.getElementById(checkedCell.toString() + 'eRadio').checked = false;
 					sound = 'kaboomSoundEnemy';
-					
+					document.getElementById("attackButton").disabled = true;
 					}
 				else // data  == 2
 					{
 					$('input[name=cell]:checked').parent().parent().removeClass("bg-info");
 					$('input[name=cell]:checked').parent().parent().addClass("miss");
+					document.getElementById(checkedCell.toString() + 'eRadio').disabled = true;
+					document.getElementById(checkedCell.toString() + 'eRadio').checked = false;
 					sound = 'splooshSoundEnemy';
+					document.getElementById("attackButton").disabled = true;
 					}
 				//var opponentMove = JSON.parse(data);
 				//console.log("Received move: "+opponentMove);
 				var soundElement = document.getElementById(sound);
 				soundElement.play();
-				soundElement.onended = function() 
+				/*soundElement.onended = function() 
 				{
 					if (gameEnded)
 					{
@@ -876,7 +907,7 @@ function sendMove(){
 					{
 						receiveAttack();
 					}
-				}
+				}*/
 			}
 			
 		};
@@ -945,13 +976,13 @@ function receiveAttack()
 			document.getElementById(attackIndex.toString()).classList.add(result);
 			var soundElement = document.getElementById(sound);
 			soundElement.play();
-			soundElement.onended = function() 
+			/*soundElement.onended = function() 
 			{
 				if (gameEnded)
 				{
 					turnOnOverlay();
 				}
-			}
+			}*/
 		}
 	};
 	xhttpr.open('POST', url, true);
@@ -1063,7 +1094,7 @@ function generateEnemyTable() {
 		//Append buttons
 		for(j=0; j<xSize; j++){
 			rows+='<td id="' + (ySize*i + j) + 'e" class="enemyGridCell" style="width: 51px; height:51px;">';
-			rows+='<label style="border:1 px solid yellow; padding-top:25%;"><input type="radio" name="cell" value="'+counter+'"></td></label>';
+			rows+='<label style="border:1 px solid yellow; padding-top:25%;"><input id="' + (ySize*i + j) + 'eRadio" type="radio" name="cell" value="'+counter+'"></td></label>';
 		    	counter++;
 		    }
 		rows+='</tr>';
@@ -1313,8 +1344,8 @@ function checkDonePlacingShips() {
 				fieldset[0].removeAttribute("disabled");*/
 				
 				//Reveal Save and Quit				
-				document.getElementById("buttonArea").innerHTML = '<button onclick="sendMove(); ">Attack</button>'
-					+'<button onclick="saveAndQuit();">Save &amp; Quit</button>';
+				document.getElementById("buttonArea").innerHTML = '<button id="attackButton" class="btn btn-danger" onclick="sendMove();" style="margin-right:10px;">Attack</button>'
+					+'<button class="btn btn-primary" onclick="saveAndQuit();" style="margin-left:30px;">Save &amp; Quit</button>';
 				document.getElementById("buttonArea").style.display= '';
 				document.getElementById('resetShipButton').style.display = 'none';
 			}
@@ -1350,7 +1381,12 @@ function generateShips() {
 }
 
 function endKaboom() {
-	
+	turnOnOverlay();
+};
+
+function endEnemySound() {
+	receiveAttack();
+	document.getElementById("attackButton").disabled = false;
 };
 
  $(function(){

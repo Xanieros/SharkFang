@@ -50,9 +50,19 @@ public class LoadPlayerGamesServlet extends HttpServlet {
 
 		Service service = ServiceImpl.getService();
 		ArrayList<GameState> gs = service.loadPlayerGames(uid, offset);
+		ArrayList<GameState> gs2 = service.loadPlayerGames(uid, offset + 1);
+		Boolean moreContent = new Boolean(false);
+		if (!gs2.isEmpty())
+		{
+			moreContent = true; 
+		}
+		
+		ArrayList<Object> objArray = new ArrayList<Object>();
+		objArray.add(gs);
+		objArray.add(moreContent);
 		
 		Gson gson = new Gson();
-		String JSON = gson.toJson(gs);
+		String JSON = gson.toJson(objArray);
 		
 		response.getWriter().write(JSON);
 	}
