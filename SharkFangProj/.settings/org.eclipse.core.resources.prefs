@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/com/revature/ws/ArchiveWS.java=UTF-8
+encoding//src/com/revature/ws/ArchiveWSInterface.java=UTF-8
 encoding//src/com/revature/ws/ArchiveWSPortBindingStub.java=UTF-8
 encoding//src/com/revature/ws/ArchiveWSService.java=UTF-8
 encoding//src/com/revature/ws/ArchiveWSServiceLocator.java=UTF-8

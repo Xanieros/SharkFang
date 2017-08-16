@@ -85,7 +85,7 @@ public class GameStateDAO implements GameStateInterface {
 
 		try {
 			ArchiveWSServiceLocator loc = new ArchiveWSServiceLocator();
-			ArchiveWS port = loc.getArchiveWSPort();
+			ArchiveWSInterface port = loc.getArchiveWSPort();
 			port.archive(winner);
 			
 			LOGGER.info("calling END_GAME(?,?,?)");

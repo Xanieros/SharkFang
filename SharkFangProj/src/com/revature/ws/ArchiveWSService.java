@@ -10,7 +10,7 @@ package com.revature.ws;
 public interface ArchiveWSService extends javax.xml.rpc.Service {
     public java.lang.String getArchiveWSPortAddress();
 
-    public com.revature.ws.ArchiveWS getArchiveWSPort() throws javax.xml.rpc.ServiceException;
+    public com.revature.ws.ArchiveWSInterface getArchiveWSPort() throws javax.xml.rpc.ServiceException;
 
-    public com.revature.ws.ArchiveWS getArchiveWSPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
+    public com.revature.ws.ArchiveWSInterface getArchiveWSPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
 }

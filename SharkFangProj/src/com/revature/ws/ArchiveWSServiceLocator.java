@@ -22,7 +22,7 @@ public class ArchiveWSServiceLocator extends org.apache.axis.client.Service impl
     }
 
     // Use to get a proxy class for ArchiveWSPort
-    private java.lang.String ArchiveWSPort_address = "http://ec2-184-73-28-116.compute-1.amazonaws.com:8080/BattleshipArchive";
+    private java.lang.String ArchiveWSPort_address = "http://ec2-184-73-28-116.compute-1.amazonaws.com:8080/Archive/archive";
 
     public java.lang.String getArchiveWSPortAddress() {
         return ArchiveWSPort_address;
@@ -39,7 +39,7 @@ public class ArchiveWSServiceLocator extends org.apache.axis.client.Service impl
         ArchiveWSPortWSDDServiceName = name;
     }
 
-    public com.revature.ws.ArchiveWS getArchiveWSPort() throws javax.xml.rpc.ServiceException {
+    public com.revature.ws.ArchiveWSInterface getArchiveWSPort() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(ArchiveWSPort_address);
@@ -50,7 +50,7 @@ public class ArchiveWSServiceLocator extends org.apache.axis.client.Service impl
         return getArchiveWSPort(endpoint);
     }
 
-    public com.revature.ws.ArchiveWS getArchiveWSPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public com.revature.ws.ArchiveWSInterface getArchiveWSPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
             com.revature.ws.ArchiveWSPortBindingStub _stub = new com.revature.ws.ArchiveWSPortBindingStub(portAddress, this);
             _stub.setPortName(getArchiveWSPortWSDDServiceName());
@@ -72,7 +72,7 @@ public class ArchiveWSServiceLocator extends org.apache.axis.client.Service impl
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (com.revature.ws.ArchiveWS.class.isAssignableFrom(serviceEndpointInterface)) {
+            if (com.revature.ws.ArchiveWSInterface.class.isAssignableFrom(serviceEndpointInterface)) {
                 com.revature.ws.ArchiveWSPortBindingStub _stub = new com.revature.ws.ArchiveWSPortBindingStub(new java.net.URL(ArchiveWSPort_address), this);
                 _stub.setPortName(getArchiveWSPortWSDDServiceName());
                 return _stub;

@@ -7,7 +7,7 @@
 
 package com.revature.ws;
 
-public class ArchiveWSPortBindingStub extends org.apache.axis.client.Stub implements com.revature.ws.ArchiveWS {
+public class ArchiveWSPortBindingStub extends org.apache.axis.client.Stub implements com.revature.ws.ArchiveWSInterface {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
@@ -28,7 +28,7 @@ public class ArchiveWSPortBindingStub extends org.apache.axis.client.Stub implem
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(org.apache.axis.encoding.XMLType.AXIS_VOID);
-        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[0] = oper;
 
