@@ -22,7 +22,7 @@ public class ArchiveWSServiceLocator extends org.apache.axis.client.Service impl
     }
 
     // Use to get a proxy class for ArchiveWSPort
-    private java.lang.String ArchiveWSPort_address = "http://ec2-184-73-28-116.compute-1.amazonaws.com:8080/BattleshipArchive/ArchiveWSService";
+    private java.lang.String ArchiveWSPort_address = "http://ec2-184-73-28-116.compute-1.amazonaws.com:8080/BattleshipArchive";
 
     public java.lang.String getArchiveWSPortAddress() {
         return ArchiveWSPort_address;
